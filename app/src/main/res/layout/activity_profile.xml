@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/profile_icon"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="60dp"
+            android:text="김김김"
+            android:layout_margin="20dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/myId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아이디"
+        android:textSize="30dp"
+        android:layout_below="@id/profile_name"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"/>
+    <TextView
+        android:id="@+id/myNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="계좌번호"
+        android:textSize="30dp"
+        android:layout_below="@id/myId"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:id="@+id/myWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="몸무게"
+        android:textSize="30dp"
+        android:layout_below="@id/myNumber"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내 친구"
+        android:textSize="30dp"
+        android:layout_below="@id/myWeight"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>
