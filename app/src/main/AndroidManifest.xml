@@ -27,13 +27,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".FindPasswordAcitivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".FindIdActivity"
             android:exported="false">
             <meta-data
@@ -70,13 +63,6 @@
         </activity>
         <activity
             android:name=".StatisticsActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".TimeNotificationHelper"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -140,13 +126,6 @@
         </activity>
         <activity
             android:name=".ParticipantActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".TimeActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
