@@ -1,13 +1,18 @@
 package com.example.todaydrink;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
@@ -21,6 +26,9 @@ import java.io.OutputStream;
 
 public class DutchPayPictureActivity extends AppCompatActivity {
 
+    private static final int PICK_FROM_ALBUM = 1;
+    Uri uri;
+    ImageView imageView;
     Bitmap image;
     private TessBaseAPI mTess;
     String datapath = "";
@@ -30,6 +38,7 @@ public class DutchPayPictureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dutch_pay_picture);
 
+        imageView = findViewById(R.id.imageView);
         image = BitmapFactory.decodeResource(getResources(), R.drawable.sample_eng3);
         datapath = getFilesDir()+"/tesseract/";
 
@@ -40,6 +49,27 @@ public class DutchPayPictureActivity extends AppCompatActivity {
         mTess = new TessBaseAPI();
         mTess.init(datapath, lang);
     }
+
+    public void uploadImage(View view){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, RESULT_OK);
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_OK && data != null) {
+            uri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                imageView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public void processImage(View view){
         String OCRresult = null;

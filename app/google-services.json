@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "91883010051",
+    "firebase_url": "https://todaydrink-458d8-default-rtdb.firebaseio.com",
+    "project_id": "todaydrink-458d8",
+    "storage_bucket": "todaydrink-458d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91883010051:android:d6be23c1f964b0ab2af636",
+        "android_client_info": {
+          "package_name": "com.example.todaydrink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91883010051-oju7u388rmgru7t2c58l352cl4tl98t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqa6pVHGcFFwKskjzb7r3-gBEx7LZ-3iA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91883010051-oju7u388rmgru7t2c58l352cl4tl98t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

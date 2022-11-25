@@ -39,8 +39,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
     private long time=0;
     private long tempTime = 0;
 
-    private CountDownTimer Timer;
-
+    private TimerRest timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +60,12 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
 
+
+        if (timer != null) {
+            timer.cancel();
+        }
+
+
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int min) {
@@ -68,7 +73,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
                 setMinute = min;
                 time=(Long.valueOf(setHour-hour)*3600000)+(Long.valueOf(setMinute-minute)*60000)-Long.valueOf(second)*1000;
                 //time_text.setText( Integer.toString(setHour) +" : "+Integer.toString(setMinute));
-                TimerRest timer = new TimerRest(time, 1000);
+                timer = new TimerRest(time, 1000);
                 timer.start();
             }
         }, hour, minute,true);
@@ -106,12 +111,14 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         String textTime="";
 
-        textTime=text_hour+" :  "+text_min +" : "+text_sec;
+        textTime=text_hour+" : ";
 
-        /*분이 10보다 작으면 앞에 0 붙임;
+        //분이 10보다 작으면 앞에 0 붙임;
         if(text_min<10) textTime+="0";
-        textTime += text_min +":";
-         */
+        textTime += text_min +" : ";
+
+        if(text_sec <10) textTime+="0";
+        textTime +=text_sec;
 
         time_text.setText(textTime);
 

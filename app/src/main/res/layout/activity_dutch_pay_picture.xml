@@ -7,16 +7,24 @@
 
     <ImageView
         android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:src="@drawable/sample_eng3" />
+        android:layout_height="wrap_content"
+        android:text="사진 업로드하기"
+        android:layout_gravity="center"
+        android:textSize="25dp"
+        android:padding="10dp"
+        android:onClick="uploadImage"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="processImage"
-        android:text="사진 업로드"
+        android:text="메뉴 추출하기"
         android:textSize="25dp"
         android:padding="10dp"/>
 
