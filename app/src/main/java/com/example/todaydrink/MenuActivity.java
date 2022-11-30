@@ -26,8 +26,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View view){
-        if(view == dutchPayBtn) {
+        if(view == dutchPayBtn){
             startActivity(new Intent(this, DutchPayPictureActivity.class));
+        }
+        else if(view == timeBtn){
+            startActivity(new Intent(this, TimeActivity.class));
         }
     }
 }

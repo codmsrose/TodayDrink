@@ -16,9 +16,11 @@ public class GameCalculateActivity extends AppCompatActivity {
     TextView number2;
     EditText answer;
     Button mark;
+
     boolean correct = false;
     int correctAnswer = 0;
     String userAnswer = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
