@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         ib_measure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MeasureActivity.class);
+                Intent intent = new Intent(MainActivity.this, CheckActivity.class);
                 startActivity(intent);
             }
         });

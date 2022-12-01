@@ -35,6 +35,7 @@ public class DutchPayListActivity extends AppCompatActivity {
         TextView menuTitleTv = new TextView(this);
         menuTitleTv.setText("메뉴 목록");
         menuTitleTv.setTextSize(30);
+        rootLinear.addView(menuTitleTv);
 
         TextView[] menuTv = new TextView[menu_list.length];
         for(int i=0;i<menu_list.length;i++){
@@ -46,6 +47,9 @@ public class DutchPayListActivity extends AppCompatActivity {
             menuTv[i].setText(food_list[i]+" "+price_list[i]);
             menuTv[i].setTextSize(20);
         }
+        LinearLayout.LayoutParams menuTvLp = new LinearLayout.LayoutParams(
+                900,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 
         for(int i=0;i<menuTv.length;i++){
             LinearLayout menuSelectLinear = new LinearLayout(this);
@@ -54,11 +58,12 @@ public class DutchPayListActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            menuSelectLinear.addView(menuTv[i]);
-
             Button peopleBtn = new Button(this);
             peopleBtn.setText("인원");
+            // 버튼 누르면 방에 있는 인원 명단 띄워서 선택가능하게 하기
 
+            menuSelectLinear.addView(menuTv[i], menuTvLp);
+            menuSelectLinear.addView(peopleBtn);
 
             rootLinear.addView(menuSelectLinear, menuSelectLp);
         }
@@ -71,7 +76,6 @@ public class DutchPayListActivity extends AppCompatActivity {
     }
 
     public static String getOnlyKorean(String str){
-
         StringBuffer sb=new StringBuffer();
 
         if(str!=null && str.length()!=0){
@@ -83,8 +87,8 @@ public class DutchPayListActivity extends AppCompatActivity {
         }
         return sb.toString();
     }
-    public static String getOnlyNumber(String str){
 
+    public static String getOnlyNumber(String str){
         StringBuffer sb=new StringBuffer();
 
         if(str!=null && str.length()!=0){
