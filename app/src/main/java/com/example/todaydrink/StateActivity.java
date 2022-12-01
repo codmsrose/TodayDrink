@@ -9,8 +9,18 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class StateActivity extends AppCompatActivity{
+
     Button modifyBtn;
+
+    char numberState;
+    char saveStateNumber;
+    String modifyState;
+    String saveState;
+
     int check = 0;
 
     @Override
@@ -33,6 +43,10 @@ public class StateActivity extends AppCompatActivity{
             }
         });
 
+        modifyState();
+    }
+
+    public void modifyState(){
         Button[] buttonNum = new Button[5];
         for(int i=0;i<buttonNum.length;i++){
             String buttonId = "state"+(i+1);
@@ -51,12 +65,16 @@ public class StateActivity extends AppCompatActivity{
                         builder.setNegativeButton("취소", null);
                         builder.setPositiveButton("저장", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                char originState = buttonId.getText().toString().charAt(0);
-                                String modifyState = state.getText().toString();
-                                buttonId.setText(originState+"단계 " + modifyState);
+                                numberState = buttonId.getText().toString().charAt(0);
+                                modifyState = state.getText().toString();
+                                saveState = numberState+"단계 " + modifyState;
+                                buttonId.setText(saveState);
                             }
                         });
                         builder.show();
+                    }
+                    else if(check == 0){
+                        saveStateNumber = buttonId.getText().toString().charAt(0);
                     }
                 }
             });

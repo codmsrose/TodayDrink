@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TodayDrink</string>
+
+    <string-array name="soju">
+        <item>처음처럼</item>
+        <item>참이슬</item>
+        <item>좋은데이</item>
+        <item>한라산</item>
+    </string-array>
+
+    <string-array name="beer">
+        <item>카스</item>
+        <item>테라</item>
+    </string-array>
+
 </resources>
