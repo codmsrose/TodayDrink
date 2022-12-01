@@ -83,6 +83,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".CheckActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".StatisticsActivity"
             android:exported="true">
             <meta-data
@@ -132,7 +139,7 @@
         </activity>
         <activity
             android:name=".GameNumberActivity"
-            android:exported="true">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
