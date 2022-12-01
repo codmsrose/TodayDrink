@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail:success");
+                            Log.d(TAG, "createUserWithEmail:succeZss");
                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
                             updateUI(user); // 파이어베이스 인증에 계정 정보 입력
 

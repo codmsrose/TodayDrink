@@ -17,8 +17,10 @@ public class StateActivity extends AppCompatActivity{
     Button modifyBtn;
 
     char numberState;
+    char saveStateNumber;
     String modifyState;
     String saveState;
+
     int check = 0;
 
     @Override
@@ -70,6 +72,9 @@ public class StateActivity extends AppCompatActivity{
                             }
                         });
                         builder.show();
+                    }
+                    else if(check == 0){
+                        saveStateNumber = buttonId.getText().toString().charAt(0);
                     }
                 }
             });
