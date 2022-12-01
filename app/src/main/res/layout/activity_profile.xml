@@ -34,6 +34,16 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="40dp"/>
     <TextView
+        android:id="@+id/myIdText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내용"
+        android:textSize="30dp"
+        android:layout_below="@id/profile_name"
+        android:layout_toRightOf="@id/myId"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"/>
+    <TextView
         android:id="@+id/myNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,6 +52,35 @@
         android:layout_below="@id/myId"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/numberBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수정"
+        android:textSize="20dp"
+        android:layout_alignTop="@id/myNumber"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"/>
+    <TextView
+        android:id="@+id/myNumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내용"
+        android:textSize="30dp"
+        android:layout_below="@id/profile_name"
+        android:layout_alignLeft="@id/myIdText"
+        android:layout_alignTop="@id/myNumber" />
+    <Button
+        android:id="@+id/weightBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수정"
+        android:textSize="20dp"
+        android:layout_alignTop="@id/myWeight"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"/>
     <TextView
         android:id="@+id/myWeight"
         android:layout_width="wrap_content"
@@ -51,6 +90,15 @@
         android:layout_below="@id/myNumber"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"/>
+    <TextView
+        android:id="@+id/myWeightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내용"
+        android:textSize="30dp"
+        android:layout_below="@id/profile_name"
+        android:layout_alignLeft="@id/myIdText"
+        android:layout_alignTop="@id/myWeight" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

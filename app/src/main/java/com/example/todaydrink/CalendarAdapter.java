@@ -45,9 +45,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             holder.dayText.setText(String.valueOf(day.getDayOfMonth()));
             // TODO 색바꾸기 holder.dayText.setBackgroundResource(R.drawable.circle_white);
             //현재 날짜 색상 칠하기
-            if(day.equals(CalendarUtil.selectedDate)){
-                holder.parentView.setBackgroundColor(Color.LTGRAY);
-            }
+            //if(day.equals(CalendarUtil.selectedDate)){
+            //    holder.parentView.setBackgroundColor(Color.LTGRAY);}
         }
 
         //텍스트 색상 지정

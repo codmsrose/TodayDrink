@@ -62,6 +62,8 @@ public class GameNumberActivity extends AppCompatActivity {
         for (int i = 0; i < numberBtn.length; i++) {
             numberBtn[i] = findViewById(R.id.btn01 + i);
             numberBtn[i].setText(arr[i] + "");
+            numberBtn[i].setTextColor(getResources().getColor(R.color.black));
+            numberBtn[i].setBackgroundColor(getResources().getColor(R.color.light_gray));
         }
     }
 }
