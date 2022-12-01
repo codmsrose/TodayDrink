@@ -15,49 +15,19 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
-    Button btn_addgroup = findViewById(R.id.btn_addgroup);
-    ImageButton ib_home = (ImageButton) findViewById(R.id.ib_home);
-    ImageButton ib_measure = (ImageButton) findViewById(R.id.ib_measure);
-    ImageButton ib_statistics = (ImageButton) findViewById(R.id.ib_statistics);
-    ImageButton ib_board = (ImageButton) findViewById(R.id.ib_board);
-
-    public void homeMove(Context context) {
-        ib_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-    }
-
-    public void boardMove(Context context) {
-        ib_board.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, BoardActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    public void statisticsMove(Context context) {
-        ib_statistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, StatisticsActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+    Button btn_addgroup;
+    ImageButton ib_home, ib_measure, ib_statistics, ib_board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        btn_addgroup = findViewById(R.id.btn_addgroup);
+        ib_home = (ImageButton) findViewById(R.id.ib_home);
+        ib_measure = (ImageButton) findViewById(R.id.ib_measure);
+        ib_statistics = (ImageButton) findViewById(R.id.ib_statistics);
+        ib_board = (ImageButton) findViewById(R.id.ib_board);
 
         btn_addgroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +40,33 @@ public class MainActivity extends AppCompatActivity {
         ib_measure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MeasureActivity.class);
+                Intent intent = new Intent(MainActivity.this, InputDrinkActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ib_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        ib_board.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BoardActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        ib_statistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
                 startActivity(intent);
             }
         });

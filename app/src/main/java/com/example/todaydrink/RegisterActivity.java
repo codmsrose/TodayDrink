@@ -1,12 +1,8 @@
 package com.example.todaydrink;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,74 +11,91 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.protobuf.Value;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private FirebaseAuth mFirebaseAuth;     // 파이어베이스 인증
-    private EditText mEtEmail, mEtPwd;      // 회원가입 입력필드
-    private Button mBtnRegister;            // 회원가입 버튼
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = database.getReference();
+    EditText etId, etPwd, etWeight, etDrink, etAccount;
+    Button btnOverlap, btnRegister;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        etId = findViewById(R.id.id_edit);
+        etPwd = findViewById(R.id.pwd_edit);
+        etWeight = findViewById(R.id.weight_edit);
+        etDrink = findViewById(R.id.drink_edit);
+        etAccount = findViewById(R.id.account_edit);
+        btnOverlap = findViewById(R.id.overlap_btn);
+        btnRegister = findViewById(R.id.register_btn);
 
-        mEtEmail = findViewById(R.id.et_email);
-        mEtPwd = findViewById(R.id.et_pwd);
-        mBtnRegister = findViewById(R.id.btn_register);
+        btnRegister.setEnabled(false);
 
-        mBtnRegister.setOnClickListener(new View.OnClickListener() {
+        // 중복 확인 버튼 클릭 시
+        btnOverlap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // 회원가입 처리 시작
-                String strEmail = mEtEmail.getText().toString().trim();
-                String strPwd = mEtPwd.getText().toString().trim();
+            public void onClick(View v) {
+                String strId = etId.getText().toString();
 
-                // Firebase Auth 진행
-                mFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                databaseReference.child("Users").child(strId).child("id").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                            updateUI(user); // 파이어베이스 인증에 계정 정보 입력
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String value = snapshot.getValue(String.class);
 
-                            Toast.makeText(RegisterActivity.this, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                        // 데이터베이스 안에 사용자가 입력한 id가 존재한다면 토스트를 띄우고 가입 버튼 비활성화
+                        if(value!=null){
+                            Toast.makeText(getApplicationContext(),"이미 존재하는 아이디입니다.",Toast.LENGTH_SHORT).show();//토스메세지 출력
+                            btnRegister.setEnabled(false);
                         }
+                        // id가 없다면 가입 버튼 활성화
+                        else{
+                            Toast.makeText(getApplicationContext(), "사용 가능한 아이디입니다.", Toast.LENGTH_SHORT).show();
+                            btnRegister.setEnabled(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("RegisterActivity", String.valueOf(databaseError.toException())); // 에러문 출력
                     }
                 });
             }
         });
-    }
-    private void updateUI(FirebaseUser user) {
 
+        // 회원가입 버튼 클릭 시
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 입력 값을 모두 String 타입으로 변환
+                String strId = etId.getText().toString();
+                String strPwd = etPwd.getText().toString();
+                String strWeight = etWeight.getText().toString();
+                String strDrink = etDrink.getText().toString();
+                String strAccount = etAccount.getText().toString();
+                String strProfile = "gs://todaydrink-458d8.appspot.com/profile_icon.png";
+
+                // 입력값을 모두 저장하기 위해 addUserAccount 메소드 호출
+                addUserAccount(strId, strPwd, strWeight, strDrink, strAccount, strProfile);
+
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    // 데이터베이스에 정보 저장
+    public void addUserAccount(String id, String pwd, String weight, String drink, String account, String profile) {
+        UserAccount userAccount = new UserAccount(id, pwd, weight, drink, account, profile);
+
+        databaseReference.child("Users").child(id).setValue(userAccount);
     }
 }

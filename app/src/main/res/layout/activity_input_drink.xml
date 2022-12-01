@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InputDrinkActivity">
+
+    <Button
+        android:id="@+id/btn_cass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="카스"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_terra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="테라"
+        app:layout_constraintStart_toEndOf="@+id/btn_cass"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:text="확인"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_iseul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="참이슬"
+        app:layout_constraintStart_toEndOf="@+id/btn_terra"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="처음처럼"
+        app:layout_constraintStart_toEndOf="@+id/btn_iseul"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

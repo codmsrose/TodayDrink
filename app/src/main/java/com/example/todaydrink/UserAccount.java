@@ -4,32 +4,69 @@ package com.example.todaydrink;
  * 사용자 계정 정보 모델 클래스
  */
 public class UserAccount {
-
-    private String idToken;     // Firebase Uid (고유 토큰정보)
-    private String emailId;     // 이메일 아이디
-    private String password;    // 비밀번호
+    String id;
+    String pwd;
+    String weight;
+    String drink;
+    String account;
+    String profile;
 
     public UserAccount() { }
 
-    public String getIdToken() {
-        return idToken;
+    public String getId() {
+        return id;
     }
 
-    public void setIdToken(String idToken) {
-        this.idToken = idToken;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getEmailId() { return emailId; }
-
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public String getPwd() {
+        return pwd;
     }
 
-    public String getPassword() {
-        return password;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getDrink() {
+        return drink;
+    }
+
+    public void setDrink(String drink) {
+        this.drink = drink;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public UserAccount(String id, String pwd, String weight, String drink, String account, String profile) {
+        this.id = id;
+        this.pwd = pwd;
+        this.weight = weight;
+        this.drink = drink;
+        this.account = account;
+        this.profile = profile;
     }
 }

@@ -48,7 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/beer" />
+        app:srcCompat="@drawable/beer"
+        android:contentDescription="주량 측정"/>
 
     <ImageButton
         android:id="@+id/ib_statistics"
@@ -62,7 +63,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toEndOf="@+id/ib_home"
-        app:srcCompat="@drawable/linegraph" />
+        app:srcCompat="@drawable/linegraph"
+        android:contentDescription="주량 통계"/>
 
     <ImageButton
         android:id="@+id/ib_home"
@@ -75,7 +77,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/home" />
+        app:srcCompat="@drawable/home"
+        android:contentDescription="메인으로 이동"/>
 
     <ImageButton
         android:id="@+id/ib_board"
@@ -89,7 +92,8 @@
         app:layout_constraintEnd_toStartOf="@+id/ib_home"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/document" />
+        app:srcCompat="@drawable/document"
+        android:contentDescription="게시판"/>
 
     <View
         android:layout_width="match_parent"
