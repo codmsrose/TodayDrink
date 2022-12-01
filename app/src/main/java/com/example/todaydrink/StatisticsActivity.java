@@ -1,97 +1,125 @@
 package com.example.todaydrink;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
-import java.util.Calendar;
+import org.threeten.bp.YearMonth;
+import org.threeten.bp.format.DateTimeFormatter;
+import java.util.ArrayList;
+import org.threeten.bp.LocalDate;
 
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivity extends AppCompatActivity{
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference reference = database.getReference();
-    LoginActivity loginActivity = new LoginActivity();
-    String currentUser = loginActivity.currentUser;
-    public CalendarView calendarView;
-    public TextView text_my_drink, text_drink_record, textView2, textView3;
+    TextView monthYearText; //년월 텍스트뷰
 
-    Calendar calendar = Calendar.getInstance();
-    int year = calendar.get(Calendar.YEAR);
-    int month = calendar.get(Calendar.MONTH);
-    int day = calendar.get(Calendar.DAY_OF_MONTH);
+    RecyclerView recyclerView;
 
-    int bottle = 0;
-    int glass = 0;
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_statistic);
+        AndroidThreeTen.init(this);
 
-        calendarView = (CalendarView)findViewById(R.id.calendarView);
-        text_my_drink = findViewById(R.id.text_my_drink);
-        textView2 = findViewById(R.id.textView2);
-        textView3 = findViewById(R.id.textView3);
-        text_drink_record = findViewById(R.id.text_drink_record);
+        //초기화
+        monthYearText = findViewById(R.id.monthYearText);
+        ImageButton preBtn = findViewById(R.id.pre_btn);
+        ImageButton nextBtn = findViewById(R.id.next_btn);
+        recyclerView = findViewById(R.id.recyclerView);
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        //현재 날짜
+        CalendarUtil.selectedDate = LocalDate.now();
+
+        //화면 설정
+        setMonthView();
+
+        //이전 달 버튼 이벤트
+        preBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                text_my_drink.setVisibility(View.VISIBLE);
-                text_drink_record.setVisibility(View.VISIBLE);
-                textView2.setVisibility(View.INVISIBLE);
-                text_my_drink.setText("나의 주량");
+            public void onClick(View view) {
 
-                takeDrink("맥주", "카스");
-                takeDrink("맥주", "테라");
-
-                int beer_bottle = bottle;
-                int beer_glass = glass;
-                bottle = 0;
-                glass = 0;
-
-                takeDrink("소주", "참이슬");
-                takeDrink("소주", "처음처럼");
-
-                int soju_bottle = bottle;
-                int soju_glass = glass;
-                bottle = 0;
-                glass = 0;
-
-
-
-                text_drink_record.setText("\n" + "맥주  " + beer_bottle + "병 " + beer_glass + "잔" +
-                        "\n" + "소주  " + soju_bottle + "병 " + soju_glass + "잔");
+                //-1한 월을 넣어준다. (2월 -> 1월)
+                CalendarUtil.selectedDate = CalendarUtil.selectedDate.minusMonths(1);
+                setMonthView();
             }
         });
+
+        //다음 달 버튼 이벤트
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //+1한 월을 넣어준다.(2월 -> 3월)
+                CalendarUtil.selectedDate = CalendarUtil.selectedDate.plusMonths(1);
+                setMonthView();
+            }
+        });
+
+    }//onCreate
+
+    //날짜 타입 설정(4월 2020)
+    private String monthYearFromDate(LocalDate date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM월 yyyy");
+        return date.format(formatter);
     }
 
-    public void takeDrink(String drinkKind, String brand) {
-        reference.child("Users").child(currentUser).child(year + "/" + month + "/" + day).child(drinkKind).child(brand).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Drink drink = snapshot.getValue(Drink.class);
+    //화면 설정
+    private void setMonthView(){
 
-                bottle += drink.getBottle();
-                glass += drink.getGlass();
+        //년월 텍스트뷰 셋팅
+        monthYearText.setText(monthYearFromDate(CalendarUtil.selectedDate));
+
+        //해당 월 날짜 가져오기
+        ArrayList<LocalDate> dayList = daysInMonthArray(CalendarUtil.selectedDate);
+
+        //어뎁터 데이터 적용
+        CalendarAdapter adapter = new CalendarAdapter(dayList);
+
+        //레이아웃 설정(열 7개)
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 7);
+
+        //레이아웃 적용
+        recyclerView.setLayoutManager(manager);
+
+        //어뎁터 적용
+        recyclerView.setAdapter(adapter);
+    }
+
+    //날짜 생성
+    private ArrayList<LocalDate> daysInMonthArray(LocalDate date){
+
+        ArrayList<LocalDate> dayList = new ArrayList<>();
+
+        YearMonth yearMonth = YearMonth.from(date);
+
+        //해당 월 마지막 날짜 가져오기(예 28, 30, 31)
+        int lastDay = yearMonth.lengthOfMonth();
+
+        //해당 월의 첫 번째 날 가져오기(예 4월1일)
+        LocalDate firstDay = CalendarUtil.selectedDate.withDayOfMonth(1);
+
+        //첫 번째 날 요일 가져오기(월:1 , 일:7)
+        int dayOfWeek = firstDay.getDayOfWeek().getValue();
+
+        //날짜 생성
+        for(int i = 1; i < 42; i++){
+
+            if( i <= dayOfWeek || i > lastDay + dayOfWeek){
+
+                dayList.add(null);
+            }else{
+                dayList.add(LocalDate.of(CalendarUtil.selectedDate.getYear(), CalendarUtil.selectedDate.getMonth(),
+                        i - dayOfWeek));
             }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        return dayList;
     }
 }

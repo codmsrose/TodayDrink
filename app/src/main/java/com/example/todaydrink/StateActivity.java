@@ -32,11 +32,11 @@ public class StateActivity extends AppCompatActivity{
         modifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (check == 0) {
+                if (check == 0) { // 수정 안하고 있는 상태
                     modifyBtn.setText("수정 내용 저장하기");
                     check = 1;
                 }
-                else if (check == 1){
+                else if (check == 1){ //수정 하고 있는 상태
                     modifyBtn.setText("수정");
                     check = 0;
                 }
@@ -45,6 +45,11 @@ public class StateActivity extends AppCompatActivity{
 
         modifyState();
     }
+
+    /* TODO 수정하기 전에 먼저 버튼에 디폴트값으로 설정되어있는 문자열을 데이터베이스에 저장해놔야함
+       TODO 수정을 했다면 버튼 눌렀을 떄 onClick에서 다이얼로그 띄워서 받아온 문자열을 다시 해당 단계에 저장해야함
+       TODO numberState에는 단계 숫자 "1", modifyState에는 행동만 "비틀거림", saveState는 "1단계 비틀거림" 이런식으로 저장되어있음.
+     */
 
     public void modifyState(){
         Button[] buttonNum = new Button[5];
@@ -75,6 +80,8 @@ public class StateActivity extends AppCompatActivity{
                     }
                     else if(check == 0){
                         saveStateNumber = buttonId.getText().toString().charAt(0);
+                        // TODO saveStateNumber는 char형으로 나오는 내가 선택한 단계 숫자
+                        // TODO 현재 내 상태를 눌렀을 때 나중에 해당 날짜에 지금 마신 술 양이랑 같이 이 숫자가 저장되어야함.
                     }
                 }
             });
