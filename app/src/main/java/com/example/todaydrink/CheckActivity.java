@@ -227,15 +227,15 @@ public class CheckActivity extends AppCompatActivity {
 
                 if (check_amount_glass.equals(view)) {
                  pressed[0] =check_amount_glass;
-                 check_amount_glass.setBackgroundColor(getResources().getColor(R.color.green));
+                 check_amount_glass.setBackgroundColor(getResources().getColor(R.color.purple_700));
                 }
                 else if (check_amount_bottle.equals(view)){
                     pressed[0] =check_amount_glass;
-                    check_amount_bottle.setBackgroundColor(getResources().getColor(R.color.green));
+                    check_amount_bottle.setBackgroundColor(getResources().getColor(R.color.purple_700));
                 }
                 else if (check_amount_ml.equals(view)){
                     pressed[0] =check_amount_glass;
-                    check_amount_ml.setBackgroundColor(getResources().getColor(R.color.green));
+                    check_amount_ml.setBackgroundColor(getResources().getColor(R.color.purple_700));
                 }
             }
         }
