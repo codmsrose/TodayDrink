@@ -26,9 +26,6 @@ public class CheckActivity extends AppCompatActivity {
     CheckAdapter CheckAdapter;
     private ArrayList<CheckItems> mArrayList;
 
-
-
-
     Dialog checkDialog; // 술 종류 클릭하면 나오는 다이얼로그
     Dialog dialogNew;
 
@@ -111,7 +108,7 @@ public class CheckActivity extends AppCompatActivity {
 
 
     //======다이얼로그==================================
-    // TODO: 수정하셔야 하는 다이얼로그 함수입니다.
+    // TODO: 수정해야 하는 다이얼로그 함수입니다.
     //  일단 매개변수인 int position 을 String drink이런식으로  String을 매개변수로 받게 만들어주세요.
 
     public void showDialogDrink(int position){
@@ -223,9 +220,9 @@ public class CheckActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                check_amount_glass.setBackgroundColor(getResources().getColor(R.color.white));
-                check_amount_bottle.setBackgroundColor(getResources().getColor(R.color.white));
-                check_amount_ml.setBackgroundColor(getResources().getColor(R.color.white));
+                check_amount_glass.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                check_amount_bottle.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                check_amount_ml.setBackgroundColor(getResources().getColor(R.color.purple_500));
 
 
                 if (check_amount_glass.equals(view)) {
