@@ -18,8 +18,6 @@ import java.util.ArrayList;
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>{
 
     ArrayList<LocalDate> dayList;
-    String a="소주 1병 2잔";
-    String b="맥주 1병";
 
     public CalendarAdapter(ArrayList<LocalDate> dayList) {
         this.dayList = dayList;
