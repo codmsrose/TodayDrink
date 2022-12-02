@@ -118,7 +118,7 @@ public class CheckActivity extends AppCompatActivity {
         checkDialog.show(); // 다이얼로그 띄우기
 
 
-        //1. 세부적인 술 종류 선택 - 라디오 다이얼로그
+        // TODO: 1. 세부적인 술 종류 선택 - 라디오 다이얼로그
         TextView check_drink_name = checkDialog.findViewById(R.id.check_drink_name);  //술 종류 선택
 
         check_drink_name.setOnClickListener(new View.OnClickListener(){
@@ -143,7 +143,7 @@ public class CheckActivity extends AppCompatActivity {
                         arrayDrink=res.getStringArray(R.array.soju);
                         break;
                 }
-                // 수정헤야하는 코드는 여기까지
+                // TODO: 수정헤야하는 코드는 여기까지
 
 
 
@@ -163,7 +163,7 @@ public class CheckActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                //TODO check_drink_name에 어떤 술 선택했는지 보여주기 (예- 처음처럼)
+                                //TODO check_drink_name(edit text view)에 어떤 술 선택했는지 보여주기 (예- 처음처럼)
 
 
                             }
@@ -211,15 +211,37 @@ public class CheckActivity extends AppCompatActivity {
             }
         });
 
-        //3. 술 마신 양의 단위
+        //3. 술 마신 양의 단위  -> 잔, 병, ml 버튼 중 1개만 선택되도록 함
         Button check_amount_glass= checkDialog.findViewById(R.id.check_amount_glass); //잔
         Button check_amount_bottle= checkDialog.findViewById(R.id.check_amount_bottle);//병
         Button check_amount_ml= checkDialog.findViewById(R.id.check_amount_ml);//ml
 
-        boolean glassPressed=false, bottlePressed=false, mlPressed=false;
+        //잔,병,ml 중 선택된 것이 pressed에 들어감
+        final Button[] pressed = new Button[1];
+
+        class checkAmountClickListener implements Button.OnClickListener {
+            @Override
+            public void onClick(View view) {
+
+                check_amount_glass.setBackgroundColor(getResources().getColor(R.color.white));
+                check_amount_bottle.setBackgroundColor(getResources().getColor(R.color.white));
+                check_amount_ml.setBackgroundColor(getResources().getColor(R.color.white));
 
 
-
+                if (check_amount_glass.equals(view)) {
+                 pressed[0] =check_amount_glass;
+                 check_amount_glass.setBackgroundColor(getResources().getColor(R.color.green));
+                }
+                else if (check_amount_bottle.equals(view)){
+                    pressed[0] =check_amount_glass;
+                    check_amount_bottle.setBackgroundColor(getResources().getColor(R.color.green));
+                }
+                else if (check_amount_ml.equals(view)){
+                    pressed[0] =check_amount_glass;
+                    check_amount_ml.setBackgroundColor(getResources().getColor(R.color.green));
+                }
+            }
+        }
 
 
 
@@ -235,14 +257,13 @@ public class CheckActivity extends AppCompatActivity {
         });
         // 네 버튼
         checkDialog.findViewById(R.id.yesBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO 지금 마신 술 데이터베이스에 저장하고 화면에 반영하기
-            }
-        });
+                 @Override
+                 public void onClick(View view) {
+                     // TODO 지금 마신 술 데이터베이스에 저장하기
+                     //  마신 술 이름이랑 입력한 양, 단위는 위에서 찾으면 됨
+                     //  저장하고 화면에 반영하기 -> activity_check에 있는 show_amout textview에 쓰면 됨
+                 }
+             }
+            );
+        }
     }
-
-
-
-
-}
