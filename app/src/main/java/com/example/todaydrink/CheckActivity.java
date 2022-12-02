@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -87,7 +88,10 @@ public class CheckActivity extends AppCompatActivity {
                     builder.show();
                 }
                 else{
-                    Log.d("선택한대종류이름",item.getName());
+                    //TODO: 지금은 리사이클러뷰에서 선택한 아이템을 position으로 접근할 수 있는데
+                    // 데이터베이스에서는 n번째 데이터에 접근하기<<같은 것은 안된다고 하셨으니까
+                    // 밑의 showDialogDrink(position)에서 positon을 item.getName()으로 바꾸시고
+                    // showDialogDrink함수를 수정하시면 됩니다. 함수는 밑에 있어요
                     showDialogDrink(position);}
             }
         });
@@ -107,23 +111,16 @@ public class CheckActivity extends AppCompatActivity {
 
 
     //======다이얼로그==================================
+    // TODO: 수정하셔야 하는 다이얼로그 함수입니다.
+    //  일단 매개변수인 int position 을 String drink이런식으로  String을 매개변수로 받게 만들어주세요.
+
     public void showDialogDrink(int position){
         checkDialog.show(); // 다이얼로그 띄우기
 
-        //*주의 : findViewById()를 쓸 때는 -> 앞에 반드시 다이얼로그 이름을 붙이기!
 
-
+        //1. 세부적인 술 종류 선택 - 라디오 다이얼로그
         TextView check_drink_name = checkDialog.findViewById(R.id.check_drink_name);  //술 종류 선택
-        EditText check_edit_amount = checkDialog.findViewById(R.id.check_edit_amount); //술 마신 양
-        Button check_amount_glass= checkDialog.findViewById(R.id.check_amount_glass); //잔
-        Button check_amount_bottle= checkDialog.findViewById(R.id.check_amount_bottle);//병
-        Button check_amount_ml= checkDialog.findViewById(R.id.check_amount_ml);//ml
 
-
-
-
-
-        //세부적인 술 종류 선택 - 라디오 다이얼로그
         check_drink_name.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v) {
@@ -134,8 +131,9 @@ public class CheckActivity extends AppCompatActivity {
                 int pick;
 
 
-                //TODO: 지금은 array파일에서 데이터를 가져왔지만 데이터베이스에서 가져올 수 있도록 해야 함
-                // 밑에 코드는 리사이클에서 어떤 것을 선택했는지를 position을 통해 식별할 수 있었는데
+                //TODO: 지금은 array파일에서 데이터를 가져와서 String[] arrayDrink에 저장했지만
+                // 데이터베이스에서 가져올 수 있도록 해야 하는데 술 종류(예시 :소주, 맥주)는 이 함수의 매개변수로 데이터베이스에서 검색하면 될 것 같아요!
+
 
                 switch(position){
                     case  0:
@@ -145,8 +143,11 @@ public class CheckActivity extends AppCompatActivity {
                         arrayDrink=res.getStringArray(R.array.soju);
                         break;
                 }
+                // 수정헤야하는 코드는 여기까지
 
-                final int[] selectedIndex = {0};
+
+
+                final int[] selectedIndex = {0};   //선택한 디테일한 술이 큰 종류의 술 리스트에서 몇 번째 인지
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(CheckActivity.this);
                 dialog.setTitle("종류를 선택하세요.")
@@ -162,7 +163,8 @@ public class CheckActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                //TODO 다이얼로그에 방금 어떤거 선택했는지 보이기
+                                //TODO check_drink_name에 어떤 술 선택했는지 보여주기 (예- 처음처럼)
+
 
                             }
                         })
@@ -198,6 +200,26 @@ public class CheckActivity extends AppCompatActivity {
 
             }
         });
+
+        //2. 술 마신 양
+        EditText check_edit_amount = checkDialog.findViewById(R.id.check_edit_amount); //술 마신 양
+
+        check_edit_amount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check_edit_amount.getText().toString();
+            }
+        });
+
+        //3. 술 마신 양의 단위
+        Button check_amount_glass= checkDialog.findViewById(R.id.check_amount_glass); //잔
+        Button check_amount_bottle= checkDialog.findViewById(R.id.check_amount_bottle);//병
+        Button check_amount_ml= checkDialog.findViewById(R.id.check_amount_ml);//ml
+
+        boolean glassPressed=false, bottlePressed=false, mlPressed=false;
+
+
+
 
 
 
