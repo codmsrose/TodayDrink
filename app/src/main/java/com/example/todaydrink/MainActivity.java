@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent get_Intent = getIntent();
+        String currentUser = get_Intent.getStringExtra("currentUser");
+
         btn_addgroup = findViewById(R.id.btn_addgroup);
         ib_home = (ImageButton) findViewById(R.id.ib_home);
         ib_measure = (ImageButton) findViewById(R.id.ib_measure);
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddGroupActivity.class);
+                intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
             }
         });
@@ -41,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, InputDrinkActivity.class);
+                intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
+                intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
             }
         });

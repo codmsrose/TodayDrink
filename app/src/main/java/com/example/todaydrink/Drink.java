@@ -1,9 +1,9 @@
 package com.example.todaydrink;
 
 public class Drink {
-    public int bottle;
-    public int glass;
-    public int ml;
+    int bottle;
+    int glass;
+    int ml;
 
     public Drink() { }
 

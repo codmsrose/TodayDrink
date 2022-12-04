@@ -60,7 +60,9 @@ public class LoginActivity extends AppCompatActivity {
                                 // 로그인 ID 저장해놓기.
                                 currentUser = userAccount.id;
 
+                                // 메인 화면으로 이동하면서 현재 로그인된 계정의 ID 정보를 넘김.
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("currentUser", currentUser);
                                 startActivity(intent);
                             }
                             // 데이터베이스에 들어있는 pwd값과 다른 경우
