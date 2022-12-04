@@ -2,6 +2,7 @@ package com.example.todaydrink;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -25,6 +26,12 @@ import android.widget.TimePicker;
 
 import android.os.CountDownTimer;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Calendar;
 
 public class TimeActivity extends AppCompatActivity implements View.OnClickListener{
@@ -40,6 +47,9 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
     private long tempTime = 0;
 
     private TimerRest timer;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +132,8 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         time_text.setText(textTime);
 
+        // 타이머가 흐를 때마다 데이터베이스에 남은 시간을 계속 업데이트함.
+        updateTime(textTime);
     }
 
     public void sendNotification(){
@@ -168,5 +180,13 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         //알림 요청시에 사용한 번호를 알림제거 할 수 있음.
         //notificationManager.cancel(1);
+    }
+
+    // 데이터베이스에 시간 업데이트할 메소드.
+    public void updateTime(String time) {
+        Time time1 = new Time(time);
+
+        // "집 갈 시간" 아래에 String 타입으로 시간 계속 저장.
+        reference.child("Users").child("abc123").child("집 갈 시간").setValue(time1);
     }
 }
