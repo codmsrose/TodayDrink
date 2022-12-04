@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,6 +21,10 @@ import org.threeten.bp.LocalDate;
 
 public class StatisticsActivity extends AppCompatActivity{
 
+    @SuppressLint("StaticFieldLeak")
+    public static Context mContext;
+    public String userId;
+
     TextView monthYearText; //년월 텍스트뷰
 
     RecyclerView recyclerView;
@@ -27,6 +34,13 @@ public class StatisticsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
         AndroidThreeTen.init(this);
+
+        // 로그인된 ID를 가져옴.
+        Intent get_Intent = getIntent();
+        userId = get_Intent.getStringExtra("currentUser");
+
+        // userId를 사용하기 위해 이 액티비티를 CalendarAdapter에 전달.
+        mContext = this;
 
         //초기화
         monthYearText = findViewById(R.id.monthYearText);
@@ -61,6 +75,7 @@ public class StatisticsActivity extends AppCompatActivity{
                 setMonthView();
             }
         });
+
 
     }//onCreate
 
