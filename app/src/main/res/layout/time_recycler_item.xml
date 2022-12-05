@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_margin="15dp">
 
-
+<!--  TODO: 동그라미로 고치기 -->
     <TextView
         android:id="@+id/other_person_timer"
         android:layout_width="150dp"
@@ -17,5 +17,14 @@
         android:layout_gravity="center"
         android:padding="9dp"/>
 
+    <TextView
+        android:id="@+id/other_person_name"
+        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:text="000"
+        android:textSize="30dp"
+        android:gravity="center"/>
+
 
 </LinearLayout>
+

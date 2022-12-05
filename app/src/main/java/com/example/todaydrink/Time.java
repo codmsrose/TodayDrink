@@ -9,6 +9,7 @@ public class Time {
         return time;
     }
 
+
     public void setTime(String time) {
         this.time = time;
     }
@@ -16,4 +17,5 @@ public class Time {
     public Time(String time) {
         this.time = time;
     }
+
 }
