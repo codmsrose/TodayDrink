@@ -45,11 +45,11 @@ public class InputDrinkActivity extends AppCompatActivity {
         btn_iseul = findViewById(R.id.btn_iseul);
         btn_start = findViewById(R.id.btn_start);
         btn_check = findViewById(R.id.btn_check);
-        text_cass = findViewById(R.id.text_cass);
+      /*  text_cass = findViewById(R.id.text_cass);
         text_terra = findViewById(R.id.text_terra);
         text_iseul = findViewById(R.id.text_iseul);
         text_start = findViewById(R.id.text_start);
-
+*/
         // 이 화면에 처음 들어왔을 때는 현재 주량이 안보임.
         text_cass.setVisibility(View.INVISIBLE);
         text_terra.setVisibility(View.INVISIBLE);

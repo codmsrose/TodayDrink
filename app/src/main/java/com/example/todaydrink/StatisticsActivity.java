@@ -46,7 +46,7 @@ public class StatisticsActivity extends AppCompatActivity{
         monthYearText = findViewById(R.id.monthYearText);
         ImageButton preBtn = findViewById(R.id.pre_btn);
         ImageButton nextBtn = findViewById(R.id.next_btn);
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.check_recyclerView);
 
         //현재 날짜
         CalendarUtil.selectedDate = LocalDate.now();
