@@ -75,6 +75,8 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
 
         //TODO: 다른 사람 데이터 넣기
+        //    other_person_timer : 다른 사람 타이머(시간 줄어들고 있음)
+        //    other_person_name: (다른 사람 이름)
 
         for (int i=0; i<10; i++) {
             //list.add()
@@ -88,9 +90,6 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         TimeAdapter adapter = new TimeAdapter(list) ;
         recyclerView.setAdapter(adapter) ;
-
-
-
 
 
 
@@ -171,10 +170,6 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
-
-
-
     public void sendNotification(){
         //알림(Notification)을 관리하는 관리자 객체를 운영체제(Context)로부터 소환하기
         NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -228,10 +223,6 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         // "집 갈 시간" 아래에 String 타입으로 시간 계속 저장.
         reference.child("Users").child("abc123").child("집 갈 시간").setValue(time1);
     }
-
-
-
-
 
 
 
