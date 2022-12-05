@@ -1,11 +1,14 @@
 package com.example.todaydrink;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import java.util.Random;
 
@@ -19,6 +22,10 @@ public class GameNumberActivity extends AppCompatActivity {
 
     int number = 1;
 
+    Chronometer chronometer;
+    boolean running;
+    String time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +33,10 @@ public class GameNumberActivity extends AppCompatActivity {
 
         numberCount = findViewById(R.id.countNumber);
         finishText = findViewById(R.id.finishText);
+
+        chronometer = findViewById(R.id.chronometer);
+        chronometer.start();
+        running = true;
 
         randomNumber();
     }
@@ -39,6 +50,14 @@ public class GameNumberActivity extends AppCompatActivity {
             number++;
             if (number > 25) {
                 finishText.setText("축하합니다 끝났습니다.");
+                if(running){
+                    chronometer.stop();
+                    time = chronometer.getText().toString();
+                    running = false;
+                }
+                Intent intent = new Intent(GameNumberActivity.this, GameResultActivity.class);
+                intent.putExtra("time_number", time);
+                startActivity(intent);
             } else {
                 numberCount.setText(number + "");
             }
