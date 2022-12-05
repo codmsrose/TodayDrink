@@ -2,11 +2,43 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:text="100"
+        android:textSize="35dp"/>
+
+    <ImageView
+        android:id="@+id/stateImage"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:src="@drawable/state1"/>
+
+    <TextView
+        android:id="@+id/drinkLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="취한 정도"
+        android:textSize="30dp"/>
+
+    <Button
+        android:id="@+id/goSelectState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="상태 체크하러 가기"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp" />
+
+
 
 </LinearLayout>
