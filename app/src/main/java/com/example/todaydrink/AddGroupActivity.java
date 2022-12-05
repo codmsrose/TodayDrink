@@ -81,7 +81,7 @@ public class AddGroupActivity extends AppCompatActivity {
                 searchId = edit_search.getText().toString();
 
                 // 검색한 ID가 데이터 베이스에 있는지
-                databaseReference.child("Users").child(searchId).child("프로필").addValueEventListener(new ValueEventListener() {
+                databaseReference.child("User").child(searchId).child("프로필").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getValue(UserAccount.class) != null) {

@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String strId = etId.getText().toString();
 
-                databaseReference.child("Users").child(strId).child("프로필").child("id").addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child("User").child(strId).child("프로필").child("id").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String value = snapshot.getValue(String.class);
@@ -166,6 +166,6 @@ public class RegisterActivity extends AppCompatActivity {
     public void addUserAccount(String name, String id, String pwd, int gender, String weight, String drink, String account, String profile) {
         UserAccount userAccount = new UserAccount(name, id, pwd, gender, weight, drink, account, profile);
 
-        databaseReference.child("Users").child(id).child("프로필").setValue(userAccount);
+        databaseReference.child("User").child(id).child("프로필").setValue(userAccount);
     }
 }

@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
                         numberText.setText(modifyNumberText);
 
                         // 계좌 번호 수정 시 업데이트
-                        reference.child("Users").child(userId).child("프로필").addValueEventListener(new ValueEventListener() {
+                        reference.child("User").child(userId).child("프로필").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.getValue(UserAccount.class) != null) {
@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     // 계좌 번호를 새로 입력한 번호로 변경.
                                     user.account = modifyNumberText;
 
-                                    reference.child("Users").child(userId).child("프로필").setValue(user);
+                                    reference.child("User").child(userId).child("프로필").setValue(user);
                                 }
                             }
 
@@ -104,14 +104,14 @@ public class ProfileActivity extends AppCompatActivity {
                         weightText.setText(modifyWeightText);
 
                         // 몸무게 수정 시 업데이트
-                        reference.child("Users").child(userId).child("프로필").addValueEventListener(new ValueEventListener() {
+                        reference.child("User").child(userId).child("프로필").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.getValue(UserAccount.class) != null) {
                                     UserAccount user = snapshot.getValue(UserAccount.class);
                                     user.weight = modifyWeightText;
 
-                                    reference.child("Users").child(userId).child("프로필").setValue(user);
+                                    reference.child("User").child(userId).child("프로필").setValue(user);
                                 }
                             }
 
@@ -127,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         // 프로필 정보를 불러와서 이름, ID, 계좌 번호, 몸무게 보여줌.
-        reference.child("Users").child(userId).child("프로필").addValueEventListener(new ValueEventListener() {
+        reference.child("User").child(userId).child("프로필").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue(UserAccount.class) != null) {
