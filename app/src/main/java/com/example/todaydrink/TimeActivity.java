@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -32,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class TimeActivity extends AppCompatActivity implements View.OnClickListener{
@@ -51,6 +55,9 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +68,32 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         //버튼 이벤트 등록
         time_text.setOnClickListener(this);
+
+        //다른 사람 시간
+        ArrayList<String> list = new ArrayList<>();
+
+
+
+        //TODO: 다른 사람 데이터 넣기
+
+        for (int i=0; i<10; i++) {
+            //list.add()
+        }
+
+
+
+        // 다른 사람 남은 시간 알려주는 recyclerview
+        RecyclerView recyclerView = findViewById(R.id.timer_recyclerView) ;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)) ;
+
+        TimeAdapter adapter = new TimeAdapter(list) ;
+        recyclerView.setAdapter(adapter) ;
+
+
+
+
+
+
     }
 
     @Override
@@ -136,6 +169,12 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         updateTime(textTime);
     }
 
+
+
+
+
+
+
     public void sendNotification(){
         //알림(Notification)을 관리하는 관리자 객체를 운영체제(Context)로부터 소환하기
         NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -189,4 +228,11 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         // "집 갈 시간" 아래에 String 타입으로 시간 계속 저장.
         reference.child("Users").child("abc123").child("집 갈 시간").setValue(time1);
     }
+
+
+
+
+
+
+
 }
