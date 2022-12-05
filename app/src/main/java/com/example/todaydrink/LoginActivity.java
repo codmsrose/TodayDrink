@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                 String strPwd = edit_Pwd.getText().toString();
 
                 // 입력한 아이디와 일치하는 데이터베이스에 접근해서 값을 읽음.
-                databaseReference.child("Users").child(strId).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("Users").child(strId).child("프로필").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         // 입력한 아이디에 대한 정보가 데이터베이스에 들어있는지

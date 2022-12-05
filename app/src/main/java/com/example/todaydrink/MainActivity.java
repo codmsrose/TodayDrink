@@ -2,6 +2,7 @@ package com.example.todaydrink;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +16,11 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
-    Button btn_addgroup;
+    Button btn_addgroup, btn_profile;
     ImageButton ib_home, ib_measure, ib_statistics, ib_board;
+    public int groupNumber = 1;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         ib_measure = (ImageButton) findViewById(R.id.ib_measure);
         ib_statistics = (ImageButton) findViewById(R.id.ib_statistics);
         ib_board = (ImageButton) findViewById(R.id.ib_board);
+        btn_profile = findViewById(R.id.btn_profile);
 
         btn_addgroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
+                intent.putExtra("currentUser", currentUser);
+                startActivity(intent);
+            }
+        });
+
+        btn_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
             }

@@ -16,9 +16,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
-        android:text="아이디"/>
+        android:text="이름" />
+
+    <EditText
+        android:id="@+id/name_edit"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:ems="10"
+        android:hint="이름 입력"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="아이디" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -50,7 +65,36 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:hint="비밀번호 입력" />
+        android:hint="비밀번호 입력"
+        android:inputType="textPassword"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="성별" />
+
+    <RadioGroup
+        android:id="@+id/gender_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/man_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="남자" />
+
+        <RadioButton
+            android:id="@+id/woman_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="여자" />
+    </RadioGroup>
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +115,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:text="자신의 주량"/>
+        android:text="자신의 주량"
+        android:inputType="number"/>
 
     <EditText
         android:id="@+id/drink_edit"

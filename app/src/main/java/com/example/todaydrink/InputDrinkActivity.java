@@ -31,6 +31,7 @@ public class InputDrinkActivity extends AppCompatActivity {
     int month = calendar.get(Calendar.MONTH);
     int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +135,7 @@ public class InputDrinkActivity extends AppCompatActivity {
                 // TODO 생각해 놓으신 식이 있으면 그 식 기준으로 바꾸시면 될 듯 합니다.
                 alcohol_sum = ((cass_ml * 4) + (terra_ml * 4.6) + (iseul_ml * 16.5) + (start_ml * 16.5)) / (cass_ml + terra_ml + iseul_ml + start_ml);
                 AlcoholSum alcoholSum = new AlcoholSum(String.valueOf(alcohol_sum));
-                reference.child("Users").child(currentUser).child(year + "년 " + (month + 1) + "월 " + day + "일").child("총 알콜 농도").child("alcohol").setValue(alcoholSum);
+                reference.child("Users").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child("총 알콜 농도").child("alcohol").setValue(alcoholSum);
 
                 // 메인 화면으로 돌아감
                 Intent intent = new Intent(InputDrinkActivity.this, MainActivity.class);
@@ -147,6 +148,6 @@ public class InputDrinkActivity extends AppCompatActivity {
     public void addDrink(String currentUser, String drinkKind, String brand, int bottle, int glass, int ml) {
         Drink drink = new Drink(bottle, glass, ml);
 
-        reference.child("Users").child(currentUser).child(year + "년 " + (month + 1) + "월 " + day + "일").child(drinkKind).child(brand).setValue(drink);
+        reference.child("Users").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child(drinkKind).child(brand).setValue(drink);
     }
 }

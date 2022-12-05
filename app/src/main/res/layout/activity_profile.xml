@@ -16,12 +16,14 @@
             android:layout_height="100dp"
             android:src="@drawable/profile_icon"
             android:layout_margin="10dp"/>
+
         <TextView
+            android:id="@+id/myNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="60dp"
+            android:layout_margin="20dp"
             android:text="김김김"
-            android:layout_margin="20dp"/>
+            android:textSize="60dp" />
     </LinearLayout>
 
     <TextView

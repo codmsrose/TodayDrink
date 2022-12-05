@@ -79,9 +79,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
             // StatisticsActivity 에서 로그인되어 있는 ID 가져옴.
             // 이 부분은 왜인지 모르게 데이터가 안 가져와 지네요...
-            /*currentUser = ((StatisticsActivity)StatisticsActivity.mContext).userId;
-
-            reference.child("Users").child(currentUser).child(aYear + "년 " + aMonth + "월 " + aDay + "일").child("총 알콜 농도").child("alcohol").addValueEventListener(new ValueEventListener() {
+            /*
+            reference.child("Users").child(currentUser).child("날짜별 데이터").child(aYear + "년 " + aMonth + "월 " + aDay + "일").child("총 알콜 농도").child("alcohol").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue(AlcoholSum.class) != null) {
@@ -114,13 +113,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             @Override
             public void onClick(View view) {
 
+                currentUser = ((StatisticsActivity)StatisticsActivity.mContext).userId;
+                
                 int iYear = day.getYear();//년
                 int iMonth = day.getMonthValue(); //월
                 int iDay = day.getDayOfMonth(); //일
 
                 String yearMonDay = iYear + "년 " + iMonth + "월 " + iDay + "일";
 
-                reference.child("Users").child(currentUser).child(yearMonDay).addValueEventListener(new ValueEventListener() {
+                reference.child("Users").child(currentUser).child("날짜별 데이터").child(yearMonDay).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         // 선택된 날짜 아래에 대한 데이터베이스가 존재하지 않을 경우 모두 0으로.

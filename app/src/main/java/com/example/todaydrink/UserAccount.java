@@ -4,14 +4,24 @@ package com.example.todaydrink;
  * 사용자 계정 정보 모델 클래스
  */
 public class UserAccount {
+    String name;
     String id;
     String pwd;
+    int gender;
     String weight;
     String drink;
     String account;
     String profile;
 
     public UserAccount() { }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getId() {
         return id;
@@ -27,6 +37,14 @@ public class UserAccount {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getWeight() {
@@ -61,9 +79,11 @@ public class UserAccount {
         this.profile = profile;
     }
 
-    public UserAccount(String id, String pwd, String weight, String drink, String account, String profile) {
+    public UserAccount(String name, String id, String pwd, int gender, String weight, String drink, String account, String profile) {
+        this.name = name;
         this.id = id;
         this.pwd = pwd;
+        this.gender = gender;
         this.weight = weight;
         this.drink = drink;
         this.account = account;
