@@ -7,7 +7,7 @@
     android:layout_margin="15dp">
 
 <!--  TODO: 동그라미로 고치기 -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/other_person_timer"
         android:layout_width="150dp"
         android:layout_height="150dp"

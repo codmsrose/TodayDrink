@@ -10,39 +10,44 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-public class TimeAdapter   extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
 
-    private ArrayList<String> mData = null ;
+public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
+
+    private ArrayList<TimeItem> mData = null ;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView other_person_timer = itemView.findViewById(R.id.other_person_timer);
 
         ViewHolder(View itemView) {
             super(itemView);
 
         }
+
+        TextView other_person_timer = itemView.findViewById(R.id.other_person_timer);
+        TextView other_person_name= itemView.findViewById(R.id.other_person_name);
+
     }
 
-    TimeAdapter(ArrayList<String> list){
+    TimeAdapter(ArrayList<TimeItem> list){
         mData = list;
     }
 
     @NonNull
     @Override
-    public TimeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
         View view = inflater.inflate(R.layout.time_recycler_item, parent, false) ;
-        TimeAdapter.ViewHolder vh = new TimeAdapter.ViewHolder(view) ;
+        ViewHolder vh = new ViewHolder(view) ;
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimeAdapter.ViewHolder holder, int position) {
-        String text = mData.get(position) ;
-        holder. other_person_timer.setText(text) ;
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String time = mData.get(position).time ;
+        String name = mData.get(position).name;
+        holder. other_person_timer.setText(time) ;
+        holder. other_person_name.setText(name);
 
     }
 
@@ -51,9 +56,6 @@ public class TimeAdapter   extends RecyclerView.Adapter<TimeAdapter.ViewHolder> 
         return mData.size() ;
     }
 
-    public void addItemTime(String time){
-        mData.add(time);
-    }
 
 
 }

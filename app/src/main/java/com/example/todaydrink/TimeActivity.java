@@ -1,39 +1,25 @@
 package com.example.todaydrink;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import android.os.CountDownTimer;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -70,7 +56,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         time_text.setOnClickListener(this);
 
         //다른 사람 시간
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<TimeItem> list = new ArrayList<>();
 
 
 
@@ -78,8 +64,10 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         //    other_person_timer : 다른 사람 타이머(시간 줄어들고 있음)
         //    other_person_name: (다른 사람 이름)
 
+        //TODO: 다른 사람의 시간이 00:00:00이 되면 이벤트리스너로 알림 오게 만들기
+
         for (int i=0; i<10; i++) {
-            //list.add()
+            list.add(new TimeItem("시간", "이름"+Integer.toString(i)));
         }
 
 
@@ -218,7 +206,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
     // 데이터베이스에 시간 업데이트할 메소드.
     public void updateTime(String time) {
-        Time time1 = new Time(time);
+        TimeItem time1 = new TimeItem(time);
 
         // "집 갈 시간" 아래에 String 타입으로 시간 계속 저장.
         reference.child("Users").child("abc123").child("집 갈 시간").setValue(time1);
