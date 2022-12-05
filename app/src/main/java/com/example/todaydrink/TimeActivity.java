@@ -60,15 +60,24 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        //TODO: 다른 사람 데이터 넣기
+        //TODO: 다른 사람의 시간이 들어가도록 for문 있는 곳 고쳐주세요.
+        // TimeAdapter에서
         //    other_person_timer : 다른 사람 타이머(시간 줄어들고 있음)
         //    other_person_name: (다른 사람 이름)
 
         //TODO: 다른 사람의 시간이 00:00:00이 되면 이벤트리스너로 알림 오게 만들기
+        // 만약 00:00:00이 되면 sendNotification();
+        // 하고 나서 - 로 만들기
 
         for (int i=0; i<10; i++) {
             list.add(new TimeItem("시간", "이름"+Integer.toString(i)));
+
         }
+
+
+
+
+
 
 
 
@@ -78,6 +87,8 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         TimeAdapter adapter = new TimeAdapter(list) ;
         recyclerView.setAdapter(adapter) ;
+
+
 
 
 

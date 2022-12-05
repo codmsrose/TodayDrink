@@ -72,7 +72,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             //    holder.parentView.setBackgroundColor(Color.LTGRAY);}
             /*TODO 여기 안에서 해당 날짜에 데이터베이스에 저장되어있는 혈중 농도 최고치를 이용해서
             TODO 달력에다가 투명도를 다르게 해서 얼만큼 마셨는지 보여주는 것을 나타내려고 합니다
-            TODO 그래서 여기다가 혈중 농도 최고치 데이터를 불러와야할 것 같아요.
+            TODO 그래서 여다가 상태를 불러와야 합니다. (1~5)
              */
             int aYear = day.getYear();
             int aMonth = day.getMonthValue();

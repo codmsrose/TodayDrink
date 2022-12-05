@@ -32,7 +32,8 @@
         android:layout_width="400dp"
         android:text="다른 사람들 집에 갈 시간"
         android:textSize="35dp"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/timer_recyclerView"

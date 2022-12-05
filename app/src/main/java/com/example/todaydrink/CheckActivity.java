@@ -28,6 +28,13 @@ public class CheckActivity extends AppCompatActivity {
     Dialog checkDialog; // 술 종류 클릭하면 나오는 다이얼로그
     Dialog dialogNew;
 
+    CheckCalculate checkCalculate; //혈중알콜농도 계산
+
+    Button state1;
+    Button state2;
+    Button state3;
+    Button state4;
+    Button state5;
 
 
     @Override
@@ -50,6 +57,15 @@ public class CheckActivity extends AppCompatActivity {
         checkDialog = new Dialog(CheckActivity.this);       // Dialog 초기화
         checkDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         checkDialog.setContentView(R.layout.check_dialog_pick);             // xml 레이아웃 파일과 연결
+
+
+        state1= findViewById(R.id.state1);
+        state2= findViewById(R.id.state2);
+        state3= findViewById(R.id.state3);
+        state4= findViewById(R.id.state4);
+        state5= findViewById(R.id.state5);
+
+
 
 
 
@@ -101,6 +117,13 @@ public class CheckActivity extends AppCompatActivity {
 
         //TODO: 지금은 리사이클러뷰에서 보일 내용을 위의 코드에서 추가했지만 데이터베이스에서 가져와서 들어갈 수 있도록 해주실 수 있나요?
         // 어려우면 카톡주세요...
+
+
+
+
+
+        //계산을 위한 객체
+        checkCalculate = new CheckCalculate();
 
 
     }
@@ -159,7 +182,7 @@ public class CheckActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                //TODO check_drink_name(edit text view)에 어떤 술 선택했는지 보여주기 (예- 처음처럼)
+                                //TODO check_drink_name(edit text view)에 어떤 술 선택했는지 보여주기 위해서 데이터베이스에서 꺼내오기(예- 처음처럼)
 
 
                             }
@@ -255,9 +278,49 @@ public class CheckActivity extends AppCompatActivity {
         checkDialog.findViewById(R.id.yesBtn).setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
+                     int state=0;
                      // TODO 지금 마신 술 데이터베이스에 저장하기
                      //  마신 술 이름이랑 입력한 양, 단위는 위에서 찾으면 됨
                      //  저장하고 화면에 반영하기 -> activity_check에 있는 show_amout textview에 쓰면 됨
+                     //  state=checkCalculate.calculate(  데이터베이스에서 방금 선택한 술의 도수 받아오기, 방금 마신 술 ml);
+
+
+                     //상태바 변경
+                     if(state>=5)
+                     {
+                         state5.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                     }
+                     else if(state>=4)
+                     {
+                         state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                     }
+                     else if(state>=3)
+                     {
+
+                         state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                     }
+                     else if(state>=2)
+                     {
+                         state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                     }
+                     else if(state>=1)
+                     {
+                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                     }
+
+
+
+
                  }
              }
             );
