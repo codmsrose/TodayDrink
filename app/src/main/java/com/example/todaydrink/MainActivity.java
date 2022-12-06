@@ -1,6 +1,8 @@
 package com.example.todaydrink;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     Button btn_addgroup, btn_profile;
     ImageButton ib_home, ib_measure, ib_statistics, ib_board;
-    public int groupNumber = 1;
+    RecyclerView recyclerView;
+    GroupAdapter groupAdapter;
+    public int requestNumber;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent get_Intent = getIntent();
         String currentUser = get_Intent.getStringExtra("currentUser");
+        requestNumber = get_Intent.getIntExtra("requestCode", 1);
 
         btn_addgroup = findViewById(R.id.btn_addgroup);
         ib_home = (ImageButton) findViewById(R.id.ib_home);
@@ -90,5 +95,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestNumber == 1) {
+            if (resultCode == RESULT_OK) {
+                groupAdapter = new GroupAdapter(getApplicationContext());
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                recyclerView.setAdapter(groupAdapter);
+            }
+        }
     }
 }

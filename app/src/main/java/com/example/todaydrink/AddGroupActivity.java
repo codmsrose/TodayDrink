@@ -26,10 +26,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class AddGroupActivity extends AppCompatActivity {
 
@@ -40,16 +43,20 @@ public class AddGroupActivity extends AppCompatActivity {
     private TextView text_id, text_name;
     private CheckBox check_add;
     private String searchId, searchName;
+    public static Context mContext;
+    public static final int sub = 1;
+    private int memberNumber = 1;
+
     // 방 번호
-    // TODO 방2, 방3, ... 이런 식으로는 어떻게 만들어야 할지 모르겠어서...
-    // TODO 방법 아시면 수정해주시면 좋을 거 같습니다..!
-    private int groupNumber = 1;
+    static int groupNumber = 1;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
+
+        mContext = this;
 
         Intent get_Intent = getIntent();
         String currentUser = get_Intent.getStringExtra("currentUser");
@@ -71,7 +78,6 @@ public class AddGroupActivity extends AppCompatActivity {
 
         // 로그인되어 있는 이용자의 ID를 주선자 역할에 넣음.
         GroupMember leader = new GroupMember(currentUser);
-        databaseReference.child("방").child("방" + groupNumber).child("주선자").setValue(leader);
 
         // 검색 버튼 클릭 시
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +85,7 @@ public class AddGroupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 검색한 ID 읽음.
                 searchId = edit_search.getText().toString();
+                check_add.setChecked(false);
 
                 // 검색한 ID가 데이터 베이스에 있는지
                 databaseReference.child("User").child(searchId).child("프로필").addValueEventListener(new ValueEventListener() {
@@ -122,17 +129,24 @@ public class AddGroupActivity extends AppCompatActivity {
                 // 그 이용자의 ID, 이름을 받아서 참가자 역할에 넣음.
                 GroupMember member = new GroupMember(searchId, searchName);
                 databaseReference.child("방").child("방" + groupNumber).child("참가자").child(searchId).setValue(member);
+                memberNumber++;
             }
         });
 
         // 저장을 누르면 메인 화면으로 이동.
-        // TODO 저장 버튼 누르면 메인 화면에서 방1, 방2, ... 버튼이 추가로 생기게 해주시면 될 듯 합니다.
+        // TODO 리사이클러뷰에 아직 미숙해서 버튼이 계속 생성되지 않네요... 혹시 도와주실 수 있으신지...
+        // TODO 일단 방 생성해서 참가자는 다 들어가지는데 주선자가 방1에만 들어갑니다.
+        // TODO 현재 데이터베이스 방식으로 어떻게 읽어야할 지 잘 모르겠네요...
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                databaseReference.child("방").child("방" + groupNumber).child("주선자").setValue(leader);
                 Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
-                startActivity(intent);
+                intent.putExtra("groupNumber", groupNumber);
+                intent.putExtra("requestCode", sub);
                 groupNumber++;
+                startActivity(intent);
+                finish();
             }
         });
     }
