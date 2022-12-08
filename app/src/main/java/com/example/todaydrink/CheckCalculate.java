@@ -1,11 +1,18 @@
 package com.example.todaydrink;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class CheckCalculate {
 
 //C(최고치)= A(섭취한 알코올 총량 = 음주량x술의농도xN)×0.7(체내흡수율)/(P(체중)×R(성별에 대한 계수))-ßt(경과시간)
-
 
     private static double maxAlcohol; //C 혈중 알코올 최대치
 
@@ -144,10 +151,28 @@ public class CheckCalculate {
 
     public static class StateCalculate {
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference();
+
+        private final String currentUser = ((InputDrinkActivity)InputDrinkActivity.mContext).currentUser;
+
         public void setState(int num, double Alcohol){
             stateWithAlcohol[num-1]=(stateWithAlcohol[num-1]+Alcohol)/2;
             //TODO: 데이터베이스에 넣기
             //TODO: stateWithAlcohol이랑 데이터베이스의 각 상태의 혈중알콜농도랑 값이 똑같아요.
+
+            reference.child("User").child(currentUser).child("상태").child(String.valueOf(num)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    State state = snapshot.getValue(State.class);
+                    state.density = String.valueOf(stateWithAlcohol[num - 1]);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
         }
 

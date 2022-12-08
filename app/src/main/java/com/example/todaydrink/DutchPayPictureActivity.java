@@ -37,6 +37,9 @@ public class DutchPayPictureActivity extends AppCompatActivity implements View.O
     Bitmap albumBitmap;
     Bitmap cameraBitmap;
 
+    String leader;
+    int groupNumber;
+
     Bitmap image;
     private TessBaseAPI mTess;
     String datapath = "";
@@ -45,6 +48,10 @@ public class DutchPayPictureActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dutch_pay_picture);
+
+        Intent intent = getIntent();
+        leader = intent.getStringExtra("currentUser");
+        groupNumber = intent.getIntExtra("groupNumber", 1);
 
         imageViewText=(TextView)findViewById(R.id.imageViewText);
         albumBtn = (Button)findViewById(R.id.albumBtn);
@@ -106,6 +113,8 @@ public class DutchPayPictureActivity extends AppCompatActivity implements View.O
 
         Intent intent = new Intent(this, DutchPayListActivity.class);
         intent.putExtra("menu", menu_list);
+        intent.putExtra("currentUser", leader);
+        intent.putExtra("groupNumber", groupNumber);
         startActivity(intent);
     }
 

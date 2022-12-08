@@ -1,18 +1,28 @@
 package com.example.todaydrink;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
 
 public class StateActivity extends AppCompatActivity{
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
 
     Button modifyBtn;
 
@@ -23,10 +33,20 @@ public class StateActivity extends AppCompatActivity{
 
     int check = 0;
 
+    String currentUser;
+
+    Calendar calendar = Calendar.getInstance();
+    int year = calendar.get(Calendar.YEAR);
+    int month = calendar.get(Calendar.MONTH);
+    int day = calendar.get(Calendar.DAY_OF_MONTH);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_state);
+
+        Intent intent = getIntent();
+        currentUser = intent.getStringExtra("currentUser");
 
         modifyBtn = (Button)findViewById(R.id.state_modify);
         modifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,12 +94,28 @@ public class StateActivity extends AppCompatActivity{
                                 modifyState = state.getText().toString();
                                 saveState = numberState+"단계 " + modifyState;
                                 buttonId.setText(saveState);
+
+                                reference.child("User").child(currentUser).child("상태").child(String.valueOf(numberState)).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        State state1 = snapshot.getValue(State.class);
+                                        state1.setState(modifyState);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
                         });
                         builder.show();
                     }
                     else if(check == 0){
                         saveStateNumber = buttonId.getText().toString().charAt(0);
+                        SelectedState selectedState = new SelectedState(String.valueOf(saveStateNumber));
+
+                        reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + month + "월 " + day).child("선택한 상태").setValue(selectedState);
                         // TODO saveStateNumber는 char형으로 나오는 내가 선택한 단계 숫자
                         // TODO 현재 내 상태를 눌렀을 때 나중에 해당 날짜에 지금 마신 술 양이랑 같이 이 숫자가 저장되어야함.
                     }

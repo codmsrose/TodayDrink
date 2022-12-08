@@ -40,7 +40,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         else if(view == timeBtn){
-            Intent intent = new Intent(this, DutchPayPictureActivity.class);
+            Intent intent = new Intent(this, TimeActivity.class);
             intent.putExtra("currentUser", leader);
             intent.putExtra("groupNumber", groupNumber);
             startActivity(intent);

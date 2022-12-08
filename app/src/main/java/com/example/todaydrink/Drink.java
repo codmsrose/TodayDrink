@@ -3,7 +3,7 @@ package com.example.todaydrink;
 public class Drink {
     int bottle;
     int glass;
-    int ml;
+    double ml;
 
     public Drink() { }
 
@@ -23,15 +23,15 @@ public class Drink {
         this.glass = glass;
     }
 
-    public int getMl() {
+    public double getMl() {
         return ml;
     }
 
-    public void setMl(int ml) {
+    public void setMl(double ml) {
         this.ml = ml;
     }
 
-    public Drink(int bottle, int glass, int ml) {
+    public Drink(int bottle, int glass, double ml) {
         this.bottle = bottle;
         this.glass = glass;
         this.ml = ml;

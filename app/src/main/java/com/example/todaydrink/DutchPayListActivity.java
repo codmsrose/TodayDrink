@@ -28,7 +28,7 @@ public class DutchPayListActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
     // TODO 몇 번 방인지 메인 화면에서부터 데이터를 가져오는 식으로 수정해야 함.
-    int groupNumber = 1;
+    int groupNumber;
     // 멤버 리스트에 0행부터 저장하기 위해.
     int member = 0;
     int i = 0;
@@ -43,11 +43,14 @@ public class DutchPayListActivity extends AppCompatActivity {
         String[] price_list = new String[menu_list.length];
         String[] price_index_list;
 
+        groupNumber = intent.getIntExtra("groupNumber", 1);
+
         // 참가자가 몇 명인지 알기 위해.
         reference.child("방").child("방" + groupNumber).child("참가자").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    GroupMember groupMember = dataSnapshot.getValue(GroupMember.class);
                     i++;
                 }
             }
@@ -58,7 +61,7 @@ public class DutchPayListActivity extends AppCompatActivity {
             }
         });
         // 참가자 명수만큼의 행을 가진 멤버 리스트 생성.
-        String[] member_list = new String[i];
+        String[] member_list = new String[100];
 
         LinearLayout rootLinear = new LinearLayout(this);
         rootLinear.setOrientation(LinearLayout.VERTICAL);

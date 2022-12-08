@@ -1,28 +1,53 @@
 package com.example.todaydrink;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class InputDrinkActivity extends AppCompatActivity {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference = database.getReference();
-    Button btn_cass, btn_terra, btn_iseul, btn_start, btn_check;
-    TextView text_cass, text_terra, text_iseul, text_start;
-    int cass_bottle, terra_bottle, iseul_bottle, start_bottle = 0;
-    int cass_glass, terra_glass, iseul_glass, start_glass = 0;
-    int cass_ml, terra_ml, iseul_ml, start_ml = 0;
+
+    @SuppressLint("StaticFieldLeak")
+    public static Context mContext;
+    public String currentUser;
+
+    RecyclerView recyclerView;
+    CheckAdapter CheckAdapter;
+    private ArrayList<CheckItems> mArrayList;
+
+    CheckCalculate checkCalculate;
+
+    Button state1, state2, state3, state4, state5, btn_state, btn_game;
+
+    ImageView image_cass, image_terra, image_heineken, image_iseul, image_start, image_jinro;
+    TextView text_cass, text_terra, text_heineken, text_iseul, text_start, text_jinro;
+    int cass_bottle, terra_bottle, heineken_bottle, iseul_bottle, start_bottle, jinro_bottle = 0;
+    int cass_glass, terra_glass, heineken_glass, iseul_glass, start_glass, jinro_glass = 0;
+    double cass_ml, terra_ml, heineken_ml, iseul_ml, start_ml, jinro_ml = 0;
+    int state = 0;
+    int cass_state = 0;
+    int terra_state = 0;
+    int heineken_state = 0;
+    int iseul_state = 0;
+    int start_state = 0;
+    int jinro_state = 0;
     double alcohol_sum = 0;
 
     // 데이터베이스에 오늘 날짜에 맞게 저장하기 위해
@@ -37,28 +62,46 @@ public class InputDrinkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_drink);
 
+        int state = 0;
+
         // 로그인한 ID를 Intent로 가져옴.
         Intent get_Intent = getIntent();
-        String currentUser = get_Intent.getStringExtra("currentUser");
+        currentUser = get_Intent.getStringExtra("currentUser");
 
-        btn_cass = findViewById(R.id.btn_cass);
-        btn_terra = findViewById(R.id.btn_terra);
-        btn_iseul = findViewById(R.id.btn_iseul);
-        btn_start = findViewById(R.id.btn_start);
-        btn_check = findViewById(R.id.btn_check);
+        mContext = this;
+
+        state1= findViewById(R.id.state1);
+        state2= findViewById(R.id.state2);
+        state3= findViewById(R.id.state3);
+        state4= findViewById(R.id.state4);
+        state5= findViewById(R.id.state5);
+
+        image_cass = findViewById(R.id.image_cass);
+        image_terra = findViewById(R.id.image_terra);
+        image_heineken = findViewById(R.id.image_heineken);
+        image_iseul = findViewById(R.id.image_iseul);
+        image_start = findViewById(R.id.image_start);
+        image_jinro = findViewById(R.id.image_jinro);
+
+        btn_state = findViewById(R.id.btn_state);
+        btn_game = findViewById(R.id.btn_game);
         text_cass = findViewById(R.id.text_cass);
         text_terra = findViewById(R.id.text_terra);
+        text_heineken = findViewById(R.id.text_heineken);
         text_iseul = findViewById(R.id.text_iseul);
         text_start = findViewById(R.id.text_start);
+        text_jinro = findViewById(R.id.text_jinro);
 
         // 이 화면에 처음 들어왔을 때는 현재 주량이 안보임.
         text_cass.setVisibility(View.INVISIBLE);
         text_terra.setVisibility(View.INVISIBLE);
+        text_heineken.setVisibility(View.INVISIBLE);
         text_iseul.setVisibility(View.INVISIBLE);
         text_start.setVisibility(View.INVISIBLE);
+        text_jinro.setVisibility(View.INVISIBLE);
 
         // 카스 버튼 클릭 시
-        btn_cass.setOnClickListener(new View.OnClickListener() {
+        image_cass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 잔 1잔 추가.
@@ -71,12 +114,30 @@ public class InputDrinkActivity extends AppCompatActivity {
                 cass_ml = (cass_bottle * 1000) + (cass_glass * 200);
 
                 // 현재 마신 병 수와 잔 수를 보여줌.
-                text_cass.setText(cass_bottle + "병\n" + cass_glass + "잔");
+                text_cass.setText("카스 : " + cass_bottle + "병 " + cass_glass + "잔");
                 text_cass.setVisibility(View.VISIBLE);
             }
         });
 
-        btn_terra.setOnClickListener(new View.OnClickListener() {
+        image_heineken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 잔 1잔 추가.
+                heineken_glass++;
+                // 5잔이 된 경우 1병을 추가하고 잔을 초기화.
+                if (heineken_glass % 4 == 0) {
+                    heineken_bottle++;
+                    heineken_glass = 0;
+                }
+                heineken_ml = (heineken_bottle * 800) + (heineken_glass * 200);
+
+                // 현재 마신 병 수와 잔 수를 보여줌.
+                text_heineken.setText("하이네켄 : " + heineken_bottle + "병 " + heineken_glass + "잔");
+                text_heineken.setVisibility(View.VISIBLE);
+            }
+        });
+
+        image_terra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 terra_glass++;
@@ -86,12 +147,12 @@ public class InputDrinkActivity extends AppCompatActivity {
                 }
                 terra_ml = (terra_bottle * 1000) + (terra_glass * 200);
 
-                text_terra.setText(terra_bottle + "병\n" + terra_glass + "잔");
+                text_terra.setText("테라 : " + terra_bottle + "병 " + terra_glass + "잔");
                 text_terra.setVisibility(View.VISIBLE);
             }
         });
 
-        btn_iseul.setOnClickListener(new View.OnClickListener() {
+        image_iseul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iseul_glass++;
@@ -101,12 +162,12 @@ public class InputDrinkActivity extends AppCompatActivity {
                 }
                 iseul_ml = (iseul_bottle * 350) + (iseul_glass * 50);
 
-                text_iseul.setText(iseul_bottle + "병\n" + iseul_glass + "잔");
+                text_iseul.setText("참이슬 : " + iseul_bottle + "병 " + iseul_glass + "잔");
                 text_iseul.setVisibility(View.VISIBLE);
             }
         });
 
-        btn_start.setOnClickListener(new View.OnClickListener() {
+        image_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 start_glass++;
@@ -116,38 +177,102 @@ public class InputDrinkActivity extends AppCompatActivity {
                 }
                 start_ml = (start_bottle * 350) + (start_glass * 50);
 
-                text_start.setText(start_bottle + "병\n" + start_glass + "잔");
+                text_start.setText("처음처럼 : " + start_bottle + "병 " + start_glass + "잔");
                 text_start.setVisibility(View.VISIBLE);
             }
         });
 
-        // 확인 버튼 클릭 시
-        btn_check.setOnClickListener(new View.OnClickListener() {
+        image_jinro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 데이터베이스에 마신 주량 저장
-                addDrink(currentUser, "맥주", "카스", cass_bottle, cass_glass, cass_ml);
-                addDrink(currentUser, "맥주", "테라", terra_bottle, terra_glass, terra_ml);
-                addDrink(currentUser, "소주", "참이슬", iseul_bottle, iseul_glass, iseul_ml);
-                addDrink(currentUser, "소주", "처음처럼", start_bottle, start_glass, start_ml);
+                // 잔 1잔 추가.
+                jinro_glass++;
+                // 5잔이 된 경우 1병을 추가하고 잔을 초기화.
+                if (jinro_glass % 7 == 0) {
+                    jinro_bottle++;
+                    jinro_glass = 0;
+                }
+                jinro_ml = (jinro_bottle * 350) + (jinro_glass * 50);
 
-                // (각 술들을 마신 용량 X 도수) / (총 마신 용량) 이라는 간단한 식으로 총 알콜 농도 저장.
-                // TODO 생각해 놓으신 식이 있으면 그 식 기준으로 바꾸시면 될 듯 합니다.
-                alcohol_sum = ((cass_ml * 4) + (terra_ml * 4.6) + (iseul_ml * 16.5) + (start_ml * 16.5)) / (cass_ml + terra_ml + iseul_ml + start_ml);
-                AlcoholSum alcoholSum = new AlcoholSum(String.valueOf(alcohol_sum));
-                reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child("총 알콜 농도").child("alcohol").setValue(alcoholSum);
+                // 현재 마신 병 수와 잔 수를 보여줌.
+                text_jinro.setText("진로 : " + jinro_bottle + "병 " + jinro_glass + "잔");
+                text_jinro.setVisibility(View.VISIBLE);
+            }
+        });
 
-                // 메인 화면으로 돌아감
-                Intent intent = new Intent(InputDrinkActivity.this, MainActivity.class);
+        // 데이터베이스에 마신 주량 저장
+        addDrink(currentUser, "카스", cass_bottle, cass_glass, cass_ml);
+        addDrink(currentUser, "테라", terra_bottle, terra_glass, terra_ml);
+        addDrink(currentUser, "하이네켄", heineken_bottle, heineken_glass, heineken_ml);
+        addDrink(currentUser, "참이슬", iseul_bottle, iseul_glass, iseul_ml);
+        addDrink(currentUser, "처음처럼", start_bottle, start_glass, start_ml);
+        addDrink(currentUser, "진로", jinro_bottle, jinro_glass, jinro_ml);
+
+        cass_state = checkCalculate.calculate(4, cass_ml);
+        terra_state = checkCalculate.calculate(4.6, terra_ml);
+        heineken_state = checkCalculate.calculate(5, heineken_ml);
+        iseul_state = checkCalculate.calculate(16.5, iseul_ml);
+        start_state = checkCalculate.calculate(16.5, start_ml);
+        jinro_state = checkCalculate.calculate(16.5, jinro_ml);
+
+        state = cass_state + terra_state + heineken_state + iseul_state + start_state + jinro_state;
+
+        if(state>=5)
+        {
+            state5.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        }
+        else if(state>=4)
+        {
+            state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        }
+        else if(state>=3)
+        {
+
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        }
+        else if(state>=2)
+        {
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        }
+        else if(state>=1)
+        {
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        }
+
+        AlcoholSum alcoholSum = new AlcoholSum(String.valueOf(state));
+        reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child("총 알콜 농도").setValue(alcoholSum);
+
+        btn_state.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InputDrinkActivity.this, StateActivity.class);
+                intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
-                finish();
+            }
+        });
+
+        btn_game.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InputDrinkActivity.this, GameActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    public void addDrink(String currentUser, String drinkKind, String brand, int bottle, int glass, int ml) {
+    public void addDrink(String currentUser, String drinkKind, int bottle, int glass, double ml) {
         Drink drink = new Drink(bottle, glass, ml);
 
-        reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child(drinkKind).child(brand).setValue(drink);
+        reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child(drinkKind).setValue(drink);
     }
 }

@@ -152,6 +152,17 @@ public class RegisterActivity extends AppCompatActivity {
                 String strAccount = etAccount.getText().toString();
                 String strProfile = "gs://todaydrink-458d8.appspot.com/profile_icon.png";
 
+                State state1 = new State("1", "멀쩡해요");
+                databaseReference.child("User").child(strId).child("상태").child("1").setValue(state1);
+                State state2 = new State("2", "기분이 UP");
+                databaseReference.child("User").child(strId).child("상태").child("2").setValue(state2);
+                State state3 = new State("3", "물건을 떨어뜨림");
+                databaseReference.child("User").child(strId).child("상태").child("3").setValue(state3);
+                State state4 = new State("4", "비틀비틀");
+                databaseReference.child("User").child(strId).child("상태").child("4").setValue(state4);
+                State state5 = new State("5", "필름 끊김");
+                databaseReference.child("User").child(strId).child("상태").child("5").setValue(state5);
+
                 // 입력값을 모두 저장하기 위해 addUserAccount 메소드 호출
                 addUserAccount(strName, strId, strPwd, intGender, intWeight, strDrink, strAccount, strProfile);
 
