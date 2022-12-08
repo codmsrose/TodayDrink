@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,11 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
-    Button btn_addgroup, btn_profile;
+    Button btn_addgroup, btn_profile, btn_group1, btn_group2;
     ImageButton ib_home, ib_measure, ib_statistics, ib_board;
-    RecyclerView recyclerView;
-    GroupAdapter groupAdapter;
-    public int requestNumber;
+    public static int REQUEST_CODE = 0;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent get_Intent = getIntent();
         String currentUser = get_Intent.getStringExtra("currentUser");
-        requestNumber = get_Intent.getIntExtra("requestCode", 1);
 
         btn_addgroup = findViewById(R.id.btn_addgroup);
         ib_home = (ImageButton) findViewById(R.id.ib_home);
@@ -40,23 +38,28 @@ public class MainActivity extends AppCompatActivity {
         ib_statistics = (ImageButton) findViewById(R.id.ib_statistics);
         ib_board = (ImageButton) findViewById(R.id.ib_board);
         btn_profile = findViewById(R.id.btn_profile);
+        btn_group1 = findViewById(R.id.btn_group1);
+        btn_group2 = findViewById(R.id.btn_group2);
+
+        btn_group1.setVisibility(View.GONE);
+        btn_group2.setVisibility(View.GONE);
 
         btn_addgroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddGroupActivity.class);
                 intent.putExtra("currentUser", currentUser);
-                startActivity(intent);
+                REQUEST_CODE++;
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 
         ib_measure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, InputDrinkActivity.class);
+                Intent intent = new Intent(MainActivity.this, CheckActivity.class);
                 intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -65,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -95,16 +97,39 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn_group1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                intent.putExtra("currentUser", currentUser);
+                intent.putExtra("groupNumber", 1);
+                startActivity(intent);
+            }
+        });
+
+        btn_group2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                intent.putExtra("currentUser", currentUser);
+                intent.putExtra("groupNumber", 2);
+                startActivity(intent);
+            }
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestNumber == 1) {
-            if (resultCode == RESULT_OK) {
-                groupAdapter = new GroupAdapter(getApplicationContext());
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-                recyclerView.setAdapter(groupAdapter);
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                btn_group1.setVisibility(View.VISIBLE);
+            }
+        }
+        else if (requestCode == 2) {
+            if (resultCode == Activity.RESULT_OK) {
+                btn_group2.setVisibility(View.VISIBLE);
             }
         }
     }

@@ -40,7 +40,8 @@ public class NewDrinkDetail {
         this.glass = glass;
     }
 
-    public NewDrinkDetail(String degree, String bottle, String glass) {
+    public NewDrinkDetail(String name, String degree, String bottle, String glass) {
+        this.name = name;
         this.degree = degree;
         this.bottle = bottle;
         this.glass = glass;

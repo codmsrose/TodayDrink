@@ -1,5 +1,6 @@
 package com.example.todaydrink;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,9 +18,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CheckActivity extends AppCompatActivity {
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
+    String currentUser;
 
     RecyclerView recyclerView;
     CheckAdapter CheckAdapter;
@@ -41,6 +53,9 @@ public class CheckActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check);
+
+        Intent get_Intent = getIntent();
+        currentUser = get_Intent.getStringExtra("currentUser");
 
         recyclerView = findViewById(R.id.check_recyclerView);
 
@@ -118,6 +133,22 @@ public class CheckActivity extends AppCompatActivity {
         //TODO: 지금은 리사이클러뷰에서 보일 내용을 위의 코드에서 추가했지만 데이터베이스에서 가져와서 들어갈 수 있도록 해주실 수 있나요?
         // 어려우면 카톡주세요...
 
+        // 이런 식으로 하면 아마 가져올 수 있을 겁니다.
+        reference.child("User").child(currentUser).child("회원이 추가한 술 종류").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    NewDrinkDetail newDrinkDetail = dataSnapshot.getValue(NewDrinkDetail.class);
+                    CheckAdapter.addItem(new CheckItems(R.drawable.pro, newDrinkDetail.name));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
 
@@ -149,12 +180,29 @@ public class CheckActivity extends AppCompatActivity {
                 String[] arrayDrink={};
                 int pick;
 
-
                 //TODO: 지금은 array파일에서 데이터를 가져와서 String[] arrayDrink에 저장했지만
                 // 데이터베이스에서 가져올 수 있도록 해야 하는데 술 종류(예시 :소주, 맥주)는 이 함수의 매개변수로 데이터베이스에서 검색하면 될 것 같아요!
 
 
+                // 단순히 arrayDrink에 술 이름을 넣으려고 하니 에러가 떠서 이런 식으로 사용함.
+                String[] finalArrayDrink = arrayDrink;
+                reference.child("User").child(currentUser).child("회원이 추가한 술 종류").child(check_drink_name.getText().toString()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        NewDrinkDetail newDrinkDetail = snapshot.getValue(NewDrinkDetail.class);
+                        finalArrayDrink[0] = newDrinkDetail.name;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
                 switch(position){
+                    //TODO: case 뒤에 arrayDrink[0]과 같은 방식으로는 에러가 뜨네요.. 특정한 "문자열" 식으로 넣어야 하는 듯 합니다.
+                    // 새로 추가한 술들까지 case 뒤에 설정해 놔야 하는데 이 부분은 힘들지 않나 싶습니다...
                     case  0:
                         arrayDrink=res.getStringArray(R.array.beer);
                         break;
@@ -198,15 +246,23 @@ public class CheckActivity extends AppCompatActivity {
                                 Button newDetailSave = findViewById(R.id.check_new_detail_save);
 
                                 //여기서 입력
-                                newDetailName.getText().toString();
-                                newDetailDegree.getText().toString();
-                                newDetailBottle.getText().toString();
-                                newDetailGlass.getText().toString();
+                                String name = newDetailName.getText().toString();
+                                String degree = newDetailDegree.getText().toString();
+                                String bottle = newDetailBottle.getText().toString();
+                                String glass = newDetailGlass.getText().toString();
 
                                 //확인 버튼을 누르면 저장됨
                                 newDetailSave.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        // 추가할 주종을 데이터베이스에 저장.
+                                        //TODO: 위에 큰 종류로 넣는 게 있는데 거기서 값을 넣으면 그 아래로 데이터베이스를 추가할 수 없어서
+                                        // 술 추가 버튼 눌렀을 때 정보를 다 받는 식으로 해야할 거 같습니다. (큰 종류는 받을 필요가 없어짐.)
+                                        // (키와 값을 따로따로 넣을 수는 없고 한 번에 넣어야 생성됩니다...)
+                                        NewDrinkDetail newDrinkDetail = new NewDrinkDetail(name, degree, bottle, glass);
+                                        reference.child("User").child(currentUser).child("회원이 추가한 술 종류").child(name).setValue(newDrinkDetail);
+
+
                                         //TODO: 새로 입력한 디테일한 술 정보 데이터 베이스에 저장
                                         // 예: newDetailName = 카스 , newDetailDegree = 15(도) , newDetailBottle=16 (ml), newDetailGlass=3(ml)
                                     }
@@ -279,11 +335,77 @@ public class CheckActivity extends AppCompatActivity {
                  @Override
                  public void onClick(View view) {
                      int state=0;
+
+                     Calendar calendar = Calendar.getInstance();
+                     int year = calendar.get(Calendar.YEAR);
+                     int month = calendar.get(Calendar.MONTH);
+                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                      // TODO 지금 마신 술 데이터베이스에 저장하기
                      //  마신 술 이름이랑 입력한 양, 단위는 위에서 찾으면 됨
                      //  저장하고 화면에 반영하기 -> activity_check에 있는 show_amout textview에 쓰면 됨
                      //  state=checkCalculate.calculate(  데이터베이스에서 방금 선택한 술의 도수 받아오기, 방금 마신 술 ml);
 
+
+
+                     // 오늘 날짜에 어떤 술을 마셨는지 술 이름에 접근.
+                     reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일")
+                             .child(check_drink_name.getText().toString()).addValueEventListener(new ValueEventListener() {
+                                 String strBottle;
+                                 String strGlass;
+                                 // 한 병에 몇 ml, 한 잔에 몇 ml 인지 알아오기 위해
+                                 int bottle;
+                                 int glass;
+                                 int amount;
+
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                             // 잔, 병, ML 중 어느 것인지 unit으로 받음.
+                             String unit = pressed[0].getText().toString();
+                             // 입력 값을 받아옴.
+                             String strAmount = check_edit_amount.getText().toString();
+                             // 데이터베이스에서 입력한 술의 기본 정보에 접근.
+                             reference.child("User").child(currentUser).child("회원이 추가한 술 종류")
+                                     .child(check_drink_name.getText().toString()).addValueEventListener(new ValueEventListener() {
+                                         @Override
+                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                             NewDrinkDetail newDrinkDetail = snapshot.getValue(NewDrinkDetail.class);
+                                             strBottle = newDrinkDetail.bottle;
+                                             strGlass = newDrinkDetail.glass;
+                                             bottle = Integer.parseInt(strBottle);
+                                             glass = Integer.parseInt(strGlass);
+                                             amount = Integer.parseInt(strAmount);
+                                         }
+
+                                         @Override
+                                         public void onCancelled(@NonNull DatabaseError error) {
+
+                                         }
+                                     });
+                             // 잔, 병, ML에 따라 단위를 계산하여 데이터베이스에 마신 양 넣어줌.
+                             switch (unit) {
+                                 case "잔":
+                                     Drink drink = new Drink( (amount * glass) / bottle, amount / ((amount * glass) / bottle), amount * glass);
+                                     reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일")
+                                             .child(check_drink_name.getText().toString()).setValue(drink);
+                                     break;
+                                 case "병":
+                                     Drink drink1 = new Drink(amount, 0, amount * bottle);
+                                     reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일")
+                                             .child(check_drink_name.getText().toString()).setValue(drink1);
+                                     break;
+                                 case "ML":
+                                     Drink drink2 = new Drink(amount / bottle, (amount % bottle) / glass, amount);
+                                     reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일")
+                                             .child(check_drink_name.getText().toString()).setValue(drink2);
+                                     break;
+                             }
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError error) {
+
+                         }
+                     });
 
                      //상태바 변경
                      if(state>=5)

@@ -7,6 +7,38 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btn_group2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:width="300dp"
+        android:height="60dp"
+        android:background="@drawable/btn_gray"
+        android:text="2차"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_group1" />
+
+    <Button
+        android:id="@+id/btn_group1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:width="300dp"
+        android:height="60dp"
+        android:background="@drawable/btn_gray"
+        android:text="1차"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addgroup" />
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
@@ -118,14 +150,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/group_recyclerView"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:scrollbars="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_addgroup"
-        app:layout_constraintStart_toStartOf="@+id/btn_addgroup"
-        app:layout_constraintTop_toBottomOf="@+id/btn_addgroup" />
 </androidx.constraintlayout.widget.ConstraintLayout>

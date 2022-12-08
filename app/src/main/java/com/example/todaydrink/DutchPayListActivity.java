@@ -1,21 +1,37 @@
 package com.example.todaydrink;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ContentFrameLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.api.Distribution;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DutchPayListActivity extends AppCompatActivity {
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
+    // TODO 몇 번 방인지 메인 화면에서부터 데이터를 가져오는 식으로 수정해야 함.
+    int groupNumber = 1;
+    // 멤버 리스트에 0행부터 저장하기 위해.
+    int member = 0;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +42,23 @@ public class DutchPayListActivity extends AppCompatActivity {
         String[] food_list = new String[menu_list.length];
         String[] price_list = new String[menu_list.length];
         String[] price_index_list;
+
+        // 참가자가 몇 명인지 알기 위해.
+        reference.child("방").child("방" + groupNumber).child("참가자").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    i++;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        // 참가자 명수만큼의 행을 가진 멤버 리스트 생성.
+        String[] member_list = new String[i];
 
         LinearLayout rootLinear = new LinearLayout(this);
         rootLinear.setOrientation(LinearLayout.VERTICAL);
@@ -60,7 +93,56 @@ public class DutchPayListActivity extends AppCompatActivity {
 
             Button peopleBtn = new Button(this);
             peopleBtn.setText("인원");
+
+
+            // TODO 화면에 어떤 방식으로 이름을 보이게 할 것인지에 따라 변형.
+            peopleBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 주선자의 ID를 가져옴.
+                    reference.child("방").child("방" + groupNumber).child("주선자").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                GroupMember leader = dataSnapshot.getValue(GroupMember.class);
+                                String leaderName = leader.getName();
+                                Toast.makeText(getApplicationContext(), leaderName, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    reference.child("방").child("방" + groupNumber).child("참가자").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            // 참가자 아래에 있는 ID들에 하나씩 접근.
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                // 각각의 ID 아래에 있는 데이터들에 접근.
+                                GroupMember groupMember = dataSnapshot.getValue(GroupMember.class);
+                                // 참가자들의 이름을 멤버 리스트에 저장.
+                                member_list[member] = groupMember.getName();
+                                member++;
+                            }
+                            for (int i = 0; i < member; i++) {
+                                // 참가자들의 이름을 리스트에서 꺼내서 토스트로 출력.
+                                Toast.makeText(getApplicationContext(), member_list[i], Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            });
             // 버튼 누르면 방에 있는 인원 명단 띄워서 선택가능하게 하기
+
+
 
             menuSelectLinear.addView(menuTv[i], menuTvLp);
             menuSelectLinear.addView(peopleBtn);

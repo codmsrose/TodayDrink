@@ -44,8 +44,7 @@ public class AddGroupActivity extends AppCompatActivity {
     private CheckBox check_add;
     private String searchId, searchName;
     public static Context mContext;
-    public static final int sub = 1;
-    private int memberNumber = 1;
+    String currentUserName;
 
     // 방 번호
     static int groupNumber = 1;
@@ -60,6 +59,19 @@ public class AddGroupActivity extends AppCompatActivity {
 
         Intent get_Intent = getIntent();
         String currentUser = get_Intent.getStringExtra("currentUser");
+
+        databaseReference.child("User").child(currentUser).child("프로필").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserAccount leader = snapshot.getValue(UserAccount.class);
+                currentUserName = leader.getName();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         Button btn_save = findViewById(R.id.btn_save);
         Button btn_search = findViewById(R.id.btn_search);
@@ -129,7 +141,6 @@ public class AddGroupActivity extends AppCompatActivity {
                 // 그 이용자의 ID, 이름을 받아서 참가자 역할에 넣음.
                 GroupMember member = new GroupMember(searchId, searchName);
                 databaseReference.child("방").child("방" + groupNumber).child("참가자").child(searchId).setValue(member);
-                memberNumber++;
             }
         });
 
@@ -140,12 +151,13 @@ public class AddGroupActivity extends AppCompatActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child("방").child("방" + groupNumber).child("주선자").setValue(leader);
+                GroupMember leaderData = new GroupMember(currentUser, currentUserName);
+                databaseReference.child("방").child("방" + groupNumber).child("주선자").child(currentUser).setValue(leaderData);
+
                 Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
                 intent.putExtra("groupNumber", groupNumber);
-                intent.putExtra("requestCode", sub);
+                setResult(RESULT_OK, intent);
                 groupNumber++;
-                startActivity(intent);
                 finish();
             }
         });

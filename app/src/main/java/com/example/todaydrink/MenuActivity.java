@@ -12,10 +12,17 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     Button dutchPayBtn;
     Button participantBtn;
     Button timeBtn;
+
+    String leader;
+    int groupNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        Intent intent = getIntent();
+        leader = intent.getStringExtra("currentUser");
+        groupNumber = intent.getIntExtra("groupNumber", 1);
 
         dutchPayBtn = (Button)findViewById(R.id.menu_pay);
         participantBtn = (Button)findViewById(R.id.menu_participant);
@@ -27,10 +34,16 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View view){
         if(view == dutchPayBtn){
-            startActivity(new Intent(this, DutchPayPictureActivity.class));
+            Intent intent = new Intent(this, DutchPayPictureActivity.class);
+            intent.putExtra("currentUser", leader);
+            intent.putExtra("groupNumber", groupNumber);
+            startActivity(intent);
         }
         else if(view == timeBtn){
-            startActivity(new Intent(this, TimeActivity.class));
+            Intent intent = new Intent(this, DutchPayPictureActivity.class);
+            intent.putExtra("currentUser", leader);
+            intent.putExtra("groupNumber", groupNumber);
+            startActivity(intent);
         }
     }
 }
