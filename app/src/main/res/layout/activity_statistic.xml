@@ -131,9 +131,12 @@
             android:textSize="35dp" />
 
         <TextView
+            android:id="@+id/text_myDrink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" "/>
+            android:layout_marginLeft="20dp"
+            android:text="text"
+            android:textSize="24sp" />
 
     </LinearLayout>
 

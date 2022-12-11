@@ -17,8 +17,10 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +38,6 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
     private String leader;
     private int groupNumber;
-    int memberNumber = 0;
 
     AlertDialog customDialog;
     Calendar calendar = Calendar.getInstance();
@@ -51,10 +52,13 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
 
+    //다른 사람 시간
+    ArrayList<TimeItem> list = new ArrayList<>();
 
 
 
-    @SuppressLint("SuspiciousIndentation")
+
+    @SuppressLint({"MissingInflatedId", "SuspiciousIndentation"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +69,6 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         //버튼 이벤트 등록
         time_text.setOnClickListener(this);
-
-        //다른 사람 시간
-        ArrayList<TimeItem> list = new ArrayList<>();
 
         Intent intent = getIntent();
         leader = intent.getStringExtra("currentUser");
@@ -84,77 +85,11 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         // 만약 00:00:00이 되면 sendNotification();
         // 하고 나서 - 로 만들기
 
-        /*
-        for (int i = 0; i < 10; i++) {
-            list.add(new TimeItem("시간", "이름" + String.valueof(i));
-         */
         //TODO: 모든 사람의 이름이 그 방의 마지막 참가자 이름으로만 나오네요...
-        //
-            reference.child("방").child("방" + groupNumber).child("참가자").addValueEventListener(new ValueEventListener() {
-                String otherId;
-                String otherName;
-                String otherTime;
 
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        GroupMember groupMember = dataSnapshot.getValue(GroupMember.class);
-                        assert groupMember != null;
-                        otherName = groupMember.name;
-                        otherId = groupMember.id;
-
-                        reference.child("User").child(otherId).child("집 갈 시간").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                TimeItem timeItem = snapshot.getValue(TimeItem.class);
-                                otherTime = timeItem.time;
-                                if (otherTime.equals("00 : 00 : 00")) {
-                                    list.add(new TimeItem("-", otherName));
-                                    sendNotification();
-                                }
-                                else {
-                                    list.add(new TimeItem(otherTime, otherName));
-                                }
-
-                                RecyclerView recyclerView = findViewById(R.id.timer_recyclerView) ;
-                                recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2)) ;
-
-                                TimeAdapter adapter = new TimeAdapter(list) ;
-                                recyclerView.setAdapter(adapter) ;
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
+        readTime();
 
         }
-
-
-
-
-
-
-
-
-        // 다른 사람 남은 시간 알려주는 recyclerview
-
-
-
-
-
-
-
 
     @Override
     public void onClick(View view) {
@@ -283,6 +218,59 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         // "집 갈 시간" 아래에 String 타입으로 시간 계속 저장.
         reference.child("User").child(leader).child("집 갈 시간").setValue(time1);
+    }
+
+    public void readTime() {
+
+        reference.child("방").child("방" + groupNumber).child("참가자").addValueEventListener(new ValueEventListener() {
+            String otherId = "";
+            String otherName = "";
+            String otherTime = "";
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                     GroupMember groupMember = dataSnapshot.getValue(GroupMember.class);
+
+                     otherName = groupMember.getName();
+                     otherId = groupMember.getId();
+
+                     reference.child("User").child(otherId).child("집 갈 시간").addListenerForSingleValueEvent(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                             TimeItem timeItem = snapshot.getValue(TimeItem.class);
+
+                             otherTime = timeItem.getTime();
+
+                             if (otherTime.equals("00 : 00 : 00")) {
+                                list.add(new TimeItem("-", otherName));
+                                sendNotification();
+                             }
+                             else {
+                                list.add(new TimeItem(otherTime, otherName));
+                             }
+
+                             RecyclerView recyclerView = findViewById(R.id.timer_recyclerView) ;
+                             recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2)) ;
+                             recyclerView.setHasFixedSize(true);
+
+                             TimeAdapter adapter = new TimeAdapter(list) ;
+                             recyclerView.setAdapter(adapter) ;
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError error) {
+
+                         }
+                     });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 

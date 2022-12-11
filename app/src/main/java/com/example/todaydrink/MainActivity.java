@@ -1,5 +1,6 @@
 package com.example.todaydrink;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,10 +16,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mFirebaseAuth;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
+
     Button btn_addgroup, btn_profile, btn_group1, btn_group2;
     ImageButton ib_home, ib_measure, ib_statistics, ib_board;
     public static int REQUEST_CODE = 0;
@@ -117,20 +125,37 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        reference.child("방").child("방1").child("주선자").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getValue(GroupMember.class) != null) {
+                        btn_group1.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
 
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                btn_group1.setVisibility(View.VISIBLE);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
-        }
-        else if (requestCode == 2) {
-            if (resultCode == Activity.RESULT_OK) {
-                btn_group2.setVisibility(View.VISIBLE);
+        });
+
+        reference.child("방").child("방2").child("주선자").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getValue(GroupMember.class) != null) {
+                        btn_group2.setVisibility(View.VISIBLE);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

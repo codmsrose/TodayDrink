@@ -1,5 +1,7 @@
 package com.example.todaydrink;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +43,8 @@ public class CheckCalculate {
     public static void setWeight(double kg1) {
         kg = kg1;
     }
+
+
 
     //성별계수
     public static void setR (int i) {
@@ -86,11 +90,11 @@ public class CheckCalculate {
     }
 
 
-    public int calculate(double density, double newAmountOfAlcohol) {
+    public int calculate(String currentUser, double density, double newAmountOfAlcohol) {
 
         setNewAlcohol(density, newAmountOfAlcohol);
-        calculateMaxAlcohol();
-        calculateMaxAlcohol();
+        calculateMaxAlcohol(currentUser);
+        calculateBloodAlcohol();
         return updateState(bloodAlcoholLevel);
 
 
@@ -104,8 +108,29 @@ public class CheckCalculate {
     }
 
     //섭취한 알코올의 최대치 구하기 C
-    private static double calculateMaxAlcohol(){
+    private static double calculateMaxAlcohol(String currentUser){
         //C(최고치)= A(섭취한 알코올 총량 = 음주량x술의농도xN)×0.7(체내흡수율)/(P(체중)×R(성별에 대한 계수))
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference();
+
+        reference.child("User").child(currentUser).child("프로필").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue(UserAccount.class) != null) {
+                    UserAccount user = snapshot.getValue(UserAccount.class);
+
+                    String account = user.account;
+                    setR(user.gender);
+                    setWeight(Double.parseDouble(user.getWeight()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         maxAlcohol= (newAlcohol*0.7) / (kg*R);
         return maxAlcohol;
     }

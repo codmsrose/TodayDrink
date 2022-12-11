@@ -127,6 +127,7 @@ public class DutchPayListActivity extends AppCompatActivity {
                                 // 각각의 ID 아래에 있는 데이터들에 접근.
                                 GroupMember groupMember = dataSnapshot.getValue(GroupMember.class);
                                 // 참가자들의 이름을 멤버 리스트에 저장.
+                                String none = groupMember.id;
                                 member_list[member] = groupMember.getName();
                                 member++;
                             }

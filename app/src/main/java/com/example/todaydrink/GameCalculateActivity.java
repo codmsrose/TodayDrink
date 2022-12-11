@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 public class GameCalculateActivity extends AppCompatActivity {
 
+    String currentUser;
+
     TextView number1;
     TextView number2;
     EditText answer;
@@ -31,6 +33,9 @@ public class GameCalculateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_calculate);
+
+        Intent get_Intent = getIntent();
+        currentUser = get_Intent.getStringExtra("currentUser");
 
         chronometer = findViewById(R.id.chronometer);
         chronometer.start();
@@ -63,6 +68,7 @@ public class GameCalculateActivity extends AppCompatActivity {
                     }
                     Intent intent = new Intent(GameCalculateActivity.this, GameResultActivity.class);
                     intent.putExtra("time_calculate", time);
+                    intent.putExtra("currentUser", currentUser);
                     startActivity(intent);
                 } else {
                     Toast.makeText(GameCalculateActivity.this, "다시 입력하세요", Toast.LENGTH_SHORT).show();

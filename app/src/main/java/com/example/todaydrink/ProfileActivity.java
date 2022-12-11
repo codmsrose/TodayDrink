@@ -109,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.getValue(UserAccount.class) != null) {
                                     UserAccount user = snapshot.getValue(UserAccount.class);
-                                    user.weight = modifyWeightText;
+                                    user.weight = (modifyWeightText);
 
                                     reference.child("User").child(userId).child("프로필").setValue(user);
                                 }

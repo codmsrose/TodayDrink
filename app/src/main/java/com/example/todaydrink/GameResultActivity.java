@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 public class GameResultActivity extends AppCompatActivity {
 
+    String currentUser;
+
     String getTime_calculate = null;
     String getTime_number = null;
     int min, sec;
@@ -26,6 +28,9 @@ public class GameResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_result);
+
+        Intent get_Intent = getIntent();
+        currentUser = get_Intent.getStringExtra("currentUser");
 
         textView = (TextView)findViewById(R.id.text);
         stateImage = (ImageView)findViewById(R.id.stateImage);
@@ -47,6 +52,7 @@ public class GameResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GameResultActivity.this, StateActivity.class);
+                intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
             }
         });

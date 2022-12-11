@@ -30,30 +30,32 @@
         android:id="@+id/myId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="아이디"
-        android:textSize="30dp"
         android:layout_below="@id/profile_name"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="40dp"
+        android:text="아이디"
+        android:textSize="30dp" />
+
     <TextView
         android:id="@+id/myIdText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="내용"
-        android:textSize="30dp"
         android:layout_below="@id/profile_name"
-        android:layout_toRightOf="@id/myId"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp"
+        android:layout_toRightOf="@id/myId"
+        android:text="내용"
+        android:textSize="25dp" />
+
     <TextView
         android:id="@+id/myNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="계좌번호"
-        android:textSize="30dp"
         android:layout_below="@id/myId"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:text="계좌번호"
+        android:textSize="30dp" />
     <Button
         android:id="@+id/numberBtn"
         android:layout_width="wrap_content"
@@ -64,15 +66,16 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"/>
+
     <TextView
         android:id="@+id/myNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="내용"
-        android:textSize="30dp"
         android:layout_below="@id/profile_name"
         android:layout_alignLeft="@id/myIdText"
-        android:layout_alignTop="@id/myNumber" />
+        android:layout_alignTop="@id/myNumber"
+        android:text="내용"
+        android:textSize="25dp" />
     <Button
         android:id="@+id/weightBtn"
         android:layout_width="wrap_content"
@@ -83,31 +86,34 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"/>
+
     <TextView
         android:id="@+id/myWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="몸무게"
-        android:textSize="30dp"
         android:layout_below="@id/myNumber"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:text="몸무게"
+        android:textSize="30dp" />
+
     <TextView
         android:id="@+id/myWeightText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="내용"
-        android:textSize="30dp"
         android:layout_below="@id/profile_name"
         android:layout_alignLeft="@id/myIdText"
-        android:layout_alignTop="@id/myWeight" />
+        android:layout_alignTop="@id/myWeight"
+        android:text="내용"
+        android:textSize="25dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="내 친구"
-        android:textSize="30dp"
         android:layout_below="@id/myWeight"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:text="내 친구"
+        android:textSize="30dp" />
 
 </RelativeLayout>

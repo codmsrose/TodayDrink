@@ -1,8 +1,11 @@
 package com.example.todaydrink;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +26,7 @@ public class StateActivity extends AppCompatActivity{
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
+    private static final String TAG = "Jaewan";
 
     Button modifyBtn;
 
@@ -32,6 +36,7 @@ public class StateActivity extends AppCompatActivity{
     String saveState;
 
     int check = 0;
+    static int num = 1;
 
     String currentUser;
 
@@ -64,7 +69,37 @@ public class StateActivity extends AppCompatActivity{
         });
 
         modifyState();
+
+        Button[] buttonNum = new Button[5];
+        for(int i=0;i<buttonNum.length;i++){
+            String buttonId = "state"+(i+1);
+            buttonNum[i] = findViewById(getResources().getIdentifier(buttonId, "id", getPackageName()));
+        }
+
+        reference.child("User").child(currentUser).child("상태").addValueEventListener(new ValueEventListener() {
+            State state;
+            int i = 0;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    state = dataSnapshot.getValue(State.class);
+
+                    if (i != 5) {
+                        buttonNum[i].setText((i + 1) + "단계 " + state.getState());
+                        i++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
+
+
+
 
     /* TODO 수정하기 전에 먼저 버튼에 디폴트값으로 설정되어있는 문자열을 데이터베이스에 저장해놔야함
        TODO 수정을 했다면 버튼 눌렀을 떄 onClick에서 다이얼로그 띄워서 받아온 문자열을 다시 해당 단계에 저장해야함
@@ -98,8 +133,12 @@ public class StateActivity extends AppCompatActivity{
                                 reference.child("User").child(currentUser).child("상태").child(String.valueOf(numberState)).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        State state1 = snapshot.getValue(State.class);
-                                        state1.setState(modifyState);
+                                        if (snapshot.getValue(State.class) != null) {
+                                            State state1 = snapshot.getValue(State.class);
+                                            state1.state = modifyState;
+
+                                            reference.child("User").child(currentUser).child("상태").child(String.valueOf(numberState)).setValue(state1);
+                                        }
                                     }
 
                                     @Override
@@ -115,7 +154,7 @@ public class StateActivity extends AppCompatActivity{
                         saveStateNumber = buttonId.getText().toString().charAt(0);
                         SelectedState selectedState = new SelectedState(String.valueOf(saveStateNumber));
 
-                        reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + month + "월 " + day).child("선택한 상태").setValue(selectedState);
+                        reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child("선택한 상태").setValue(selectedState);
                         // TODO saveStateNumber는 char형으로 나오는 내가 선택한 단계 숫자
                         // TODO 현재 내 상태를 눌렀을 때 나중에 해당 날짜에 지금 마신 술 양이랑 같이 이 숫자가 저장되어야함.
                     }

@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.threeten.bp.LocalDate;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,10 +37,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
     String currentUser;
-    int cass_bottle, terra_bottle, iseul_bottle, start_bottle;
-    int cass_glass, terra_glass, iseul_glass, start_glass;
-    AlcoholSum alcohol_sum;
-    String alcohol;
+    int cass_bottle, terra_bottle, heineken_bottle, iseul_bottle, start_bottle, jinro_bottle;
+    int cass_glass, terra_glass, heineken_glass, iseul_glass, start_glass, jinro_glass;
+    String selectedState;
+    int intState;
+    TextView text_myDrink;
 
     public CalendarAdapter(ArrayList<LocalDate> dayList) {
         this.dayList = dayList;
@@ -61,6 +64,26 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         //날짜 변수에 담기
         LocalDate day = dayList.get(position);
 
+        currentUser = ((StatisticsActivity)StatisticsActivity.mContext).userId;
+
+        text_myDrink = ((StatisticsActivity)StatisticsActivity.mContext).findViewById(R.id.text_myDrink);
+
+        reference.child("User").child(currentUser).child("프로필").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue(UserAccount.class) != null) {
+                    UserAccount userAccount = snapshot.getValue(UserAccount.class);
+
+                    String myDrink = userAccount.drink;
+                    text_myDrink.setText(myDrink + "병");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         if(day == null){
             holder.dayText.setText("");
@@ -78,28 +101,37 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             int aMonth = day.getMonthValue();
             int aDay = day.getDayOfMonth();
 
-            // StatisticsActivity 에서 로그인되어 있는 ID 가져옴.
-            // 이 부분은 왜인지 모르게 데이터가 안 가져와 지네요...
-            /*
-            reference.child("User").child(currentUser).child("날짜별 데이터").child(aYear + "년 " + aMonth + "월 " + aDay + "일").child("총 알콜 농도").child("alcohol").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getValue(AlcoholSum.class) != null) {
-                        alcohol_sum = snapshot.getValue(AlcoholSum.class);
-                        assert alcohol_sum != null;
-                        alcohol = alcohol_sum.alcohol_sum;
-                    }
-                    else {
-                        alcohol = "0";
-                    }
-                }
+            holder.dayText.setBackgroundResource(R.drawable.circle_white);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            if(day.equals(CalendarUtil.selectedDate)) {
+                holder.parentView.setBackgroundColor(Color.LTGRAY);
+            }
 
-                }
-            });
-             */
+            // 일단 오늘의 상태만 불러옴.
+            //TODO: 상태 화면에서 클릭한 번호 가져오는 거는 되었습니다.
+            // 이거 토대로 변형해 주시면 될 듯 합니다.
+            reference.child("User").child(currentUser).child("날짜별 데이터").child(aYear + "년 " + aMonth + "월 " + aDay + "일")
+                    .child("선택한 상태").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getValue(SelectedState.class) != null) {
+                                SelectedState state = snapshot.getValue(SelectedState.class);
+
+                                // 상태 불러옴.
+                                selectedState = state.selectedState;
+                                // 상태 int 형으로.
+                                intState = Integer.parseInt(selectedState);
+
+                                // 데이터 가져와지는 거 확인용.
+                                Toast.makeText(((StatisticsActivity) StatisticsActivity.mContext).getApplicationContext(), String.valueOf(intState), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
         }
 
         //텍스트 색상 지정
@@ -113,8 +145,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                currentUser = ((StatisticsActivity)StatisticsActivity.mContext).userId;
                 
                 int iYear = day.getYear();//년
                 int iMonth = day.getMonthValue(); //월
@@ -125,34 +155,77 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 reference.child("User").child(currentUser).child("날짜별 데이터").child(yearMonDay).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        // 선택된 날짜 아래에 대한 데이터베이스가 존재하지 않을 경우 모두 0으로.
-                        if (snapshot.child("맥주").child("카스").getValue(Drink.class) == null) {
+
+                        int none = 0;
+                        // 선택된 날짜 아래에 대한 데이터베이스가 존재하지 않을 경우 병과 잔 모두 0으로.
+                        if (snapshot.child("카스").getValue(Drink.class) == null) {
                             cass_bottle = 0;
                             cass_glass = 0;
-                            terra_bottle = 0;
-                            terra_glass = 0;
-                            iseul_bottle = 0;
-                            iseul_glass = 0;
-                            start_bottle = 0;
-                            start_glass = 0;
                         }
-
-                        // 데이터베이스가 존재한다면 모든 데이터를 가져와서 저장.
+                        // 데이터베이스가 존재할 경우, 병과 잔 데이터를 가져옴.
                         else {
-                            Drink drink_cass = snapshot.child("맥주").child("카스").getValue(Drink.class);
-                            Drink drink_terra = snapshot.child("맥주").child("테라").getValue(Drink.class);
-                            Drink drink_iseul = snapshot.child("소주").child("참이슬").getValue(Drink.class);
-                            Drink drink_start = snapshot.child("소주").child("처음처럼").getValue(Drink.class);
+                            Drink drink_cass = snapshot.child("카스").getValue(Drink.class);
 
                             cass_bottle = drink_cass.bottle;
                             cass_glass = drink_cass.glass;
+                        }
+
+                        if (snapshot.child("테라").getValue(Drink.class) == null) {
+                            terra_bottle = 0;
+                            terra_glass = 0;
+                        }
+                        else {
+                            Drink drink_terra = snapshot.child("테라").getValue(Drink.class);
+
                             terra_bottle = drink_terra.bottle;
                             terra_glass = drink_terra.glass;
+                        }
+
+                        if (snapshot.child("하이네켄").getValue(Drink.class) == null) {
+                            heineken_bottle = 0;
+                            heineken_glass = 0;
+                        }
+                        else {
+                            Drink drink_heineken = snapshot.child("하이네켄").getValue(Drink.class);
+
+                            heineken_bottle = drink_heineken.getBottle();
+                            heineken_glass = drink_heineken.getGlass();
+                        }
+
+                        if (snapshot.child("참이슬").getValue(Drink.class) == null) {
+                            iseul_bottle = 0;
+                            iseul_glass = 0;
+                        }
+                        else {
+                            Drink drink_iseul = snapshot.child("참이슬").getValue(Drink.class);
+
                             iseul_bottle = drink_iseul.bottle;
                             iseul_glass = drink_iseul.glass;
+                        }
+
+                        if (snapshot.child("처음처럼").getValue(Drink.class) == null) {
+                            start_bottle = 0;
+                            start_glass = 0;
+                        }
+                        else {
+                            Drink drink_start = snapshot.child("처음처럼").getValue(Drink.class);
+
                             start_bottle = drink_start.bottle;
                             start_glass = drink_start.glass;
                         }
+
+                        if (snapshot.child("진로").getValue(Drink.class) == null) {
+                            jinro_bottle = 0;
+                            jinro_glass = 0;
+                        }
+                        else {
+                            Drink drink_jinro = snapshot.child("진로").getValue(Drink.class);
+
+                            jinro_bottle = drink_jinro.getBottle();
+                            jinro_glass = drink_jinro.getGlass();
+                        }
+
+                        // 데이터베이스가 존재한다면 모든 데이터를 가져와서 저장.
                     }
 
                     @Override
@@ -167,10 +240,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
                 // 선택한 날의 주량을 다이얼로그에 보여줌.
                 // 약간의 문제는 그 날짜를 처음 클릭하면 모두 0으로 뜨고 한 번 더 누르면 정상 작동.
+                // 이 부분은 시간 액티비티와 마찬가지로 원인이 무엇인지 잘 모르겠네요...
                 builder.setMessage("카스 : " + cass_bottle + "병 " + cass_glass + "잔\n" +
                         "테라 : " + terra_bottle + "병 " + terra_glass + "잔\n" +
+                        "하이네켄 : " + heineken_bottle + "병 " + heineken_glass + "잔\n" +
                         "참이슬 : " + iseul_bottle + "병 " + iseul_glass + "잔\n" +
-                        "처음처럼 : " + start_bottle + "병 " + start_glass + "잔");
+                        "처음처럼 : " + start_bottle + "병 " + start_glass + "잔\n" +
+                        "진로 : " + jinro_bottle + "병 " + jinro_glass + "잔");
 
 
                 builder.setPositiveButton("확인", null);

@@ -16,6 +16,8 @@ import java.util.Random;
 
 public class GameNumberActivity extends AppCompatActivity {
 
+    String currentUser;
+
     TextView numberCount;
     TextView finishText;
     Button[] numberBtn = new Button[25];
@@ -30,6 +32,9 @@ public class GameNumberActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_number);
+
+        Intent get_Intent = getIntent();
+        currentUser = get_Intent.getStringExtra("currentUser");
 
         numberCount = findViewById(R.id.countNumber);
         finishText = findViewById(R.id.finishText);
@@ -57,6 +62,7 @@ public class GameNumberActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(GameNumberActivity.this, GameResultActivity.class);
                 intent.putExtra("time_number", time);
+                intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
             } else {
                 numberCount.setText(number + "");
