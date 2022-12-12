@@ -2,12 +2,8 @@ package com.example.todaydrink;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
 
-    Button btn_addgroup, btn_profile, btn_group1, btn_group2;
+    Button btn_addgroup, btn_group1, btn_group2;
+    ImageView imageView_profile;
     ImageButton ib_home, ib_measure, ib_statistics, ib_board;
     public static int REQUEST_CODE = 0;
 
@@ -45,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         ib_measure = (ImageButton) findViewById(R.id.ib_measure);
         ib_statistics = (ImageButton) findViewById(R.id.ib_statistics);
         ib_board = (ImageButton) findViewById(R.id.ib_board);
-        btn_profile = findViewById(R.id.btn_profile);
+        imageView_profile = findViewById(R.id.imageView_profile);
         btn_group1 = findViewById(R.id.btn_group1);
         btn_group2 = findViewById(R.id.btn_group2);
 
@@ -97,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_profile.setOnClickListener(new View.OnClickListener() {
+        imageView_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);

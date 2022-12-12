@@ -20,7 +20,7 @@
         android:text="이름" />
 
     <EditText
-        android:id="@+id/name_edit"
+        android:id="@+id/state1_edit"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/id_edit"
+            android:id="@+id/state2_edit"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -62,7 +62,7 @@
         android:text="비밀번호"/>
 
     <EditText
-        android:id="@+id/pwd_edit"
+        android:id="@+id/state3_edit"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -105,26 +105,11 @@
         android:text="몸무게"/>
 
     <EditText
-        android:id="@+id/weight_edit"
+        android:id="@+id/state4_edit"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:hint="몸무게 입력" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="자신의 주량"
-        android:inputType="number"/>
-
-    <EditText
-        android:id="@+id/drink_edit"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:hint="소주 주량을 적어주세요 (병 기준)" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -141,13 +126,13 @@
         android:hint="계좌번호를 입력하세요" />
 
     <Button
-        android:id="@+id/register_btn"
+        android:id="@+id/nextInput_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="완료"
-        android:backgroundTint="@color/blue1"/>
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/blue1"
+        android:text="다음" />
 
 
 </LinearLayout>

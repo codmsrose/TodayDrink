@@ -68,15 +68,22 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
         text_myDrink = ((StatisticsActivity)StatisticsActivity.mContext).findViewById(R.id.text_myDrink);
 
-        reference.child("User").child(currentUser).child("프로필").addValueEventListener(new ValueEventListener() {
+        reference.child("User").child(currentUser).child("상태").addValueEventListener(new ValueEventListener() {
+            int i = 0;
+            String[] myDrink = new String[5];
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue(UserAccount.class) != null) {
-                    UserAccount userAccount = snapshot.getValue(UserAccount.class);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    State state = dataSnapshot.getValue(State.class);
 
-                    String myDrink = userAccount.drink;
-                    text_myDrink.setText(myDrink + "병");
+                    if (i != 5) {
+                        myDrink[i] = (i + 1) + "단계 " + state.state + " : " + state.density;
+                        i++;
+                    }
                 }
+
+                text_myDrink.setText(myDrink[0] + "\n" + myDrink[1] + "\n" + myDrink[2] + "\n" + myDrink[3] + "\n" + myDrink[4]);
             }
 
             @Override

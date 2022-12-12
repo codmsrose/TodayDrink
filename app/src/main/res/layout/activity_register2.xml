@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="회원가입"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="1단계 - 멀쩡해요" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/state1_edit"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:ems="10"
+                android:hint="주량 입력"
+                android:inputType="textPersonName" />
+
+            <RadioGroup
+                android:id="@+id/drink1_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/bottle1_radio"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="병" />
+
+                <RadioButton
+                    android:id="@+id/glass1_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="잔" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:text="2단계 - 기분이 UP" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/state2_edit"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:hint="주량 입력" />
+
+            <RadioGroup
+                android:id="@+id/drink2_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/bottle2_radio"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="병" />
+
+                <RadioButton
+                    android:id="@+id/glass2_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="잔" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:text="3단계 - 물건을 떨어뜨림" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/state3_edit"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:ems="10"
+                android:hint="주량 입력"
+                android:inputType="textPersonName" />
+
+            <RadioGroup
+                android:id="@+id/drink3_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/bottle3_radio"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="병" />
+
+                <RadioButton
+                    android:id="@+id/glass3_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="잔" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:text="4단계 - 비틀비틀" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/state4_edit"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:ems="10"
+                android:hint="주량 입력"
+                android:inputType="textPersonName" />
+
+            <RadioGroup
+                android:id="@+id/drink4_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/bottle4_radio"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="병" />
+
+                <RadioButton
+                    android:id="@+id/glass4_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="잔" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:inputType="number"
+            android:text="5단계 - 필름 끊김" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/state5_edit"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:ems="10"
+                android:hint="주량 입력"
+                android:inputType="textPersonName" />
+
+            <RadioGroup
+                android:id="@+id/drink5_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/bottle5_radio"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="병" />
+
+                <RadioButton
+                    android:id="@+id/glass5_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="잔" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/register_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/blue1"
+            android:text="가입" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

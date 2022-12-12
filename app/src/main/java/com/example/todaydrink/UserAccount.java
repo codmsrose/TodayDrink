@@ -9,7 +9,6 @@ public class UserAccount {
     String pwd;
     int gender;
     String weight;
-    String drink;
     String account;
     String profile;
 
@@ -55,14 +54,6 @@ public class UserAccount {
         this.weight = weight;
     }
 
-    public String getDrink() {
-        return drink;
-    }
-
-    public void setDrink(String drink) {
-        this.drink = drink;
-    }
-
     public String getAccount() {
         return account;
     }
@@ -79,13 +70,12 @@ public class UserAccount {
         this.profile = profile;
     }
 
-    public UserAccount(String name, String id, String pwd, int gender, String weight, String drink, String account, String profile) {
+    public UserAccount(String name, String id, String pwd, int gender, String weight, String account, String profile) {
         this.name = name;
         this.id = id;
         this.pwd = pwd;
         this.gender = gender;
         this.weight = weight;
-        this.drink = drink;
         this.account = account;
         this.profile = profile;
     }

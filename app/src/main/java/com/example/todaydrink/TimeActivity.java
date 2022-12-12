@@ -13,6 +13,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -86,6 +87,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         // 하고 나서 - 로 만들기
 
         //TODO: 모든 사람의 이름이 그 방의 마지막 참가자 이름으로만 나오네요...
+
 
         readTime();
 
@@ -235,7 +237,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
                      otherName = groupMember.getName();
                      otherId = groupMember.getId();
 
-                     reference.child("User").child(otherId).child("집 갈 시간").addListenerForSingleValueEvent(new ValueEventListener() {
+                     reference.child("User").child(otherId).child("집 갈 시간").addValueEventListener(new ValueEventListener() {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot snapshot) {
                              TimeItem timeItem = snapshot.getValue(TimeItem.class);
@@ -250,12 +252,13 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
                                 list.add(new TimeItem(otherTime, otherName));
                              }
 
-                             RecyclerView recyclerView = findViewById(R.id.timer_recyclerView) ;
-                             recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2)) ;
+                             RecyclerView recyclerView = findViewById(R.id.timer_recyclerView);
+                             recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2));
                              recyclerView.setHasFixedSize(true);
 
-                             TimeAdapter adapter = new TimeAdapter(list) ;
-                             recyclerView.setAdapter(adapter) ;
+                             TimeAdapter adapter = new TimeAdapter(list);
+                             recyclerView.setAdapter(adapter);
+
                          }
 
                          @Override
