@@ -145,9 +145,7 @@ public class AddGroupActivity extends AppCompatActivity {
         });
 
         // 저장을 누르면 메인 화면으로 이동.
-        // TODO 리사이클러뷰에 아직 미숙해서 버튼이 계속 생성되지 않네요... 혹시 도와주실 수 있으신지...
-        // TODO 일단 방 생성해서 참가자는 다 들어가지는데 주선자가 방1에만 들어갑니다.
-        // TODO 현재 데이터베이스 방식으로 어떻게 읽어야할 지 잘 모르겠네요...
+
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

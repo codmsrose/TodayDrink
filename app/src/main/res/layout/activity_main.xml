@@ -10,11 +10,11 @@
     <Button
         android:id="@+id/btn_group2"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginTop="10dp"
         android:width="300dp"
         android:height="60dp"
-        android:background="@drawable/btn_gray"
+        android:backgroundTint="@color/blue1"
         android:text="2차"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -26,11 +26,11 @@
     <Button
         android:id="@+id/btn_group1"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginTop="10dp"
         android:width="300dp"
         android:height="60dp"
-        android:background="@drawable/btn_gray"
+        android:backgroundTint="@color/blue1"
         android:text="1차"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -52,15 +52,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-<!--TODO  색 바꾸기-->
+
     <Button
         android:id="@+id/btn_addgroup"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginTop="30dp"
         android:width="300dp"
         android:height="60dp"
-        android:background="@drawable/btn_gray"
         android:text="+"
         android:textColor="@color/white"
         android:backgroundTint="@color/blue1"

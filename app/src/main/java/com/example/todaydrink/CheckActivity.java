@@ -98,19 +98,24 @@ public class CheckActivity extends AppCompatActivity {
                 //리사이클러에서 보이는 큰 술 종류 추가
                 // 항상 맨 마지막을 눌렀을 때 추가가능하도록 함
                 if(position==CheckAdapter.getItemCount()-1){
+
+                    //TODO: 여기 수정함     파이어베이스에 newDetailDrink도 같이 들어가게 하면 됨
                     final EditText newDrink = new EditText(CheckActivity.this);
+                    newDrink.setHint(" 술 종류 (예-소주)");
+                    final EditText newDetailDrink = new EditText(CheckActivity.this);
+                    newDetailDrink.setHint("술 이름 (예-처음처럼)");
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(CheckActivity.this);
-                    builder.setMessage("추가하고 싶은 술의 종류를 입력하세요");
-                    builder.setView(newDrink);
-
-                    builder.setNegativeButton("취소", null);
-                    builder.setPositiveButton("저장", new DialogInterface.OnClickListener() {
+                    builder.setMessage("추가하고 싶은 술을 입력하세요")
+                            .setView(newDrink)
+                            .setView(newDetailDrink)
+                            .setNegativeButton("취소", null)
+                            .setPositiveButton("저장", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            //TODO : 술 종류 추가한거 데이터베이스에 저장
+                            // 술 종류 추가한거 데이터베이스에 저장
                             // (위스키, 샴페인 같은 큰 종류)
-                            CheckAdapter.addItem(new CheckItems(R.drawable.pro, newDrink.getText().toString()));
+                            CheckAdapter.addItem(new CheckItems(R.drawable.new_drink_bottle, newDrink.getText().toString()));
                             CheckAdapter.itemPositionChange(CheckAdapter.getItemCount()-1,CheckAdapter.getItemCount()-2);
                             CheckAdapter.notifyItemMoved(CheckAdapter.getItemCount()-1, CheckAdapter.getItemCount()-2);
                         }
