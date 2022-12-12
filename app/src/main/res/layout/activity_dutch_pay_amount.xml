@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DutchPayAmountActivity">
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/payText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OO님이 내셔야할 금액은"
+        android:textSize="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:id="@+id/payPriceText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="1차 : 13000"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:background="@color/light_gray"
+        android:layout_gravity="center"
+        android:layout_below="@id/payText"
+        android:layout_marginTop="100dp"
+        android:textSize="30dp"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/accountNumberText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="계좌번호"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_below="@id/payPriceText"
+        android:background="@color/light_gray"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:padding="10dp"/>
+
+    <ImageView
+        android:id="@+id/copyIcon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/copy"
+        android:layout_alignBottom="@id/accountNumberText"
+        android:layout_alignRight="@id/accountNumberText"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="6dp"
+        android:onClick="copyClick"/>
+
+</RelativeLayout>
