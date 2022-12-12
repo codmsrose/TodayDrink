@@ -39,8 +39,8 @@ public class DutchPayListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String[] menu_list = intent.getStringArrayExtra("menu");
-        String[] food_list = new String[menu_list.length];
-        String[] price_list = new String[menu_list.length];
+        String[] food_list = new String[menu_list.length];  //음식메뉴만
+        String[] price_list = new String[menu_list.length]; //가격만
         String[] price_index_list;
 
         groupNumber = intent.getIntExtra("groupNumber", 1);
@@ -94,7 +94,7 @@ public class DutchPayListActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            Button peopleBtn = new Button(this);
+            Button peopleBtn = new Button(this);  //인원버튼
             peopleBtn.setText("인원");
 
 

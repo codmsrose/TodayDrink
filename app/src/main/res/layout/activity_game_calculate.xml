@@ -6,10 +6,11 @@
 
     <Chronometer
         android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"
+        android:textSize="30dp"
+        android:textColor="@color/blue1"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"/>
 
@@ -50,6 +51,7 @@
 
 
     <EditText
+        android:layout_marginTop="20dp"
         android:id="@+id/answer"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -63,7 +65,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="채점"
-        android:textSize="20dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/blue1"
+        android:textSize="30dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/answer"/>
 

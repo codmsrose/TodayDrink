@@ -50,7 +50,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn02"
@@ -58,7 +59,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn03"
@@ -66,7 +68,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn04"
@@ -74,7 +77,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn05"
@@ -82,7 +86,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
     </LinearLayout>
 
     <LinearLayout
@@ -90,7 +95,8 @@
         android:orientation="horizontal"
         android:layout_height="0dp"
         android:weightSum="5"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:backgroundTint="@color/blue1">
 
         <Button
             android:id="@+id/btn06"
@@ -98,7 +104,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn"  />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn07"
@@ -106,7 +113,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn08"
@@ -114,7 +122,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn09"
@@ -122,7 +131,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn10"
@@ -130,7 +140,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
     </LinearLayout>
 
@@ -139,7 +150,8 @@
         android:orientation="horizontal"
         android:layout_height="0dp"
         android:weightSum="5"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:backgroundTint="@color/blue1">
 
         <Button
             android:id="@+id/btn11"
@@ -147,7 +159,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn12"
@@ -155,7 +168,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn13"
@@ -163,7 +177,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn14"
@@ -171,7 +186,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
         <Button
             android:id="@+id/btn15"
@@ -179,7 +195,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="25sp"
-            android:onClick="clickBtn" />
+            android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"/>
 
     </LinearLayout>
 
@@ -197,6 +214,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
         <Button
@@ -206,6 +224,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
         <Button
@@ -215,6 +234,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
         <Button
@@ -224,6 +244,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
         <Button
@@ -233,6 +254,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
 
@@ -243,7 +265,8 @@
         android:orientation="horizontal"
         android:layout_height="0dp"
         android:weightSum="5"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:backgroundTint="@color/blue1">
 
         <Button
             android:id="@+id/btn21"
@@ -252,6 +275,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
         <Button
@@ -261,6 +285,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
         <Button
@@ -270,6 +295,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
         <Button
@@ -279,6 +305,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
         <Button
@@ -288,6 +315,7 @@
             android:layout_weight="1"
             android:textSize="25sp"
             android:onClick="clickBtn"
+            android:backgroundTint="@color/blue1"
             />
 
     </LinearLayout>

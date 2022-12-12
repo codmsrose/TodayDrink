@@ -18,31 +18,36 @@
             android:text="1단계 멀쩡해요"
             android:layout_width="200dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue3"/>
         <Button
             android:id="@+id/state2"
             android:text="2단계 기본이 UP"
             android:layout_width="200dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue2"/>
         <Button
             android:id="@+id/state3"
             android:text="3단계 물건을 떨어트림"
             android:layout_width="200dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue1"/>
         <Button
             android:id="@+id/state4"
             android:text="4단계 비틀비틀"
             android:layout_width="200dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue4"/>
         <Button
             android:id="@+id/state5"
             android:text="5단계 필름 끊김"
             android:layout_width="200dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue5"/>
 
     </LinearLayout>
 
@@ -50,9 +55,12 @@
         android:id="@+id/state_modify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="33dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/blue1"
+        android:margin="20dp"
         android:text="수정" />
 
 </RelativeLayout>

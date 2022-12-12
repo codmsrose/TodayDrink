@@ -51,7 +51,7 @@ public class GameNumberActivity extends AppCompatActivity {
         String s = btn.getText().toString();
         int n = Integer.parseInt(s);
         if (number == n) {
-            btn.setBackgroundColor(getResources().getColor(R.color.green));
+            btn.setBackgroundColor(getResources().getColor(R.color.skyblue));
             number++;
             if (number > 25) {
                 finishText.setText("축하합니다 끝났습니다.");

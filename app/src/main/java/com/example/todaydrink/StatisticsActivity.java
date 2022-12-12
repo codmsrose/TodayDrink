@@ -81,7 +81,7 @@ public class StatisticsActivity extends AppCompatActivity{
 
     //날짜 타입 설정(4월 2020)
     private String monthYearFromDate(LocalDate date){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM월 yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy GG-MM");
         return date.format(formatter);
     }
 

@@ -12,5 +12,11 @@
     <color name="circle1">#EFAEB6</color>
     <color name="circle2">#EA949D</color>
     <color name="circle3">#E57985</color>
-    <color name="skyblue">#b2d7fc</color>>
+    <color name="skyblue">#b2d7fc</color>
+    <color name="blue1">#0096c6</color>
+    <color name ="blue2">#00bcf8</color>
+    <color name ="blue3">#37cfff</color>
+    <color name ="blue4">#00789e</color>
+    <color name ="blue5">#00607e</color>
+    <color name="red"> #ff0000</color>
 </resources>

@@ -3,7 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativelayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_marginTop="40dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="20dp">
 
     <ImageView
         android:id="@+id/imageView"
@@ -18,31 +22,39 @@
         android:layout_alignTop="@id/imageView"
         android:layout_alignRight="@id/imageView"
         android:layout_alignBottom="@id/imageView"
-        android:layout_margin="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
         android:gravity="center"
         android:text="사진 업로드"
         android:textColor="#000000" />
 
+
     <Button
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="60dp"
         android:id="@+id/albumBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
-        android:layout_marginLeft="60dp"
         android:text="앨범 선택"
-        android:textSize="25dp"
-        android:padding="10dp"/>
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:backgroundTint="@color/skyblue"/>
 
     <Button
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
         android:id="@+id/cameraBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
         android:layout_toRightOf="@id/albumBtn"
-        android:layout_marginLeft="10dp"
         android:text="카메라 촬영"
-        android:textSize="25dp"
-        android:padding="10dp"/>
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:backgroundTint="@color/skyblue"/>
 
     <Button
         android:id="@+id/listBtn"
@@ -50,19 +62,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/albumBtn"
         android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
         android:onClick="processImage"
         android:text="메뉴 추출하기"
         android:textSize="25dp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:backgroundTint="@color/blue1"/>
 
-    <TextView
-        android:id="@+id/OCRTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/listBtn"
-        android:text="여기에 결과 출력"
-        android:textSize="20dp"
-        android:textColor="#169cdf"
-        android:layout_marginTop="20dp"/>
+
 
 </RelativeLayout>

@@ -28,14 +28,17 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:text="취한 정도"
-        android:textSize="30dp"/>
+        android:textSize="40dp"
+        android:textColor="@color/blue1"
+        android:fontFamily="@font/samliphopangcheoutline"/>
 
     <Button
         android:id="@+id/goSelectState"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
         android:text="상태 체크하러 가기"
+        android:backgroundTint="@color/blue1"
         android:textSize="20dp"
         android:layout_marginTop="20dp" />
 

@@ -37,7 +37,8 @@
         android:layout_height="40dp"
         android:text="잔"
         android:textSize="12dp"
-        android:layout_below="@id/check_drink_name" />
+        android:layout_below="@id/check_drink_name"
+        android:backgroundTint="@color/blue1"/>
 
     <Button
         android:id="@+id/check_amount_bottle"
@@ -47,7 +48,8 @@
         android:layout_below="@id/check_drink_name"
         android:text="병"
         android:textSize="12dp"
-        android:layout_toRightOf="@id/check_amount_glass"/>
+        android:layout_toRightOf="@id/check_amount_glass"
+        android:backgroundTint="@color/blue1"/>
 
     <Button
         android:id="@+id/check_amount_ml"
@@ -57,7 +59,8 @@
         android:text="ml"
         android:textSize="10dp"
         android:layout_below="@id/check_drink_name"
-        android:layout_toRightOf="@id/check_amount_bottle"/>
+        android:layout_toRightOf="@id/check_amount_bottle"
+        android:backgroundTint="@color/blue1"/>
 
 
 
@@ -74,7 +77,8 @@
             android:id="@+id/noBtn"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="아니오" />
+            android:text="아니오"
+            android:backgroundTint="@color/blue4"/>
 
 
         <Button
@@ -82,7 +86,8 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="네"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@color/blue4"/>
     </LinearLayout>
 
 </LinearLayout>

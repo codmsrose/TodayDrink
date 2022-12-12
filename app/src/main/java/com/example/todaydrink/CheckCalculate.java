@@ -34,9 +34,10 @@ public class CheckCalculate {
     static ArrayList<bloodAlcohol> bloodAlcoholArrayList = new ArrayList<bloodAlcohol>();
 
 
+    //상태의 기준이 되는 알콜농도
     static private double[] stateWithAlcohol = new double[5];
 
-    private int maxState;
+    private static int maxState;
 
 
     //몸무게 입력
@@ -90,7 +91,10 @@ public class CheckCalculate {
     }
 
 
-    public int calculate(String currentUser, double density, double newAmountOfAlcohol) {
+
+     //////////////////////////
+    //혈중알콜농도 계산
+    public static int calculate(String currentUser, double density, double newAmountOfAlcohol) {
 
         setNewAlcohol(density, newAmountOfAlcohol);
         calculateMaxAlcohol(currentUser);
@@ -100,8 +104,47 @@ public class CheckCalculate {
 
     }
 
+    /////////////////////////////////////
 
-    //방금 섭취한 알코올 A  밖에서는 이 함수를 통해 입력을 함
+
+
+    //TODO: 데이터베이스에 새로 넣어야 함
+
+
+    //상태 기준 업데이트
+    public void updateStateStandard(int newInput) {
+
+        switch (newInput){
+
+            case (0):
+                stateWithAlcohol[0]=(stateWithAlcohol[0]+bloodAlcoholLevel)/2;
+                break;
+
+            case (1):
+                stateWithAlcohol[1]=(stateWithAlcohol[2]+bloodAlcoholLevel)/2;
+                break;
+
+            case (2):
+                stateWithAlcohol[2]=(stateWithAlcohol[2]+bloodAlcoholLevel)/2;
+                break;
+
+            case (3):
+                stateWithAlcohol[3]=(stateWithAlcohol[3]+bloodAlcoholLevel)/2;
+                break;
+
+            case (4):
+                stateWithAlcohol[4]=(stateWithAlcohol[4]+bloodAlcoholLevel)/2;
+                break;
+
+        }
+
+
+    }
+
+
+
+
+    //방금 섭취한 알코올 A
     public static void setNewAlcohol(double density, double newAmountOfAlcohol) {
         newAlcohol = density*newAmountOfAlcohol*N;
 
@@ -137,21 +180,21 @@ public class CheckCalculate {
 
 
     //현재 혈중 알콜농도
-    private void calculateBloodAlcohol(){
+    private static void calculateBloodAlcohol(){
 
         for(int i=0; i<bloodAlcoholArrayList.size();i++){
             bloodAlcoholLevel+=bloodAlcoholArrayList.get(i).calculateWidMark();
         }
     }
 
-//만약 지금 혈중알콜농도가 각 상태별로 정한 알콜 농도를 넘어가면 화면에서 변화를 주기 위해서
-    public int updateState(double bloodAlcoholLevel){
+     // 만약 지금 혈중알콜농도가 각 상태별로 정한 알콜 농도를 넘어가면 화면에서 변화를 주기 위해서
+    public static int updateState(double bloodAlcoholLevel){
 
         if(bloodAlcoholLevel<stateWithAlcohol[0])
         {
             maxState =0;
         }
-        else if(stateWithAlcohol[0]<=bloodAlcoholLevel  && bloodAlcoholLevel<stateWithAlcohol[1])
+            else if(stateWithAlcohol[0]<=bloodAlcoholLevel  && bloodAlcoholLevel<stateWithAlcohol[1])
         {
             maxState =1;
         }
@@ -167,6 +210,8 @@ public class CheckCalculate {
         {
             maxState=4;
         }
+
+
         return maxState;
 
     }
@@ -182,9 +227,10 @@ public class CheckCalculate {
         private final String currentUser = ((InputDrinkActivity)InputDrinkActivity.mContext).currentUser;
 
         public void setState(int num, double Alcohol){
-            stateWithAlcohol[num-1]=(stateWithAlcohol[num-1]+Alcohol)/2;
-            //TODO: 데이터베이스에 넣기
-            //TODO: stateWithAlcohol이랑 데이터베이스의 각 상태의 혈중알콜농도랑 값이 똑같아요.
+
+            // stateWithAlcohol이랑 데이터베이스의 각 상태의 혈중알콜농도랑 값이 똑같아요.
+
+            //TODO: 왜 num-1 하시는지?
 
             reference.child("User").child(currentUser).child("상태").child(String.valueOf(num)).addValueEventListener(new ValueEventListener() {
                 @Override

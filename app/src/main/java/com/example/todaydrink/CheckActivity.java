@@ -42,11 +42,14 @@ public class CheckActivity extends AppCompatActivity {
 
     CheckCalculate checkCalculate; //혈중알콜농도 계산
 
-    Button state1;
-    Button state2;
-    Button state3;
-    Button state4;
-    Button state5;
+     Button state1;
+     Button state2;
+     Button state3;
+     Button state4;
+     Button state5;
+
+     int todayState;
+
 
 
     @Override
@@ -160,7 +163,43 @@ public class CheckActivity extends AppCompatActivity {
     }
 
 
+
+    //상태바 업데이트 하는 것
+    void updateState(int state) {
+
+
+
+        if (state >= 5) {
+            state5.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        } else if (state >= 4) {
+            state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        } else if (state >= 3) {
+
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        } else if (state >= 2) {
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        } else if (state >= 1) {
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        }
+
+
+    }
+
+
+
     //======다이얼로그==================================
+
+
     // TODO: 수정해야 하는 다이얼로그 함수입니다.
     //  일단 매개변수인 int position 을 String drink이런식으로  String을 매개변수로 받게 만들어주세요.
 
@@ -334,7 +373,6 @@ public class CheckActivity extends AppCompatActivity {
         checkDialog.findViewById(R.id.yesBtn).setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
-                     int state=0;
 
                      Calendar calendar = Calendar.getInstance();
                      int year = calendar.get(Calendar.YEAR);
@@ -407,41 +445,20 @@ public class CheckActivity extends AppCompatActivity {
                          }
                      });
 
-                     //상태바 변경
-                     if(state>=5)
-                     {
-                         state5.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                     }
-                     else if(state>=4)
-                     {
-                         state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                     }
-                     else if(state>=3)
-                     {
 
-                         state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                     }
-                     else if(state>=2)
-                     {
-                         state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                     }
-                     else if(state>=1)
-                     {
-                         state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                     }
+                    //TODO:여기서 계산하는 함수 호출
+                     // database에서 불러와야 함
+
+                     int tempState;
 
 
-
+                     //TODO: currentUser...
+                     tempState=CheckCalculate.calculate("0",0,0);
+                     if(todayState >= tempState)
+                     {
+                         todayState = tempState;
+                         updateState(todayState);
+                     }
 
                  }
              }
