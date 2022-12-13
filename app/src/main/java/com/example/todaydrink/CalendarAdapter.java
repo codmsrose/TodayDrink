@@ -159,7 +159,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
                 String yearMonDay = iYear + "년 " + iMonth + "월 " + iDay + "일";
 
-                reference.child("User").child(currentUser).child("날짜별 데이터").child(yearMonDay).addListenerForSingleValueEvent(new ValueEventListener() {
+                reference.child("User").child(currentUser).child("날짜별 데이터").child(yearMonDay).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -231,6 +231,25 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                             jinro_glass = drink_jinro.getGlass();
                         }
 
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setTitle("마신 술");
+                        // TODO builder.setMessage(); 아니면 TextView 이용해서
+
+                        // 선택한 날의 주량을 다이얼로그에 보여줌.
+                        builder.setMessage("카스 : " + cass_bottle + "병 " + cass_glass + "잔\n" +
+                                "테라 : " + terra_bottle + "병 " + terra_glass + "잔\n" +
+                                "하이네켄 : " + heineken_bottle + "병 " + heineken_glass + "잔\n" +
+                                "참이슬 : " + iseul_bottle + "병 " + iseul_glass + "잔\n" +
+                                "처음처럼 : " + start_bottle + "병 " + start_glass + "잔\n" +
+                                "진로 : " + jinro_bottle + "병 " + jinro_glass + "잔");
+
+
+                        builder.setPositiveButton("확인", null);
+                        // TODO 여기 변수에서 년, 월, 일 뺴오고 이걸 이용해서 데이터베이스에 해당 날짜에 저장된 마신 술 모두 보여주기
+                        // TODO 이 함수 안이 원하는 날짜를 눌렀을때 할 행동을 적을 공간
+                        // TODO 아래 다이얼로그에다가 setMessage로 보여주면 될거같아요
+                        builder.show();
+
                         // 데이터베이스가 존재한다면 모든 데이터를 가져와서 저장.
                     }
 
@@ -239,27 +258,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
                     }
                 });
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("마신 술");
-                // TODO builder.setMessage(); 아니면 TextView 이용해서
-
-                // 선택한 날의 주량을 다이얼로그에 보여줌.
-                // 약간의 문제는 그 날짜를 처음 클릭하면 모두 0으로 뜨고 한 번 더 누르면 정상 작동.
-                // 이 부분은 시간 액티비티와 마찬가지로 원인이 무엇인지 잘 모르겠네요...
-                builder.setMessage("카스 : " + cass_bottle + "병 " + cass_glass + "잔\n" +
-                        "테라 : " + terra_bottle + "병 " + terra_glass + "잔\n" +
-                        "하이네켄 : " + heineken_bottle + "병 " + heineken_glass + "잔\n" +
-                        "참이슬 : " + iseul_bottle + "병 " + iseul_glass + "잔\n" +
-                        "처음처럼 : " + start_bottle + "병 " + start_glass + "잔\n" +
-                        "진로 : " + jinro_bottle + "병 " + jinro_glass + "잔");
-
-
-                builder.setPositiveButton("확인", null);
-                // TODO 여기 변수에서 년, 월, 일 뺴오고 이걸 이용해서 데이터베이스에 해당 날짜에 저장된 마신 술 모두 보여주기
-                // TODO 이 함수 안이 원하는 날짜를 눌렀을때 할 행동을 적을 공간
-                // TODO 아래 다이얼로그에다가 setMessage로 보여주면 될거같아요
-                builder.show();
 
                 Toast.makeText(holder.itemView.getContext(), yearMonDay, Toast.LENGTH_SHORT).show();
             }
