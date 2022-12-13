@@ -88,9 +88,6 @@ public class AddGroupActivity extends AppCompatActivity {
         text_name.setVisibility(View.INVISIBLE);
         check_add.setVisibility(View.INVISIBLE);
 
-        // 로그인되어 있는 이용자의 ID를 주선자 역할에 넣음.
-        GroupMember leader = new GroupMember(currentUser);
-
         // 검색 버튼 클릭 시
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override

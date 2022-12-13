@@ -234,38 +234,38 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                      GroupMember groupMember = dataSnapshot.getValue(GroupMember.class);
 
-                     otherName = groupMember.getName();
                      otherId = groupMember.getId();
 
-                     reference.child("User").child(otherId).child("집 갈 시간").addValueEventListener(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                             TimeItem timeItem = snapshot.getValue(TimeItem.class);
+                    reference.child("User").child(otherId).child("집 갈 시간").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            TimeItem timeItem = snapshot.getValue(TimeItem.class);
 
-                             otherTime = timeItem.getTime();
+                            otherName = groupMember.getName();
+                            otherTime = timeItem.getTime();
 
-                             if (otherTime.equals("00 : 00 : 00")) {
+                            if (otherTime.equals("00 : 00 : 00")) {
                                 list.add(new TimeItem("-", otherName));
                                 sendNotification();
-                             }
-                             else {
+                            }
+                            else {
                                 list.add(new TimeItem(otherTime, otherName));
-                             }
+                            }
 
-                             RecyclerView recyclerView = findViewById(R.id.timer_recyclerView);
-                             recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2));
-                             recyclerView.setHasFixedSize(true);
+                            RecyclerView recyclerView = findViewById(R.id.timer_recyclerView);
+                            recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2));
+                            recyclerView.setHasFixedSize(true);
 
-                             TimeAdapter adapter = new TimeAdapter(list);
-                             recyclerView.setAdapter(adapter);
+                            TimeAdapter adapter = new TimeAdapter(list);
+                            recyclerView.setAdapter(adapter);
+                        }
 
-                         }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                         @Override
-                         public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
 
-                         }
-                     });
                 }
             }
 
@@ -275,6 +275,8 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
+
 
 
 

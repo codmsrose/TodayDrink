@@ -37,7 +37,7 @@ public class DutchPayPictureActivity extends AppCompatActivity implements View.O
     Bitmap albumBitmap;
     Bitmap cameraBitmap;
 
-    String leader;
+    String currentUser;
     int groupNumber;
 
     Bitmap image;
@@ -50,7 +50,7 @@ public class DutchPayPictureActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_dutch_pay_picture);
 
         Intent intent = getIntent();
-        leader = intent.getStringExtra("currentUser");
+        currentUser = intent.getStringExtra("currentUser");
         groupNumber = intent.getIntExtra("groupNumber", 1);
 
         imageViewText=(TextView)findViewById(R.id.imageViewText);
@@ -113,7 +113,7 @@ public class DutchPayPictureActivity extends AppCompatActivity implements View.O
 
         Intent intent = new Intent(this, DutchPayListActivity.class);
         intent.putExtra("menu", menu_list);
-        intent.putExtra("currentUser", leader);
+        intent.putExtra("currentUser", currentUser);
         intent.putExtra("groupNumber", groupNumber);
         startActivity(intent);
     }

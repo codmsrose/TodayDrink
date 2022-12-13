@@ -39,6 +39,7 @@ public class DutchPayListActivity extends AppCompatActivity {
 
     int groupNumber=1;
     int member=0;
+    String leader_Id, currentUser;
 
     boolean[][] tf;
     boolean[][] checkedId;
@@ -54,6 +55,7 @@ public class DutchPayListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         menu_list = intent.getStringArrayExtra("menu");
+        currentUser = intent.getStringExtra("currentUser");
         food_list = new String[menu_list.length];
         price_list = new String[menu_list.length];
         String[] price_index_list;
@@ -106,8 +108,8 @@ public class DutchPayListActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     GroupMember leader = dataSnapshot.getValue(GroupMember.class);
-                    String leaderName = leader.getName();
-                    member_list[member] = leaderName;
+                    member_list[member] = leader.name;
+                    leader_Id = leader.id;
                     member++;
                 }
             }
@@ -127,10 +129,6 @@ public class DutchPayListActivity extends AppCompatActivity {
                     // 참가자들의 이름을 멤버 리스트에 저장.
                     member_list[member] = groupMember.getName();
                     member++;
-                }
-                for (int i = 0; i < member; i++) {
-                    // 참가자들의 이름을 리스트에서 꺼내서 토스트로 출력.
-                    Toast.makeText(getApplicationContext(), member_list[i], Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -209,8 +207,36 @@ public class DutchPayListActivity extends AppCompatActivity {
                 for (int i = 0; i < receipt.length; i++) {
                     receipt_s[i] = String.valueOf(receipt[i]);
                 }
+
+                PayAmount amount = new PayAmount(receipt_s[0]);
+                reference.child("User").child(leader_Id).child("내어야할 금액").setValue(amount);
+
+                reference.child("방").child("방" + groupNumber).child("참가자").addValueEventListener(new ValueEventListener() {
+                    int i = 1;
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            GroupMember groupMember = dataSnapshot.getValue(GroupMember.class);
+                            String member_Id = groupMember.id;
+
+                            PayAmount payAmount = new PayAmount(receipt_s[i]);
+                            i++;
+
+                            reference.child("User").child(member_Id).child("내어야할 금액").setValue(payAmount);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 Intent intent = new Intent(DutchPayListActivity.this, DutchPayAmountActivity.class);
                 intent.putExtra("price", receipt_s);
+                intent.putExtra("member_list", member_list);
+                intent.putExtra("groupNumber", groupNumber);
+                intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
                 //TODO receipt에 member_list에 저장된 사람 순서대로 내야할 금액이 들어가 있음.
                 rootLinear.addView(test);

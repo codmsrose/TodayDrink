@@ -159,11 +159,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
                 String yearMonDay = iYear + "년 " + iMonth + "월 " + iDay + "일";
 
-                reference.child("User").child(currentUser).child("날짜별 데이터").child(yearMonDay).addValueEventListener(new ValueEventListener() {
+                reference.child("User").child(currentUser).child("날짜별 데이터").child(yearMonDay).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        int none = 0;
                         // 선택된 날짜 아래에 대한 데이터베이스가 존재하지 않을 경우 병과 잔 모두 0으로.
                         if (snapshot.child("카스").getValue(Drink.class) == null) {
                             cass_bottle = 0;
