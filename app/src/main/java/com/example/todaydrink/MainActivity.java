@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView_profile;
     ImageButton ib_home, ib_measure, ib_statistics, ib_board;
     static int groupNumber = 0;
+    int memberNumber = 0;
     public static int REQUEST_CODE = 0;
 
     @SuppressLint("MissingInflatedId")
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BoardActivity.class);
+                intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
             }
         });
@@ -108,22 +110,85 @@ public class MainActivity extends AppCompatActivity {
         btn_group1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                intent.putExtra("currentUser", currentUser);
-                groupNumber = 1;
-                intent.putExtra("groupNumber", groupNumber);
-                startActivity(intent);
+                reference.child("방").child("방1").child("참가자").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                            memberNumber++;
+                        }
+
+                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                        intent.putExtra("memberNumber", memberNumber + 1);
+                        intent.putExtra("currentUser", currentUser);
+                        groupNumber = 1;
+                        memberNumber = 0;
+                        intent.putExtra("groupNumber", groupNumber);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
         btn_group2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                intent.putExtra("currentUser", currentUser);
-                groupNumber = 2;
-                intent.putExtra("groupNumber", groupNumber);
-                startActivity(intent);
+                reference.child("방").child("방2").child("참가자").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                            memberNumber++;
+                        }
+                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                        intent.putExtra("currentUser", currentUser);
+                        intent.putExtra("memberNumber", memberNumber + 1);
+                        groupNumber = 2;
+                        memberNumber = 0;
+                        intent.putExtra("groupNumber", groupNumber);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        btn_group3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reference.child("방").child("방3").child("참가자").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                            memberNumber++;
+                        }
+                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                        intent.putExtra("currentUser", currentUser);
+                        intent.putExtra("memberNumber", memberNumber + 1);
+                        groupNumber = 3;
+                        memberNumber = 0;
+                        intent.putExtra("groupNumber", groupNumber);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 

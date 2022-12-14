@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +27,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     String leader;
     String currentUser;
     int groupNumber;
+    int memberNumber;
 
 
     @Override
@@ -35,8 +37,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = getIntent();
         currentUser = intent.getStringExtra("currentUser");
-        groupNumber = intent.getIntExtra("groupNumber", 1);
-
+        groupNumber = intent.getIntExtra("groupNumber", 0);
+        // 참가자 명 수
+        memberNumber = intent.getIntExtra("memberNumber", 0);
         dutchPayBtn = (Button)findViewById(R.id.menu_pay);
         participantBtn = (Button)findViewById(R.id.menu_participant);
         timeBtn = (Button)findViewById(R.id.menu_time);
