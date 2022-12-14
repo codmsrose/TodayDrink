@@ -73,7 +73,7 @@ public class DutchPayListActivity extends AppCompatActivity {
             array[i] = i;
         }
 
-        howManyTrue = new int[person];
+        howManyTrue = new int[menu_list.length];
         receipt = new int[person];
         receipt_s = new String[person];
         //groupNumber = intent.getIntExtra("groupNumber", 1);
@@ -173,6 +173,7 @@ public class DutchPayListActivity extends AppCompatActivity {
                             tf[num] = checkedId[num];
                         }
                     });
+                    build.setNegativeButton("취소", null);
                     build.show();
                 }
             });
@@ -190,7 +191,7 @@ public class DutchPayListActivity extends AppCompatActivity {
                 for(int i=0;i<menu_list.length;i++) {
                     for (int j = 0; j < person; j++) {
                         if (tf[i][j]) {
-                            howManyTrue[i]++;
+                            howManyTrue[i]+=1;
                         }
                     }
                 }
@@ -203,9 +204,9 @@ public class DutchPayListActivity extends AppCompatActivity {
                     }
                 }
 
-                TextView test = new TextView(DutchPayListActivity.this);
                 for (int i = 0; i < receipt.length; i++) {
                     receipt_s[i] = String.valueOf(receipt[i]);
+                    Log.d("price", String.valueOf(receipt[i]));
                 }
 
                 PayAmount amount = new PayAmount(receipt_s[0]);
@@ -238,8 +239,6 @@ public class DutchPayListActivity extends AppCompatActivity {
                 intent.putExtra("groupNumber", groupNumber);
                 intent.putExtra("currentUser", currentUser);
                 startActivity(intent);
-                //TODO receipt에 member_list에 저장된 사람 순서대로 내야할 금액이 들어가 있음.
-                rootLinear.addView(test);
             }
         });
 
