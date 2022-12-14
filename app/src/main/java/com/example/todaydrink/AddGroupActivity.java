@@ -59,6 +59,7 @@ public class AddGroupActivity extends AppCompatActivity {
 
         Intent get_Intent = getIntent();
         String currentUser = get_Intent.getStringExtra("currentUser");
+        int roomNumber = get_Intent.getIntExtra("groupNumber", 0);
 
         databaseReference.child("User").child(currentUser).child("프로필").addValueEventListener(new ValueEventListener() {
             @Override
@@ -137,7 +138,7 @@ public class AddGroupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 그 이용자의 ID, 이름을 받아서 참가자 역할에 넣음.
                 GroupMember member = new GroupMember(searchId, searchName);
-                databaseReference.child("방").child("방" + groupNumber).child("참가자").child(searchId).setValue(member);
+                databaseReference.child("방").child("방" + (roomNumber + 1)).child("참가자").child(searchId).setValue(member);
             }
         });
 
@@ -147,10 +148,10 @@ public class AddGroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GroupMember leaderData = new GroupMember(currentUser, currentUserName);
-                databaseReference.child("방").child("방" + groupNumber).child("주선자").child(currentUser).setValue(leaderData);
+                databaseReference.child("방").child("방" + (roomNumber + 1)).child("주선자").child(currentUser).setValue(leaderData);
 
                 Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
-                intent.putExtra("groupNumber", groupNumber);
+                intent.putExtra("groupNumber", (roomNumber + 1));
                 setResult(RESULT_OK, intent);
                 groupNumber++;
                 finish();

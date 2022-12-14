@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_addgroup, btn_group1, btn_group2;
     ImageView imageView_profile;
     ImageButton ib_home, ib_measure, ib_statistics, ib_board;
+    static int groupNumber = 0;
     public static int REQUEST_CODE = 0;
 
     @SuppressLint("MissingInflatedId")
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddGroupActivity.class);
                 intent.putExtra("currentUser", currentUser);
+                intent.putExtra("groupNumber", groupNumber);
                 REQUEST_CODE++;
                 startActivityForResult(intent, REQUEST_CODE);
             }
@@ -107,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 intent.putExtra("currentUser", currentUser);
-                intent.putExtra("groupNumber", 1);
+                groupNumber = 1;
+                intent.putExtra("groupNumber", groupNumber);
                 startActivity(intent);
             }
         });
@@ -117,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 intent.putExtra("currentUser", currentUser);
-                intent.putExtra("groupNumber", 2);
+                groupNumber = 2;
+                intent.putExtra("groupNumber", groupNumber);
                 startActivity(intent);
             }
         });
@@ -128,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getValue(GroupMember.class) != null) {
                         btn_group1.setVisibility(View.VISIBLE);
+                        groupNumber = 1;
                     }
                 }
             }
@@ -144,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getValue(GroupMember.class) != null) {
                         btn_group2.setVisibility(View.VISIBLE);
+                        groupNumber = 2;
                     }
                 }
             }

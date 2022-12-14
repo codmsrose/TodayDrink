@@ -236,7 +236,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
                      otherId = groupMember.getId();
 
-                    reference.child("User").child(otherId).child("집 갈 시간").addValueEventListener(new ValueEventListener() {
+                    reference.child("User").child(otherId).child("집 갈 시간").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             TimeItem timeItem = snapshot.getValue(TimeItem.class);
@@ -244,7 +244,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
                             otherName = groupMember.getName();
                             otherTime = timeItem.getTime();
 
-                            if (otherTime.equals("00 : 00 : 00")) {
+                            if (otherTime.equals("00 : 00 : 00") || otherTime.equals("0 : 00 : 00")) {
                                 list.add(new TimeItem("-", otherName));
                                 sendNotification();
                             }
