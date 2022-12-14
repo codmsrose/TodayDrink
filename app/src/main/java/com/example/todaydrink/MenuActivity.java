@@ -47,7 +47,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         participantBtn.setOnClickListener(this);
         timeBtn.setOnClickListener(this);
 
-        // TODO 더치페이 누르면 주선자일때 바로 사진 찍는걸로 안나와서 위치 바꿈.
         reference.child("방").child("방" + groupNumber).child("주선자").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -74,6 +73,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, DutchPayPictureActivity.class);
                 intent.putExtra("currentUser", currentUser);
                 intent.putExtra("groupNumber", groupNumber);
+                intent.putExtra("memberNumber", memberNumber);
                 startActivity(intent);
             }
             else {
@@ -87,6 +87,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, TimeActivity.class);
             intent.putExtra("currentUser", currentUser);
             intent.putExtra("groupNumber", groupNumber);
+            startActivity(intent);
+        }
+        else if(view == participantBtn){
+            Intent intent = new Intent(this, ParticipantActivity.class);
+            intent.putExtra("currentUser", currentUser);
+            intent.putExtra("groupNumber", groupNumber);
+            intent.putExtra("memberNumber", memberNumber);
             startActivity(intent);
         }
     }
