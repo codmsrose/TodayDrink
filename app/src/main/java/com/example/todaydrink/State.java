@@ -1,16 +1,16 @@
 package com.example.todaydrink;
 
 public class State {
-    String density;
+    int density;
     String state;
 
     public State() { }
 
-    public String getDensity() {
+    public int getDensity() {
         return density;
     }
 
-    public void setDensity(String density) {
+    public void setDensity(int density) {
         this.density = density;
     }
 
@@ -22,7 +22,7 @@ public class State {
         this.state = state;
     }
 
-    public State(String density, String state) {
+    public State(int density, String state) {
         this.density = density;
         this.state = state;
     }

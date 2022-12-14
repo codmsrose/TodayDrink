@@ -224,7 +224,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void readTime() {
 
-        reference.child("방").child("방" + groupNumber).child("참가자").addValueEventListener(new ValueEventListener() {
+        reference.child("방").child("방" + groupNumber).child("참가자").addListenerForSingleValueEvent(new ValueEventListener() {
             String otherId = "";
             String otherName = "";
             String otherTime = "";
@@ -236,7 +236,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
                      otherId = groupMember.getId();
 
-                    reference.child("User").child(otherId).child("집 갈 시간").addListenerForSingleValueEvent(new ValueEventListener() {
+                    reference.child("User").child(otherId).child("집 갈 시간").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             TimeItem timeItem = snapshot.getValue(TimeItem.class);
@@ -251,13 +251,6 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
                             else {
                                 list.add(new TimeItem(otherTime, otherName));
                             }
-
-                            RecyclerView recyclerView = findViewById(R.id.timer_recyclerView);
-                            recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2));
-                            recyclerView.setHasFixedSize(true);
-
-                            TimeAdapter adapter = new TimeAdapter(list);
-                            recyclerView.setAdapter(adapter);
                         }
 
                         @Override
@@ -266,6 +259,12 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     });
 
+                    RecyclerView recyclerView = findViewById(R.id.timer_recyclerView);
+                    recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2));
+                    recyclerView.setHasFixedSize(true);
+
+                    TimeAdapter adapter = new TimeAdapter(list);
+                    recyclerView.setAdapter(adapter);
                 }
             }
 

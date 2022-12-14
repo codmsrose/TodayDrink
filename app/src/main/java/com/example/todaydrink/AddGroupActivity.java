@@ -154,6 +154,7 @@ public class AddGroupActivity extends AppCompatActivity {
                 intent.putExtra("groupNumber", (roomNumber + 1));
                 setResult(RESULT_OK, intent);
                 groupNumber++;
+
                 finish();
             }
         });
