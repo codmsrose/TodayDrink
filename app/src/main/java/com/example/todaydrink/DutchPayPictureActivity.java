@@ -108,8 +108,6 @@ public class DutchPayPictureActivity extends AppCompatActivity implements View.O
         mTess.setImage(image);
         OCRresult = mTess.getUTF8Text();
         String[] menu_list = OCRresult.split("\\n");
-        //TextView OCRTextView = (TextView)findViewById(R.id.OCRTextView);
-        //OCRTextView.setText(OCRresult);
 
         Intent intent = new Intent(this, DutchPayListActivity.class);
         intent.putExtra("menu", menu_list);

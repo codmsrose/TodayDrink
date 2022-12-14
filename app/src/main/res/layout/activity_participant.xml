@@ -3,7 +3,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="30dp"
+    android:layout_marginTop="20dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -11,7 +13,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="참가자"
-        android:textSize="40dp" />
+        android:textSize="40dp"
+        android:layout_marginBottom="5dp"/>
 
     <Button
         android:layout_width="match_parent"
@@ -20,15 +23,15 @@
 
     <RelativeLayout
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
-        <Button
-            android:id="@+id/Participant_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+"
-            android:textSize="35dp"
-            android:backgroundTint="@color/blue1"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/participant_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,7 +46,7 @@
                 android:text="주선자 바꾸기"
                 android:textSize="15dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="@color/blue1"/>
+                android:backgroundTint="@color/light_gray"/>
 
             <Button
                 android:id="@+id/Participant_host_save"
@@ -51,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:text="저장"
                 android:textSize="15dp"
-                android:backgroundTint="@color/blue1"/>
+                android:backgroundTint="@color/blue1"
+                android:layout_marginRight="20dp"/>
 
         </LinearLayout>>
 

@@ -192,6 +192,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btn_group3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                intent.putExtra("currentUser", currentUser);
+                groupNumber = 3;
+                intent.putExtra("groupNumber", groupNumber);
+                startActivity(intent);
+            }
+        });
+
         reference.child("방").child("방1").child("주선자").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
