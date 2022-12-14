@@ -22,7 +22,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter< ParticipantAdapter
             super(itemView) ;
 
             // 뷰 객체에 대한 참조. (hold strong reference)
-
+            name = itemView.findViewById(R.id.participant_recyclerView_name) ;
         }
     }
 
