@@ -26,7 +26,7 @@ public class RegisterActivity2 extends AppCompatActivity {
 
     EditText state1_amount, state2_amount, state3_amount, state4_amount, state5_amount;
     String amount1, amount2, amount3, amount4, amount5;
-    String state1, state2, state3, state4, state5;
+    int state1, state2, state3, state4, state5;
     Button register_btn;
 
     @SuppressLint("MissingInflatedId")
@@ -54,10 +54,10 @@ public class RegisterActivity2 extends AppCompatActivity {
                 amount1 = state1_amount.getText().toString();
                 switch (checkedId) {
                     case R.id.bottle1_radio:
-                        state1 = amount1 + "병";
+                        state1 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount1) * 360);
                         break;
                     case R.id.glass1_radio:
-                        state1 = amount1 + "잔";
+                        state1 = CheckCalculate.calculate(strId, 1, Integer.parseInt(amount1) * 50);
                         break;
                 }
             }
@@ -71,10 +71,10 @@ public class RegisterActivity2 extends AppCompatActivity {
                 RadioButton radioButton = group.findViewById(checkedId);
                 switch (checkedId) {
                     case R.id.bottle2_radio:
-                        state2 = amount2 + "병";
+                        state2 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount2) * 360);
                         break;
                     case R.id.glass2_radio:
-                        state2 = amount2 + "잔";
+                        state2 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount2) * 50);
                         break;
                 }
             }
@@ -88,10 +88,10 @@ public class RegisterActivity2 extends AppCompatActivity {
                 RadioButton radioButton = group.findViewById(checkedId);
                 switch (checkedId) {
                     case R.id.bottle3_radio:
-                        state3 = amount3 + "병";
+                        state3 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount3) * 360);
                         break;
                     case R.id.glass3_radio:
-                        state3 = amount3 + "잔";
+                        state3 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount3) * 50);
                         break;
                 }
             }
@@ -105,10 +105,10 @@ public class RegisterActivity2 extends AppCompatActivity {
                 RadioButton radioButton = group.findViewById(checkedId);
                 switch (checkedId) {
                     case R.id.bottle4_radio:
-                        state4 = amount4 + "병";
+                        state4 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount4) * 360);
                         break;
                     case R.id.glass4_radio:
-                        state4 = amount4 + "잔";
+                        state4 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount4) * 50);
                         break;
                 }
             }
@@ -122,10 +122,10 @@ public class RegisterActivity2 extends AppCompatActivity {
                 amount5 = state5_amount.getText().toString();
                 switch (checkedId) {
                     case R.id.bottle5_radio:
-                        state5 = amount5 + "병";
+                        state5 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount5) * 360);
                         break;
                     case R.id.glass5_radio:
-                        state5 = amount5 + "잔";
+                        state5 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount5) * 50);
                         break;
                 }
             }

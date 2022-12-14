@@ -121,7 +121,7 @@ public class CheckCalculate {
                 break;
 
             case (1):
-                stateWithAlcohol[1]=(stateWithAlcohol[2]+bloodAlcoholLevel)/2;
+                stateWithAlcohol[1]=(stateWithAlcohol[1]+bloodAlcoholLevel)/2;
                 break;
 
             case (2):
@@ -163,7 +163,6 @@ public class CheckCalculate {
                 if (snapshot.getValue(UserAccount.class) != null) {
                     UserAccount user = snapshot.getValue(UserAccount.class);
 
-                    String account = user.account;
                     setR(user.gender);
                     setWeight(Double.parseDouble(user.getWeight()));
                 }
@@ -236,7 +235,7 @@ public class CheckCalculate {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     State state = snapshot.getValue(State.class);
-                    state.density = String.valueOf(stateWithAlcohol[num - 1]);
+                    state.density = Integer.parseInt(String.valueOf(stateWithAlcohol[num - 1]));
                 }
 
                 @Override

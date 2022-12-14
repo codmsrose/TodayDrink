@@ -1,5 +1,7 @@
 package com.example.todaydrink;
 
+import static com.example.todaydrink.CheckCalculate.updateState;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,8 +39,6 @@ public class InputDrinkActivity extends AppCompatActivity {
     CheckAdapter CheckAdapter;
     private ArrayList<CheckItems> mArrayList;
 
-    CheckCalculate checkCalculate = new CheckCalculate();
-
     Button state1, state2, state3, state4, state5, btn_state, btn_game;
 
     ImageView image_cass, image_terra, image_heineken, image_iseul, image_start, image_jinro;
@@ -46,12 +47,12 @@ public class InputDrinkActivity extends AppCompatActivity {
     int cass_glass, terra_glass, heineken_glass, iseul_glass, start_glass, jinro_glass = 0;
     double cass_ml, terra_ml, heineken_ml, iseul_ml, start_ml, jinro_ml = 0;
     int state = 0;
-    int cass_state = 0;
-    int terra_state = 0;
-    int heineken_state = 0;
-    int iseul_state = 0;
-    int start_state = 0;
-    int jinro_state = 0;
+    static int cass_state = 0;
+    static int terra_state = 0;
+    static int heineken_state = 0;
+    static int iseul_state = 0;
+    static int start_state = 0;
+    static int jinro_state = 0;
     double alcohol_sum = 0;
 
     // 데이터베이스에 오늘 날짜에 맞게 저장하기 위해
@@ -116,6 +117,9 @@ public class InputDrinkActivity extends AppCompatActivity {
                         text_cass.setText("카스 : " + cass_bottle + "병 " + cass_glass + "잔");
                         text_cass.setVisibility(View.VISIBLE);
                     }
+
+                    cass_state = CheckCalculate.calculate(currentUser, 4, cass_ml);
+                    addState();
                 }
             }
 
@@ -138,6 +142,9 @@ public class InputDrinkActivity extends AppCompatActivity {
                         text_terra.setText("테라 : " + terra_bottle + "병 " + terra_glass + "잔");
                         text_terra.setVisibility(View.VISIBLE);
                     }
+
+                    terra_state = CheckCalculate.calculate(currentUser, 4.6, terra_ml);
+                    addState();
                 }
             }
 
@@ -160,6 +167,9 @@ public class InputDrinkActivity extends AppCompatActivity {
                         text_heineken.setText("하이네켄 : " + heineken_bottle + "병 " + heineken_glass + "잔");
                         text_heineken.setVisibility(View.VISIBLE);
                     }
+
+                    heineken_state = CheckCalculate.calculate(currentUser, 5, heineken_ml);
+                    addState();
                 }
             }
 
@@ -182,6 +192,9 @@ public class InputDrinkActivity extends AppCompatActivity {
                         text_iseul.setText("참이슬 : " + iseul_bottle + "병 " + iseul_glass + "잔");
                         text_iseul.setVisibility(View.VISIBLE);
                     }
+
+                    iseul_state = CheckCalculate.calculate(currentUser, 16.5, iseul_ml);
+                    addState();
                 }
             }
 
@@ -204,6 +217,9 @@ public class InputDrinkActivity extends AppCompatActivity {
                         text_start.setText("처음처럼 : " + start_bottle + "병 " + start_glass + "잔");
                         text_start.setVisibility(View.VISIBLE);
                     }
+
+                    start_state = CheckCalculate.calculate(currentUser,16.5,start_ml);
+                    addState();
                 }
             }
 
@@ -226,6 +242,9 @@ public class InputDrinkActivity extends AppCompatActivity {
                         text_jinro.setText("진로 : " + jinro_bottle + "병 " + jinro_glass + "잔");
                         text_jinro.setVisibility(View.VISIBLE);
                     }
+
+                    jinro_state=CheckCalculate.calculate(currentUser,16.5,jinro_ml);
+                    addState();
                 }
             }
 
@@ -252,8 +271,6 @@ public class InputDrinkActivity extends AppCompatActivity {
                 text_cass.setText("카스 : " + cass_bottle + "병 " + cass_glass + "잔");
                 text_cass.setVisibility(View.VISIBLE);
                 addDrink(currentUser, "카스", cass_bottle, cass_glass, cass_ml);
-                cass_state = checkCalculate.calculate(currentUser, 4, cass_ml);
-                addState();
             }
         });
 
@@ -273,8 +290,6 @@ public class InputDrinkActivity extends AppCompatActivity {
                 text_heineken.setText("하이네켄 : " + heineken_bottle + "병 " + heineken_glass + "잔");
                 text_heineken.setVisibility(View.VISIBLE);
                 addDrink(currentUser, "하이네켄", heineken_bottle, heineken_glass, heineken_ml);
-                heineken_state = checkCalculate.calculate(currentUser, 5, heineken_ml);
-                addState();
             }
         });
 
@@ -291,8 +306,6 @@ public class InputDrinkActivity extends AppCompatActivity {
                 text_terra.setText("테라 : " + terra_bottle + "병 " + terra_glass + "잔");
                 text_terra.setVisibility(View.VISIBLE);
                 addDrink(currentUser, "테라", terra_bottle, terra_glass, terra_ml);
-                terra_state = checkCalculate.calculate(currentUser, 4.6, terra_ml);
-                addState();
             }
         });
 
@@ -309,8 +322,6 @@ public class InputDrinkActivity extends AppCompatActivity {
                 text_iseul.setText("참이슬 : " + iseul_bottle + "병 " + iseul_glass + "잔");
                 text_iseul.setVisibility(View.VISIBLE);
                 addDrink(currentUser, "참이슬", iseul_bottle, iseul_glass, iseul_ml);
-                iseul_state = checkCalculate.calculate(currentUser, 16.5, iseul_ml);
-                addState();
             }
         });
 
@@ -327,8 +338,6 @@ public class InputDrinkActivity extends AppCompatActivity {
                 text_start.setText("처음처럼 : " + start_bottle + "병 " + start_glass + "잔");
                 text_start.setVisibility(View.VISIBLE);
                 addDrink(currentUser, "처음처럼", start_bottle, start_glass, start_ml);
-                start_state = checkCalculate.calculate(currentUser, 16.5, start_ml);
-                addState();
             }
         });
 
@@ -348,42 +357,10 @@ public class InputDrinkActivity extends AppCompatActivity {
                 text_jinro.setText("진로 : " + jinro_bottle + "병 " + jinro_glass + "잔");
                 text_jinro.setVisibility(View.VISIBLE);
                 addDrink(currentUser, "진로", jinro_bottle, jinro_glass, jinro_ml);
-                jinro_state = checkCalculate.calculate(currentUser, 16.5, jinro_ml);
-                addState();
+
+                // 알콜 계산
             }
         });
-
-        if(state>=5)
-        {
-            state5.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-        }
-        else if(state>=4)
-        {
-            state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-        }
-        else if(state>=3)
-        {
-
-            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-        }
-        else if(state>=2)
-        {
-            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
-            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-        }
-        else if(state>=1)
-        {
-            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-        }
 
         AlcoholSum alcoholSum = new AlcoholSum(String.valueOf(state));
         reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child("총 알콜 농도").setValue(alcoholSum);
@@ -415,5 +392,37 @@ public class InputDrinkActivity extends AppCompatActivity {
 
     public void addState() {
         state = cass_state + terra_state + heineken_state + iseul_state + start_state + jinro_state;
+
+        updateState(state);
+    }
+
+    void updateState(int state) {
+
+
+
+        if (state >= 5) {
+            state5.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        } else if (state >= 4) {
+            state4.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        } else if (state >= 3) {
+
+            state3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        } else if (state >= 2) {
+            state2.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        } else if (state >= 1) {
+            state1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+        }
+
+
     }
 }

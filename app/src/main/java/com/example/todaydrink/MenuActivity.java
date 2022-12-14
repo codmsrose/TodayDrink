@@ -89,5 +89,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             intent.putExtra("groupNumber", groupNumber);
             startActivity(intent);
         }
+        else if (view == participantBtn){
+            Intent intent = new Intent(this, ParticipantActivity.class);
+            intent.putExtra("currentUser", currentUser);
+            intent.putExtra("groupNumber", groupNumber);
+            startActivity(intent);
+        }
     }
 }
