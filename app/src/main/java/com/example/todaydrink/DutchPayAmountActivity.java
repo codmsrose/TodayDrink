@@ -135,7 +135,7 @@ public class DutchPayAmountActivity extends AppCompatActivity {
                     String payAmount = amount.payAmount;
 
                     payText.setText(currentUserName + "님이 내셔야할 금액은");
-                    payPriceText.setText(groupNumber + "차 : " + payAmount);
+                    payPriceText.setText(groupNumber + "차 : " + payAmount+" 원");
                 }
             }
 
