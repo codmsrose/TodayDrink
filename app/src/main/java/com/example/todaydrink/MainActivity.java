@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
 
-    Button btn_addgroup, btn_group1, btn_group2;
+    Button btn_addgroup, btn_group1, btn_group2, btn_group3;
     ImageView imageView_profile;
     ImageButton ib_home, ib_measure, ib_statistics, ib_board;
     static int groupNumber = 0;
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         imageView_profile = findViewById(R.id.imageView_profile);
         btn_group1 = findViewById(R.id.btn_group1);
         btn_group2 = findViewById(R.id.btn_group2);
+        btn_group3 = findViewById(R.id.btn_group3);
 
         btn_group1.setVisibility(View.GONE);
         btn_group2.setVisibility(View.GONE);
@@ -150,6 +151,23 @@ public class MainActivity extends AppCompatActivity {
                     if (dataSnapshot.getValue(GroupMember.class) != null) {
                         btn_group2.setVisibility(View.VISIBLE);
                         groupNumber = 2;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.child("방").child("방3").child("주선자").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getValue(GroupMember.class) != null) {
+                        btn_group3.setVisibility(View.VISIBLE);
+                        groupNumber = 3;
                     }
                 }
             }

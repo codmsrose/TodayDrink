@@ -12,7 +12,8 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="400dp"
+        android:background="@drawable/upload_border"/>
 
     <TextView
         android:id="@+id/imageViewText"
@@ -28,6 +29,7 @@
         android:layout_marginBottom="1dp"
         android:gravity="center"
         android:text="사진 업로드"
+        android:textSize="20dp"
         android:textColor="#000000" />
 
 

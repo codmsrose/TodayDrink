@@ -1,6 +1,7 @@
 package com.example.todaydrink;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -42,9 +43,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         dutchPayBtn.setOnClickListener(this);
         participantBtn.setOnClickListener(this);
         timeBtn.setOnClickListener(this);
-    }
 
-    public void onClick(View view){
+        // TODO 더치페이 누르면 주선자일때 바로 사진 찍는걸로 안나와서 위치 바꿈.
         reference.child("방").child("방" + groupNumber).child("주선자").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -62,7 +62,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+    }
 
+
+    public void onClick(View view){
         if(view == dutchPayBtn){
             if (currentUser.equals(leader)) {
                 Intent intent = new Intent(this, DutchPayPictureActivity.class);

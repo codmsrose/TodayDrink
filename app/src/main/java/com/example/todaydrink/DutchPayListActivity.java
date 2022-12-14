@@ -48,7 +48,7 @@ public class DutchPayListActivity extends AppCompatActivity {
     int[] howManyTrue;
     int[] receipt;
     String[] receipt_s;
-    int person = 5;
+    int person = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +60,9 @@ public class DutchPayListActivity extends AppCompatActivity {
         price_list = new String[menu_list.length];
         String[] price_index_list;
 
-        member_list = new String[5];
-        checkedId = new boolean[menu_list.length][5];
-        tf = new boolean[menu_list.length][5];
+        member_list = new String[person];
+        checkedId = new boolean[menu_list.length][person];
+        tf = new boolean[menu_list.length][person];
         for(int i=0;i<menu_list.length;i++){
             for(int j=0;j<member_list.length;j++){
                 tf[i][j] = true;
@@ -73,9 +73,9 @@ public class DutchPayListActivity extends AppCompatActivity {
             array[i] = i;
         }
 
-        howManyTrue = new int[5];
-        receipt = new int[5];
-        receipt_s = new String[5];
+        howManyTrue = new int[person];
+        receipt = new int[person];
+        receipt_s = new String[person];
         //groupNumber = intent.getIntExtra("groupNumber", 1);
 
         LinearLayout rootLinear = new LinearLayout(this);

@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/payPriceText"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:text="1차 : 13000"
         android:textAlignment="center"
@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/accountNumberText"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:text="계좌번호"
         android:layout_centerHorizontal="true"

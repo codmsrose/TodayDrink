@@ -8,14 +8,32 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/btn_group1"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+        android:width="300dp"
+        android:height="60dp"
+        android:backgroundTint="@color/blue1"
+        android:text="1차"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <Button
         android:id="@+id/btn_group2"
         android:layout_width="300dp"
         android:layout_height="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:width="300dp"
         android:height="60dp"
         android:backgroundTint="@color/blue1"
         android:text="2차"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,26 +42,42 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_group1" />
 
     <Button
-        android:id="@+id/btn_group1"
+        android:id="@+id/btn_group3"
         android:layout_width="300dp"
         android:layout_height="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:width="300dp"
         android:height="60dp"
         android:backgroundTint="@color/blue1"
-        android:text="1차"
+        android:text="3차"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_addgroup" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_group2" />
+
+    <Button
+        android:id="@+id/btn_addgroup"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+        android:width="300dp"
+        android:height="60dp"
+        android:text="+"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/blue1"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_group3" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="130dp"
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:text="오늘의 술자리"
@@ -53,27 +87,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_addgroup"
-        android:layout_width="300dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="30dp"
-        android:width="300dp"
-        android:height="60dp"
-        android:text="+"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/blue1"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
-
     <ImageButton
         android:id="@+id/ib_measure"
         android:layout_width="90dp"
         android:layout_height="100dp"
         android:layout_marginStart="350dp"
-        android:layout_marginBottom="112dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="20dp"
         android:backgroundTint="@color/white"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -85,8 +105,8 @@
 
     <ImageButton
         android:id="@+id/ib_statistics"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="75dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="@color/white"
@@ -100,8 +120,8 @@
 
     <ImageButton
         android:id="@+id/ib_home"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="@color/white"
         android:scaleType="centerCrop"
@@ -114,8 +134,8 @@
 
     <ImageButton
         android:id="@+id/ib_board"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="75dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="@color/white"
@@ -135,7 +155,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_addgroup"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
