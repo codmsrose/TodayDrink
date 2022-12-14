@@ -18,7 +18,7 @@ public class ParticipantActivity extends AppCompatActivity implements View.OnCli
 
     RecyclerView recyclerView;
     ParticipantAdapter ParticipantAdapter;
-    ArrayList<String> list;
+
 
 
     @Override
@@ -26,28 +26,26 @@ public class ParticipantActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant);
 
-        list = new ArrayList<>();
-        list.add("아이템 1");
-        list.add("아이템 2");
-        list.add("아이템 3");
-        list.add("아이템 4");
-        list.add("아이템 5");
-        list.add("아이템 6");
 
+        // 리사이클러뷰에 표시할 데이터 리스트 생성.
+        ArrayList<String> list = new ArrayList<>();
+        for (int i=0; i<100; i++) {
+            list.add(String.format("TEXT %d", i)) ;
+        }
 
 
 
         plusBtn.setOnClickListener(this);
 
-        recyclerView = findViewById(R.id.participant_recyclerView);
 
-        //매니저
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        RecyclerView recyclerView = findViewById(R.id.participant_recyclerView) ;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
 
-        //리사이클뷰에 어댑터
-        ParticipantAdapter = new ParticipantAdapter(list);
-        recyclerView.setAdapter(ParticipantAdapter);
+        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+        ParticipantAdapter adapter = new ParticipantAdapter(list) ;
+        recyclerView.setAdapter(adapter) ;
+
 
 
 
