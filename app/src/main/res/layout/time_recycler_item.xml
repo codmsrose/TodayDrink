@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:layout_margin="15dp">
 
-<!--  TODO: 동그라미로 고치기 -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/other_person_timer"
         android:layout_width="150dp"
