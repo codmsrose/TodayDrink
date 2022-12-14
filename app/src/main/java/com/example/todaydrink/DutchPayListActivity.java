@@ -38,6 +38,7 @@ public class DutchPayListActivity extends AppCompatActivity {
     String[] price_list;
 
     int groupNumber;
+    int memberNumber;
     int member=0;
     String leader_Id, currentUser;
 
@@ -56,13 +57,15 @@ public class DutchPayListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         menu_list = intent.getStringArrayExtra("menu");
         currentUser = intent.getStringExtra("currentUser");
+        groupNumber = intent.getIntExtra("groupNumber", 1);
+        memberNumber = intent.getIntExtra("memberNumber", 0);
         food_list = new String[menu_list.length];
         price_list = new String[menu_list.length];
         String[] price_index_list;
 
-        member_list = new String[person];
-        checkedId = new boolean[menu_list.length][person];
-        tf = new boolean[menu_list.length][person];
+        member_list = new String[memberNumber];
+        checkedId = new boolean[menu_list.length][memberNumber];
+        tf = new boolean[menu_list.length][memberNumber];
         for(int i=0;i<menu_list.length;i++){
             for(int j=0;j<member_list.length;j++){
                 tf[i][j] = true;
@@ -74,9 +77,8 @@ public class DutchPayListActivity extends AppCompatActivity {
         }
 
         howManyTrue = new int[menu_list.length];
-        receipt = new int[person];
-        receipt_s = new String[person];
-        groupNumber = intent.getIntExtra("groupNumber", 1);
+        receipt = new int[memberNumber];
+        receipt_s = new String[memberNumber];
 
         LinearLayout rootLinear = new LinearLayout(this);
         rootLinear.setOrientation(LinearLayout.VERTICAL);
@@ -189,7 +191,7 @@ public class DutchPayListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 for(int i=0;i<menu_list.length;i++) {
-                    for (int j = 0; j < person; j++) {
+                    for (int j = 0; j < memberNumber; j++) {
                         if (tf[i][j]) {
                             howManyTrue[i]+=1;
                         }
@@ -198,7 +200,7 @@ public class DutchPayListActivity extends AppCompatActivity {
                 for(int i=0;i<menu_list.length;i++) {
                     //receipt 내야 할 금액
                     int onePersonPrice = Integer.parseInt(price_list[i]) / (howManyTrue[i]);
-                    for (int j = 0; j < person; j++) {
+                    for (int j = 0; j < memberNumber; j++) {
                         if (tf[i][j])
                             receipt[j] += onePersonPrice;
                     }
