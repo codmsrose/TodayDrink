@@ -37,7 +37,7 @@ public class DutchPayListActivity extends AppCompatActivity {
     String[] food_list;
     String[] price_list;
 
-    int groupNumber=1;
+    int groupNumber;
     int member=0;
     String leader_Id, currentUser;
 
@@ -76,7 +76,7 @@ public class DutchPayListActivity extends AppCompatActivity {
         howManyTrue = new int[menu_list.length];
         receipt = new int[person];
         receipt_s = new String[person];
-        //groupNumber = intent.getIntExtra("groupNumber", 1);
+        groupNumber = intent.getIntExtra("groupNumber", 1);
 
         LinearLayout rootLinear = new LinearLayout(this);
         rootLinear.setOrientation(LinearLayout.VERTICAL);

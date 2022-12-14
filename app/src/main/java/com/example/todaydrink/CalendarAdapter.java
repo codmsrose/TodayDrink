@@ -96,14 +96,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             holder.dayText.setText("");
         }else{
             holder.dayText.setText(String.valueOf(day.getDayOfMonth()));
-            //색바꾸기 holder.dayText.setBackgroundResource(R.drawable.circle_white);
-            //현재 날짜 색상 칠하기
-            //if(day.equals(CalendarUtil.selectedDate)){
-            //    holder.parentView.setBackgroundColor(Color.LTGRAY);}
-            /*TODO 여기 안에서 해당 날짜에 데이터베이스에 저장되어있는 혈중 농도 최고치를 이용해서
-            TODO 달력에다가 투명도를 다르게 해서 얼만큼 마셨는지 보여주는 것을 나타내려고 합니다
-            TODO 그래서 여다가 상태를 불러와야 합니다. (1~5)
-             */
+
             int aYear = day.getYear();
             int aMonth = day.getMonthValue();
             int aDay = day.getDayOfMonth();
@@ -114,9 +107,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 holder.parentView.setBackgroundColor(Color.LTGRAY);
             }
 
-            // 일단 오늘의 상태만 불러옴.
-            //TODO: 상태 화면에서 클릭한 번호 가져오는 거는 되었습니다.
-            // 이거 토대로 변형해 주시면 될 듯 합니다.
             reference.child("User").child(currentUser).child("날짜별 데이터").child(aYear + "년 " + aMonth + "월 " + aDay + "일")
                     .child("선택한 상태").addValueEventListener(new ValueEventListener() {
                         @Override
@@ -129,8 +119,25 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                                 // 상태 int 형으로.
                                 intState = Integer.parseInt(selectedState);
 
-                                // 데이터 가져와지는 거 확인용.
-                                Toast.makeText(((StatisticsActivity) StatisticsActivity.mContext).getApplicationContext(), String.valueOf(intState), Toast.LENGTH_SHORT).show();
+                                switch(intState){
+                                    case 1 :
+                                        holder.dayText.setBackgroundResource(R.drawable.circle1);
+                                        break;
+                                    case 2 :
+                                        holder.dayText.setBackgroundResource(R.drawable.circle2);
+                                        break;
+                                    case 3 :
+                                        holder.dayText.setBackgroundResource(R.drawable.circle3);
+                                        break;
+                                    case 4 :
+                                        holder.dayText.setBackgroundResource(R.drawable.circle4);
+                                        break;
+                                    case 5 :
+                                        holder.dayText.setBackgroundResource(R.drawable.circle5);
+                                        break;
+                                    default :
+                                        holder.dayText.setBackgroundResource(R.drawable.circle_white);
+                                }
                             }
                         }
 
@@ -245,9 +252,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
 
                         builder.setPositiveButton("확인", null);
-                        // TODO 여기 변수에서 년, 월, 일 뺴오고 이걸 이용해서 데이터베이스에 해당 날짜에 저장된 마신 술 모두 보여주기
-                        // TODO 이 함수 안이 원하는 날짜를 눌렀을때 할 행동을 적을 공간
-                        // TODO 아래 다이얼로그에다가 setMessage로 보여주면 될거같아요
                         builder.show();
 
                         // 데이터베이스가 존재한다면 모든 데이터를 가져와서 저장.
