@@ -132,8 +132,12 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getValue(GroupMember.class) != null) {
-                        btn_group1.setVisibility(View.VISIBLE);
-                        groupNumber = 1;
+                        GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                        if (currentUser.equals(member.id)) {
+                            btn_group1.setVisibility(View.VISIBLE);
+                            groupNumber = 1;
+                        }
                     }
                 }
             }
@@ -149,8 +153,12 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getValue(GroupMember.class) != null) {
-                        btn_group2.setVisibility(View.VISIBLE);
-                        groupNumber = 2;
+                        GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                        if (currentUser.equals(member.id)) {
+                            btn_group2.setVisibility(View.VISIBLE);
+                            groupNumber = 2;
+                        }
                     }
                 }
             }
@@ -166,8 +174,75 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getValue(GroupMember.class) != null) {
-                        btn_group3.setVisibility(View.VISIBLE);
-                        groupNumber = 3;
+                        GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                        if (currentUser.equals(member.id)) {
+                            btn_group3.setVisibility(View.VISIBLE);
+                            groupNumber = 3;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.child("방").child("방1").child("참가자").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getValue(GroupMember.class) != null) {
+                        GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                        if (currentUser.equals(member.id)) {
+                            btn_group1.setVisibility(View.VISIBLE);
+                            groupNumber = 1;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.child("방").child("방2").child("참가자").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getValue(GroupMember.class) != null) {
+                        GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                        if (currentUser.equals(member.id)) {
+                            btn_group2.setVisibility(View.VISIBLE);
+                            groupNumber = 2;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.child("방").child("방3").child("참가자").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getValue(GroupMember.class) != null) {
+                        GroupMember member = dataSnapshot.getValue(GroupMember.class);
+
+                        if (currentUser.equals(member.id)) {
+                            btn_group3.setVisibility(View.VISIBLE);
+                            groupNumber = 3;
+                        }
                     }
                 }
             }
