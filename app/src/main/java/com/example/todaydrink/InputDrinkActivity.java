@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,10 +36,6 @@ public class InputDrinkActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static Context mContext;
     public String currentUser;
-
-    RecyclerView recyclerView;
-    CheckAdapter CheckAdapter;
-    private ArrayList<CheckItems> mArrayList;
 
     Button state1, state2, state3, state4, state5, btn_state, btn_game;
 
@@ -361,9 +359,6 @@ public class InputDrinkActivity extends AppCompatActivity {
                 // 알콜 계산
             }
         });
-
-        AlcoholSum alcoholSum = new AlcoholSum(String.valueOf(state));
-        reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child("총 알콜 농도").setValue(alcoholSum);
 
         btn_state.setOnClickListener(new View.OnClickListener() {
             @Override
