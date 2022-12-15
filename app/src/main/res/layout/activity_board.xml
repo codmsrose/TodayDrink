@@ -7,11 +7,22 @@
     android:orientation="vertical"
     tools:context=".BoardActivity">
 
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="게시판"
+        android:textSize="70dp"
+        android:layout_marginLeft="20dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/board_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/post_edit"

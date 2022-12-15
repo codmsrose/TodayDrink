@@ -38,6 +38,15 @@ public class CheckCalculate {
     static private double[] stateWithAlcohol = new double[5];
 
 
+    public static void setMaxState() {
+        stateWithAlcohol[0] = 16.5 * 0.05;
+        stateWithAlcohol[1] = 16.5 * 0.1;
+        stateWithAlcohol[2] = 16.5 * 0.15;
+        stateWithAlcohol[3] = 16.5 * 0.20;
+        stateWithAlcohol[4] = 16.5 * 0.25;
+
+    }
+
     //
 
     private static int maxState;
@@ -144,7 +153,8 @@ public class CheckCalculate {
 
 
 
-    public static int calculate(String currentUser, double density, double newAmountOfAlcohol) {
+    public static int calculate(String currentUser, double density1, double newAmountOfAlcohol) {
+        double density = density1/1000;
 
         newAlcohol = density*newAmountOfAlcohol*N;  //방금 섭취한 알코올
         calculateMaxAlcohol(currentUser);
@@ -223,6 +233,9 @@ public class CheckCalculate {
 
     }
 
+    public static int GetMaxState(){
+        return maxState;
+    }
 
     //상태에 update
 

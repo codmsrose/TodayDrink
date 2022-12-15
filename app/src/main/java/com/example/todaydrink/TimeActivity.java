@@ -1,34 +1,25 @@
 package com.example.todaydrink;
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,9 +27,6 @@ import java.util.Calendar;
 public class TimeActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView time_text;
-
-    private String leader;
-    private int groupNumber;
 
     AlertDialog customDialog;
     Calendar calendar = Calendar.getInstance();
@@ -53,13 +41,9 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
 
-    //다른 사람 시간
-    ArrayList<TimeItem> list = new ArrayList<>();
 
 
 
-
-    @SuppressLint({"MissingInflatedId", "SuspiciousIndentation"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,28 +54,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
 
         //버튼 이벤트 등록
         time_text.setOnClickListener(this);
-
-        Intent intent = getIntent();
-        leader = intent.getStringExtra("currentUser");
-        groupNumber = intent.getIntExtra("groupNumber", 1);
-
-
-
-        //TODO: 다른 사람의 시간이 들어가도록 for문 있는 곳 고쳐주세요.
-        // TimeAdapter에서
-        //    other_person_timer : 다른 사람 타이머(시간 줄어들고 있음)
-        //    other_person_name: (다른 사람 이름)
-
-        //TODO: 다른 사람의 시간이 00:00:00이 되면 이벤트리스너로 알림 오게 만들기
-        // 만약 00:00:00이 되면 sendNotification();
-        // 하고 나서 - 로 만들기
-
-        //TODO: 모든 사람의 이름이 그 방의 마지막 참가자 이름으로만 나오네요...
-
-
-        readTime();
-
-        }
+    }
 
     @Override
     public void onClick(View view) {
@@ -161,39 +124,36 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         textTime +=text_sec;
 
         time_text.setText(textTime);
-
-        // 타이머가 흐를 때마다 데이터베이스에 남은 시간을 계속 업데이트함.
-        updateTime(textTime);
     }
 
 
 
-    public void sendNotification(){
+    public void sendNotification() {
         //알림(Notification)을 관리하는 관리자 객체를 운영체제(Context)로부터 소환하기
-        NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         //Notification 객체를 생성해주는 건축가객체 생성(AlertDialog 와 비슷)
-        NotificationCompat.Builder builder= null;
+        NotificationCompat.Builder builder = null;
 
         //Oreo 버전(API26 버전)이상에서는 알림시에 NotificationChannel 이라는 개념이 필수 구성요소가 됨.
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            String channelID="channel_01"; //알림채널 식별자
-            String channelName="MyChannel01"; //알림채널의 이름(별명)
+            String channelID = "channel_01"; //알림채널 식별자
+            String channelName = "MyChannel01"; //알림채널의 이름(별명)
 
             //알림채널 객체 만들기
-            NotificationChannel channel= new NotificationChannel(channelID,channelName,NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
 
             //알림매니저에게 채널 객체의 생성을 요청
             notificationManager.createNotificationChannel(channel);
 
             //알림건축가 객체 생성
-            builder=new NotificationCompat.Builder(TimeActivity.this, channelID);
+            builder = new NotificationCompat.Builder(TimeActivity.this, channelID);
 
 
-        }else{
+        } else {
             //알림 건축가 객체 생성
-            builder= new NotificationCompat.Builder(TimeActivity.this);
+            builder = new NotificationCompat.Builder(TimeActivity.this);
         }
 
         //건축가에게 원하는 알림의 설정작업
@@ -205,7 +165,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         builder.setContentText("집에 가야할 사람이 있습니다!!");//알림창 내용
 
         //건축가에게 알림 객체 생성하도록
-        Notification notification=builder.build();
+        Notification notification = builder.build();
 
         //알림매니저에게 알림(Notify) 요청
         notificationManager.notify(1, notification);
@@ -214,68 +174,7 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
         //notificationManager.cancel(1);
     }
 
-    // 데이터베이스에 시간 업데이트할 메소드.
-    public void updateTime(String time) {
-        TimeItem time1 = new TimeItem(time);
-
-        // "집 갈 시간" 아래에 String 타입으로 시간 계속 저장.
-        reference.child("User").child(leader).child("집 갈 시간").setValue(time1);
-    }
-
-    public void readTime() {
-
-        reference.child("방").child("방" + groupNumber).child("참가자").addListenerForSingleValueEvent(new ValueEventListener() {
-            String otherId = "";
-            String otherName = "";
-            String otherTime = "";
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                     GroupMember groupMember = dataSnapshot.getValue(GroupMember.class);
-
-                     otherId = groupMember.getId();
-
-                    reference.child("User").child(otherId).child("집 갈 시간").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            TimeItem timeItem = snapshot.getValue(TimeItem.class);
-
-                            otherName = groupMember.getName();
-                            otherTime = timeItem.getTime();
-
-                            if (otherTime.equals("00 : 00 : 00") || otherTime.equals("0 : 00 : 00")) {
-                                list.add(new TimeItem("-", otherName));
-                                sendNotification();
-                            }
-                            else {
-                                list.add(new TimeItem(otherTime, otherName));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-
-
-
-
 }
-
-
 
 
 

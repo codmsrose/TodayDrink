@@ -384,9 +384,8 @@ public class InputDrinkActivity extends AppCompatActivity {
 
         reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child(drinkKind).setValue(drink);
     }
-
     public void addState() {
-        state = cass_state + terra_state + heineken_state + iseul_state + start_state + jinro_state;
+         state = cass_state + terra_state + heineken_state + iseul_state + start_state + jinro_state;
 
         updateState(state);
     }

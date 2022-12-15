@@ -59,4 +59,3 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
 
 
 }
-
