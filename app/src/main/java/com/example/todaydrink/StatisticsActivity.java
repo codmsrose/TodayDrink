@@ -1,5 +1,6 @@
 package com.example.todaydrink;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.YearMonth;
@@ -20,6 +26,8 @@ import java.util.ArrayList;
 import org.threeten.bp.LocalDate;
 
 public class StatisticsActivity extends AppCompatActivity{
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
 
     @SuppressLint("StaticFieldLeak")
     public static Context mContext;
@@ -28,6 +36,11 @@ public class StatisticsActivity extends AppCompatActivity{
     TextView monthYearText; //년월 텍스트뷰
 
     RecyclerView recyclerView;
+
+    static TextView textMyDrink;
+    static double soju = 16.5 * 0.05;
+    static double beer = 4.5 *0.5;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,7 @@ public class StatisticsActivity extends AppCompatActivity{
         ImageButton preBtn = findViewById(R.id.pre_btn);
         ImageButton nextBtn = findViewById(R.id.next_btn);
         recyclerView = findViewById(R.id.check_recyclerView);
+        textMyDrink = findViewById(R.id.text_myDrink);
 
         //현재 날짜
         CalendarUtil.selectedDate = LocalDate.now();
@@ -73,6 +87,34 @@ public class StatisticsActivity extends AppCompatActivity{
                 //+1한 월을 넣어준다.(2월 -> 3월)
                 CalendarUtil.selectedDate = CalendarUtil.selectedDate.plusMonths(1);
                 setMonthView();
+            }
+        });
+
+        reference.child("User").child(userId).child("상태").addValueEventListener(new ValueEventListener() {
+            int i = 0;
+            String[] myDrink = new String[5];
+            double[] myDrinkDensity = new double[5];
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    State state = dataSnapshot.getValue(State.class);
+
+                    if (i != 5) {
+                        myDrink[i] = (i + 1) + "단계 " + state.state + " : " + state.density;
+                        myDrinkDensity[i] = state.density;
+                        i++;
+                    }
+                }
+
+                textMyDrink.setText(myDrink[0] + "\n" + myDrink[1] + "\n" + myDrink[2] + "\n" + myDrink[3] + "\n" + myDrink[4]);
+                CheckCalculate.setStateArray(myDrinkDensity);
+                update(myDrinkDensity);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -137,6 +179,26 @@ public class StatisticsActivity extends AppCompatActivity{
 
         return dayList;
     }
+    public static void update(double[] state){
+
+        String show =" ";
+        String temp="";
+
+
+        for(int i=0; i<5; i++)
+        {
+            if(state[i]/soju>0){
+                temp=String.format("%10.1f",state[i]/soju)+"병" ;
+
+            }
+            show+= +(i+1)+"단계"+" 소주 :"+temp+"\n";
+        }
+
+        textMyDrink.setText(show);
+
+
+    }
+
 
 
 

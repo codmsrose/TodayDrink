@@ -30,7 +30,6 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>{
 
@@ -43,7 +42,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     String selectedState;
     int intState;
     TextView text_myDrink;
-    String message = "";
 
     public CalendarAdapter(ArrayList<LocalDate> dayList) {
         this.dayList = dayList;
@@ -70,30 +68,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
         text_myDrink = ((StatisticsActivity)StatisticsActivity.mContext).findViewById(R.id.text_myDrink);
 
-        reference.child("User").child(currentUser).child("상태").addValueEventListener(new ValueEventListener() {
-            int i = 0;
-            String[] myDrink = new String[5];
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    State state = dataSnapshot.getValue(State.class);
-
-                    if (i != 5) {
-                        myDrink[i] = (i + 1) + "단계 " + state.state + " : " + state.density;
-                        i++;
-                    }
-                }
-
-                text_myDrink.setText(myDrink[0] + "\n" + myDrink[1] + "\n" + myDrink[2] + "\n" + myDrink[3] + "\n" + myDrink[4]);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         if(day == null){
             holder.dayText.setText("");
         }else{
@@ -102,12 +76,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             int aYear = day.getYear();
             int aMonth = day.getMonthValue();
             int aDay = day.getDayOfMonth();
-
-            holder.dayText.setBackgroundResource(R.drawable.circle_white);
-
-            if(day.equals(CalendarUtil.selectedDate)) {
-                holder.parentView.setBackgroundColor(Color.LTGRAY);
-            }
 
             reference.child("User").child(currentUser).child("날짜별 데이터").child(aYear + "년 " + aMonth + "월 " + aDay + "일")
                     .child("선택한 상태").addValueEventListener(new ValueEventListener() {
@@ -161,7 +129,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
                 int iYear = day.getYear();//년
                 int iMonth = day.getMonthValue(); //월
                 int iDay = day.getDayOfMonth(); //일
@@ -171,21 +139,73 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 reference.child("User").child(currentUser).child("날짜별 데이터").child(yearMonDay).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            // 선택된 날짜 아래에 대한 데이터베이스가 존재하지 않을 경우 병과 잔 모두 0으로.
-                            if (dataSnapshot.getValue(Drink.class) != null) {
-                                Drink drink = dataSnapshot.getValue(Drink.class);
-                                if (!(Objects.equals(dataSnapshot.getKey(), "선택한 상태")) && !(Objects.equals(dataSnapshot.getKey(), "총 알콜 농도"))) {
-                                    if (drink.bottle != 0 || drink.glass != 0) {
-                                        message = message + dataSnapshot.getKey() + ": " + drink.bottle + "병" + drink.glass + "잔\n";
-                                    }
 
-                                }
-                            }
+                        // 선택된 날짜 아래에 대한 데이터베이스가 존재하지 않을 경우 병과 잔 모두 0으로.
+                        if (snapshot.child("카스").getValue(Drink.class) == null) {
+                            cass_bottle = 0;
+                            cass_glass = 0;
+                        }
+                        // 데이터베이스가 존재할 경우, 병과 잔 데이터를 가져옴.
+                        else {
+                            Drink drink_cass = snapshot.child("카스").getValue(Drink.class);
 
+                            cass_bottle = drink_cass.bottle;
+                            cass_glass = drink_cass.glass;
+                        }
 
+                        if (snapshot.child("테라").getValue(Drink.class) == null) {
+                            terra_bottle = 0;
+                            terra_glass = 0;
+                        }
+                        else {
+                            Drink drink_terra = snapshot.child("테라").getValue(Drink.class);
 
-                            // 데이터베이스가 존재한다면 모든 데이터를 가져와서 저장.
+                            terra_bottle = drink_terra.bottle;
+                            terra_glass = drink_terra.glass;
+                        }
+
+                        if (snapshot.child("하이네켄").getValue(Drink.class) == null) {
+                            heineken_bottle = 0;
+                            heineken_glass = 0;
+                        }
+                        else {
+                            Drink drink_heineken = snapshot.child("하이네켄").getValue(Drink.class);
+
+                            heineken_bottle = drink_heineken.getBottle();
+                            heineken_glass = drink_heineken.getGlass();
+                        }
+
+                        if (snapshot.child("참이슬").getValue(Drink.class) == null) {
+                            iseul_bottle = 0;
+                            iseul_glass = 0;
+                        }
+                        else {
+                            Drink drink_iseul = snapshot.child("참이슬").getValue(Drink.class);
+
+                            iseul_bottle = drink_iseul.bottle;
+                            iseul_glass = drink_iseul.glass;
+                        }
+
+                        if (snapshot.child("처음처럼").getValue(Drink.class) == null) {
+                            start_bottle = 0;
+                            start_glass = 0;
+                        }
+                        else {
+                            Drink drink_start = snapshot.child("처음처럼").getValue(Drink.class);
+
+                            start_bottle = drink_start.bottle;
+                            start_glass = drink_start.glass;
+                        }
+
+                        if (snapshot.child("진로").getValue(Drink.class) == null) {
+                            jinro_bottle = 0;
+                            jinro_glass = 0;
+                        }
+                        else {
+                            Drink drink_jinro = snapshot.child("진로").getValue(Drink.class);
+
+                            jinro_bottle = drink_jinro.getBottle();
+                            jinro_glass = drink_jinro.getGlass();
                         }
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -193,11 +213,18 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                         // TODO builder.setMessage(); 아니면 TextView 이용해서
 
                         // 선택한 날의 주량을 다이얼로그에 보여줌.
-                        builder.setMessage(message);
+                        builder.setMessage("카스 : " + cass_bottle + "병 " + cass_glass + "잔\n" +
+                                "테라 : " + terra_bottle + "병 " + terra_glass + "잔\n" +
+                                "하이네켄 : " + heineken_bottle + "병 " + heineken_glass + "잔\n" +
+                                "참이슬 : " + iseul_bottle + "병 " + iseul_glass + "잔\n" +
+                                "처음처럼 : " + start_bottle + "병 " + start_glass + "잔\n" +
+                                "진로 : " + jinro_bottle + "병 " + jinro_glass + "잔");
+
 
                         builder.setPositiveButton("확인", null);
                         builder.show();
-                        message = "";
+
+                        // 데이터베이스가 존재한다면 모든 데이터를 가져와서 저장.
                     }
 
                     @Override

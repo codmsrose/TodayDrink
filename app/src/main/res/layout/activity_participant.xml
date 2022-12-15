@@ -19,6 +19,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="@color/skyblue"/>
 
     <RelativeLayout
@@ -40,22 +41,13 @@
             android:layout_alignParentRight="true">
 
             <Button
-                android:id="@+id/Participant_host_change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="주선자 바꾸기"
-                android:textSize="15dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="@color/light_gray"/>
-
-            <Button
                 android:id="@+id/Participant_host_save"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="저장"
-                android:textSize="15dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
                 android:backgroundTint="@color/blue1"
-                android:layout_marginRight="20dp"/>
+                android:text="확인"
+                android:textSize="15dp" />
 
         </LinearLayout>>
 

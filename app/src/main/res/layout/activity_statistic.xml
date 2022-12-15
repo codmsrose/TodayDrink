@@ -120,7 +120,6 @@
         android:id="@+id/check_recyclerView"/>
 
     <LinearLayout
-        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_width="350dp"

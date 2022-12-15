@@ -123,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 addUserAccount(strName, strId, strPwd, intGender, strWeight, strAccount, strProfile);
 
-                Intent intent = new Intent(RegisterActivity.this, RegisterActivity2.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 intent.putExtra("registerId", registerId);
                 startActivity(intent);
                 finish();

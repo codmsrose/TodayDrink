@@ -3,6 +3,7 @@ package com.example.todaydrink;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +27,7 @@ public class ParticipantActivity extends AppCompatActivity implements View.OnCli
     DatabaseReference reference = database.getReference();
 
     View plusDialog;
-    Button plusBtn;
+    Button okBtn;
 
     RecyclerView recyclerView;
     ParticipantAdapter ParticipantAdapter;
@@ -38,6 +39,7 @@ public class ParticipantActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant);
+        okBtn = findViewById(R.id.Participant_host_save);
 
         Intent intent = getIntent();
         currentUser = intent.getStringExtra("currentUser");
@@ -62,7 +64,7 @@ public class ParticipantActivity extends AppCompatActivity implements View.OnCli
 
                 // 리사이클러뷰에 LinearLayoutManager 객체 지정.
                 RecyclerView recyclerView = findViewById(R.id.participant_recyclerView) ;
-                recyclerView.setLayoutManager(new LinearLayoutManager(ParticipantActivity.this)) ;
+                recyclerView.setLayoutManager(new GridLayoutManager(ParticipantActivity.this,3)) ;
 
                 // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
                 ParticipantAdapter adapter = new ParticipantAdapter(list) ;
@@ -74,25 +76,12 @@ public class ParticipantActivity extends AppCompatActivity implements View.OnCli
 
             }
         });
-
-        //plusBtn.setOnClickListener(this);
-
-
-
-
-
-
-
     }
 
     public void onClick(View view){
-        if(view == plusBtn){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("친구 찾기");
-
-            plusDialog = (View) View.inflate(ParticipantActivity.this, R.layout.participant_dialog, null);
-            builder.setView(plusDialog);
-            builder.show();
+        if(view == okBtn){
+            Intent intent = new Intent(ParticipantActivity.this, MenuActivity.class);
+            startActivity(intent);
         }
     }
 }

@@ -155,6 +155,9 @@ public class StateActivity extends AppCompatActivity{
                         SelectedState selectedState = new SelectedState(String.valueOf(saveStateNumber));
 
                         reference.child("User").child(currentUser).child("날짜별 데이터").child(year + "년 " + (month + 1) + "월 " + day + "일").child("선택한 상태").setValue(selectedState);
+
+                        CheckCalculate.updateStateStandard(Character.getNumericValue(saveStateNumber));
+
                         // TODO saveStateNumber는 char형으로 나오는 내가 선택한 단계 숫자
                         // TODO 현재 내 상태를 눌렀을 때 나중에 해당 날짜에 지금 마신 술 양이랑 같이 이 숫자가 저장되어야함.
                     }

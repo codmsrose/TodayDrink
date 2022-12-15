@@ -259,12 +259,6 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     });
 
-                    RecyclerView recyclerView = findViewById(R.id.timer_recyclerView);
-                    recyclerView.setLayoutManager(new GridLayoutManager(TimeActivity.this, 2));
-                    recyclerView.setHasFixedSize(true);
-
-                    TimeAdapter adapter = new TimeAdapter(list);
-                    recyclerView.setAdapter(adapter);
                 }
             }
 

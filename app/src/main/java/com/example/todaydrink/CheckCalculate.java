@@ -26,8 +26,8 @@ public class CheckCalculate {
     private static double kg = 60; //TODO : 만약에 사용자가 설정화면에서 몸무게 바꾸면 이것 바뀌어야 함
     private static double R = 0.64; //성별에 대한 계수(남자 0.86, 여자 0.64)   //TODO : 회원가입할 때 입력받기
 
-    private static long inputTime; //시작시간
-    private static long nowTime=360;
+    private static long inputTime = 1000*60*60*17; //시작시간
+    private static long nowTime;
 
     private static double bloodAlcoholLevel=0; //음주운전 당시 혈중알코올 = 최고혈중알코올농도-(경과시간 × 0.015%)
 
@@ -36,6 +36,9 @@ public class CheckCalculate {
 
     //상태의 기준이 되는 알콜농도
     static private double[] stateWithAlcohol = new double[5];
+
+
+    //
 
     private static int maxState;
 
@@ -54,6 +57,10 @@ public class CheckCalculate {
             R= 0.86;}
         else{
             R=0.64;}
+    }
+
+    public static void setStateArray(double[] stateArray){
+        stateWithAlcohol = stateArray;
     }
 
     //배열 원소
@@ -86,23 +93,16 @@ public class CheckCalculate {
     }
 
     //지금 시간
-    public static void setNowTime(long nowTime1){
-        nowTime= nowTime1;
+    public static long setNowTime(){
+        nowTime = System.currentTimeMillis();
+        return nowTime;
     }
 
 
 
      //////////////////////////
     //혈중알콜농도 계산
-    public static int calculate(String currentUser, double density, double newAmountOfAlcohol) {
 
-        setNewAlcohol(density, newAmountOfAlcohol);
-        calculateMaxAlcohol(currentUser);
-        calculateBloodAlcohol();
-        return updateState(bloodAlcoholLevel);
-
-
-    }
 
     /////////////////////////////////////
 
@@ -112,9 +112,9 @@ public class CheckCalculate {
 
 
     //상태 기준 업데이트
-    public void updateStateStandard(int newInput) {
+    public static void updateStateStandard(int statePick) {
 
-        switch (newInput){
+        switch (statePick-1){
 
             case (0):
                 stateWithAlcohol[0]=(stateWithAlcohol[0]+bloodAlcoholLevel)/2;
@@ -137,18 +137,26 @@ public class CheckCalculate {
                 break;
 
         }
+        StatisticsActivity.update(stateWithAlcohol);
 
 
     }
 
 
 
+    public static int calculate(String currentUser, double density, double newAmountOfAlcohol) {
 
-    //방금 섭취한 알코올 A
-    public static void setNewAlcohol(double density, double newAmountOfAlcohol) {
-        newAlcohol = density*newAmountOfAlcohol*N;
+        newAlcohol = density*newAmountOfAlcohol*N;  //방금 섭취한 알코올
+        calculateMaxAlcohol(currentUser);
+        bloodAlcoholArrayList.add(new bloodAlcohol(maxAlcohol, setNowTime()));
+
+        calculateBloodAlcohol();
+        return updateState(bloodAlcoholLevel);
+
 
     }
+
+
 
     //섭취한 알코올의 최대치 구하기 C
     private static double calculateMaxAlcohol(String currentUser){

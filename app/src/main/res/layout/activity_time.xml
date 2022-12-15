@@ -12,33 +12,18 @@
         android:layout_height="wrap_content"
         android:text="집 갈 시간"
         android:textSize="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="150dp"
         android:gravity="center"
         android:layout_gravity="center_vertical"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/time_text"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:background="@drawable/circle"
-        android:text= "20:20:20"
-        android:textSize="40dp"
+        android:text= "0 : 00 : 00"
+        android:textSize="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"/>
-
-    <TextView
-        android:layout_marginLeft="5dp"
-        android:layout_height="wrap_content"
-        android:layout_width="400dp"
-        android:text="다른 사람들 집에 갈 시간"
-        android:textSize="35dp"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="15dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/timer_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"/>
 
 </LinearLayout>

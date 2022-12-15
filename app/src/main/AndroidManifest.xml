@@ -41,28 +41,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".FirebaseActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".SearchResultActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".FindPasswordActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".FindIdActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

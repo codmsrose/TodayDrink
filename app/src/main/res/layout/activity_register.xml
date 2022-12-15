@@ -132,7 +132,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/blue1"
-        android:text="다음" />
+        android:text="확인" />
 
 
 </LinearLayout>
