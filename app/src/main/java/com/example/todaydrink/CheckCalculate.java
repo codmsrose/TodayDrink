@@ -112,7 +112,7 @@ public class CheckCalculate {
 
 
     //상태 기준 업데이트
-    public void updateStateStandard(int newInput) {
+    public static void updateStateStandard(int newInput) {
 
         switch (newInput){
 
@@ -140,7 +140,6 @@ public class CheckCalculate {
 
 
     }
-
 
 
 

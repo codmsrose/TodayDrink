@@ -54,10 +54,13 @@ public class RegisterActivity2 extends AppCompatActivity {
                 amount1 = state1_amount.getText().toString();
                 switch (checkedId) {
                     case R.id.bottle1_radio:
+
+                        CheckCalculate.updateStateStandard(0);
                         state1 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount1) * 360);
                         break;
                     case R.id.glass1_radio:
-                        state1 = CheckCalculate.calculate(strId, 1, Integer.parseInt(amount1) * 50);
+                        CheckCalculate.updateStateStandard(0);
+                        state1 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount1) * 50);
                         break;
                 }
             }
@@ -71,9 +74,11 @@ public class RegisterActivity2 extends AppCompatActivity {
                 RadioButton radioButton = group.findViewById(checkedId);
                 switch (checkedId) {
                     case R.id.bottle2_radio:
+                        CheckCalculate.updateStateStandard(1);
                         state2 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount2) * 360);
                         break;
                     case R.id.glass2_radio:
+                        CheckCalculate.updateStateStandard(1);
                         state2 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount2) * 50);
                         break;
                 }
@@ -88,9 +93,11 @@ public class RegisterActivity2 extends AppCompatActivity {
                 RadioButton radioButton = group.findViewById(checkedId);
                 switch (checkedId) {
                     case R.id.bottle3_radio:
+                        CheckCalculate.updateStateStandard(2);
                         state3 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount3) * 360);
                         break;
                     case R.id.glass3_radio:
+                        CheckCalculate.updateStateStandard(2);
                         state3 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount3) * 50);
                         break;
                 }
@@ -105,9 +112,11 @@ public class RegisterActivity2 extends AppCompatActivity {
                 RadioButton radioButton = group.findViewById(checkedId);
                 switch (checkedId) {
                     case R.id.bottle4_radio:
+                        CheckCalculate.updateStateStandard(3);
                         state4 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount4) * 360);
                         break;
                     case R.id.glass4_radio:
+                        CheckCalculate.updateStateStandard(3);
                         state4 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount4) * 50);
                         break;
                 }
@@ -122,9 +131,11 @@ public class RegisterActivity2 extends AppCompatActivity {
                 amount5 = state5_amount.getText().toString();
                 switch (checkedId) {
                     case R.id.bottle5_radio:
+                        CheckCalculate.updateStateStandard(4);
                         state5 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount5) * 360);
                         break;
                     case R.id.glass5_radio:
+                        CheckCalculate.updateStateStandard(4);
                         state5 = CheckCalculate.calculate(strId, 16.9, Integer.parseInt(amount5) * 50);
                         break;
                 }
